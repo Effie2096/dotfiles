@@ -1,0 +1,101 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LGUG2Z/komorebi/v0.1.37/schema.bar.json",
+  "monitor": 0,
+  "height": 22,
+  "margin": {
+    "horizontal": 10,
+    "vertical": [
+      5,
+      0
+    ]
+  },
+  "widget_spacing": 3,
+  // "grouping": {
+  //   "kind": "Alignment",
+  //   "style": "Default",
+  //   "rounding": 10,
+  //   "transparency_alpha": 255
+  // },
+  "transparency_alpha": 255,
+  "frame": {
+    "inner_margin": {
+      "x": 1.0,
+      "y": 0.0
+    }
+  },
+  "font_family": "Segoe UI Variable",
+  "font_size": 13.0,
+  "icon_scale": 1.2,
+  "left_widgets": [
+    {
+      "Komorebi": {
+        "workspaces": {
+          "enable": true,
+          "hide_empty_workspaces": true,
+          "display": "AllIconsAndText"
+        },
+        "layout": {
+          "enable": true,
+          "display": "Icon"
+        }
+      }
+    }
+  ],
+  "center_widgets": [
+    {
+      "Komorebi": {
+        "focused_window": {
+          "enable": true,
+          "show_icon": true
+        }
+      }
+    }
+  ],
+  "right_widgets": [
+    {
+      "Media": {
+        "enable": true
+      }
+    },
+    {
+      "Network": {
+        "enable": false,
+        "show_total_data_transmitted": false,
+        "show_network_activity": true,
+        "show_default_interface": true
+      }
+    },
+    {
+      "Keyboard": {
+        "enable": false,
+        "label_prefix": "Icon"
+      }
+    },
+    {
+      "Battery": {
+        "enable": false
+      }
+    },
+    {
+      "Date": {
+        "enable": true,
+        "format": "DateMonthYear",
+        "label_prefix": "None"
+      }
+    },
+    {
+      "Time": {
+        "enable": true,
+        "format": "TwentyFourHourWithoutSeconds",
+        "label_prefix": "None"
+      }
+    },
+    {
+      "Update": {
+        "enable": true,
+        "label_prefix": "Icon",
+        "data_refresh_interval": 4
+      }
+    }
+  ]
+}

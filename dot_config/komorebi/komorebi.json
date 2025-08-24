@@ -1,0 +1,658 @@
+{
+	"$schema": "https://raw.githubusercontent.com/LGUG2Z/komorebi/v0.1.37/schema.json",
+	"app_specific_configuration_path": "$Env:KOMOREBI_CONFIG_HOME/applications.json",
+	"display_index_preferences": {
+		"0": "ACR03E3-5&114d6bd7&0&UID4355",
+		"1": "ACR03E3-5&114d6bd7&0&UID4352"
+	},
+	"bar_configurations": [
+		"$Env:KOMOREBI_CONFIG_HOME/komorebi.bar.json",
+		"$Env:KOMOREBI_CONFIG_HOME/komorebi.bar.2.json"
+	],
+	"window_handling_behaviour": "Async",
+	"window_hiding_behaviour": "Cloak",
+	"floating_window_aspect_ratio": "Widescreen",
+	"resize_delta": 200,
+	"animation": {
+		"enabled": true,
+		"style": {
+			"movement": "EaseInOutElastic",
+			"transparency": "Linear"
+		},
+		"fps": 60,
+		"duration": 250
+	},
+	"mouse_follows_focus": true,
+	"transparency": false,
+	"transparency_alpha": 240,
+	"transparency_ignore_rules": [
+		{
+			"kind": "Title",
+			"matching_strategy": "Contains",
+			"id": "YouTube"
+		},
+		{
+			"kind": "Title",
+			"matching_strategy": "Contains",
+			"id": "Twitch"
+		},
+		{
+			"kind": "Exe",
+			"matching_strategy": "Equals",
+			"id": "Ryujinx.exe"
+		},
+		{
+			"kind": "Exe",
+			"matching_strategy": "Equals",
+			"id": "blender.exe"
+		},
+		{
+			"kind": "Title",
+			"matching_strategy": "Contains",
+			"id": "Foundry Virtual Tabletop"
+		}
+	],
+	"cross_monitor_move_behaviour": "Insert",
+	"default_workspace_padding": 5,
+	"default_container_padding": 2,
+	"global_work_area_offset": {
+		"top": -5,
+		"bottom": -5,
+		"left": 0,
+		"right": 0
+	},
+	"border": true,
+	"border_implementation": "Komorebi",
+	"border_style": "Rounded",
+	"border_width": 7,
+	"border_offset": -1,
+	"theme": {
+		"palette": "Catppuccin",
+		"name": "Mocha",
+		"bar_accent": "Pink",
+		"monocle_accent": "Mauve",
+		"single_border": "Pink",
+		"stackbar_focused_text": "Pink"
+	},
+	"stackbar": {
+		"height": 24,
+		"mode": "Never",
+		"label": "Title",
+		"tabs": {
+			"width": 300,
+			"focused_text": "#f5c2e7",
+			"unfocused_text": "#cdd6f4",
+			"background": "#1e1e2e"
+		}
+	},
+	"monitors": [
+		{
+			"workspaces": [
+				{
+					"name": "1:\uf120",
+					"layout": "BSP"
+				},
+				{
+					"name": "2:\udb81\udd9f",
+					"layout": "BSP"
+				},
+				{
+					"name": "3:\udb80\ude4b",
+					"layout": "BSP"
+				},
+				{
+					"name": "4",
+					"layout": "BSP"
+				},
+				{
+					"name": "5",
+					"layout": "BSP"
+				},
+				{
+					"name": "6:\udb81\uddba",
+					"layout": "BSP",
+					"initial_workspace_rules": [
+						{
+							"kind": "Exe",
+							"id": "steamwebhelper.exe"
+						}
+					]
+				},
+				{
+					"name": "7:\udb81\udf5a",
+					"layout": "BSP",
+					"initial_workspace_rules": [
+						{
+							"kind": "Exe",
+							"id": "Spotify.exe"
+						}
+					]
+				},
+				{
+					"name": "8",
+					"layout": "BSP"
+				},
+				{
+					"name": "9",
+					"layout": "BSP"
+				},
+				{
+					"name": "10",
+					"layout": "BSP"
+				}
+			]
+		},
+		{
+			"workspaces": [
+				{
+					"name": "1",
+					"layout": "BSP"
+				},
+				{
+					"name": "2",
+					"layout": "BSP",
+					"initial_workspace_rules": [
+						{
+							"kind": "Exe",
+							"id": "Discord.exe"
+						}
+					]
+				},
+				{
+					"name": "3",
+					"layout": "BSP"
+				},
+				{
+					"name": "4",
+					"layout": "BSP"
+				},
+				{
+					"name": "5",
+					"layout": "BSP"
+				},
+				{
+					"name": "6",
+					"layout": "BSP"
+				},
+				{
+					"name": "7",
+					"layout": "BSP"
+				},
+				{
+					"name": "8",
+					"layout": "BSP"
+				},
+				{
+					"name": "9",
+					"layout": "BSP"
+				},
+				{
+					"name": "10",
+					"layout": "BSP"
+				}
+			]
+		}
+	],
+	"tray_and_multi_window_applications": [
+		{
+			"kind": "Exe",
+			"id": "cockatrice.exe",
+			"matching_strategy": "Equals"
+		},
+		{
+			"kind": "Exe",
+			"id": "RobloxStudio.*.exe",
+			"matching_strategy": "Regex"
+		},
+		{
+			"kind": "Exe",
+			"id": "godot-mono.exe",
+			"matching_strategy": "Equals"
+		},
+		{
+			"kind": "Exe",
+			"id": "Cook Desktop.exe",
+			"matching_strategy": "Equals"
+		},
+		{
+			"kind": "Exe",
+			"id": "Notion.exe",
+			"matching_strategy": "Equals"
+		}
+	],
+	"manage_rules": [
+		[
+			{
+				"kind": "Exe",
+				"id": "godot-mono.exe",
+				"matching_strategy": "Equals"
+			},
+			{
+				"kind": "Title",
+				"id": "",
+				"matching_strategy": "Equals"
+			}
+		],
+		{
+			"kind": "Exe",
+			"id": "soffic.bin",
+			"matching_strategy": "Equals"
+		}
+	],
+	"floating_applications": [
+		[
+			{
+				"kind": "Exe",
+				"id": "yasb.exe",
+				"matching_strategy": "Equals"
+			},
+			{
+				"kind": "Title",
+				"id": "Add New App",
+				"matching_strategy": "Equals"
+			}
+		],
+		[
+			{
+				"kind": "Exe",
+				"id": "yasb.exe",
+				"matching_strategy": "Equals"
+			},
+			{
+				"kind": "Title",
+				"id": "Edit App",
+				"matching_strategy": "Equals"
+			}
+		],
+		{
+			"kind": "Exe",
+			"id": "Flow.Launcher.exe",
+			"matching_strategy": "Equals"
+		},
+		{
+			"kind": "Exe",
+			"id": "t-engine-launcher.exe",
+			"matching_strategy": "Equals"
+		},
+		{
+			"kind": "Exe",
+			"id": "t-engine.exe",
+			"matching_strategy": "Equals"
+		},
+		{
+			"kind": "Exe",
+			"id": "Aurora.exe",
+			"matching_strategy": "Equals"
+		},
+		[
+			{
+				"kind": "Exe",
+				"id": "freeciv21-client.exe",
+				"matching_strategy": "Equals"
+			},
+			{
+				"kind": "Title",
+				"id": "Freeciv21",
+				"matching_strategy": "DoesNotEqual"
+			}
+		],
+		{
+			"kind": "Exe",
+			"id": "PCem.exe",
+			"matching_strategy": "Equals"
+		},
+		{
+			"kind": "Exe",
+			"id": "ES-DE.exe",
+			"matching_strategy": "Equals"
+		},
+		{
+			"kind": "Exe",
+			"id": "love.*.exe",
+			"matching_strategy": "Regex"
+		},
+		{
+			"kind": "Exe",
+			"id": "gzdoom.exe",
+			"matching_strategy": "Equals"
+		},
+		{
+			"kind": "Exe",
+			"id": "ADSR Sample Manager.exe",
+			"matching_strategy": "Equals"
+		},
+		[
+			{
+				"kind": "Exe",
+				"id": "Reason Suite.exe",
+				"matching_strategy": "Equals"
+			},
+			{
+				"kind": "Title",
+				"id": ".reason",
+				"matching_strategy": "DoesNotContain"
+			}
+		],
+		{
+			"kind": "Exe",
+			"id": "ShareX.exe",
+			"matching_strategy": "Equals"
+		},
+		{
+			"kind": "Title",
+			"id": "Blender Render",
+			"matching_strategy": "Equals"
+		},
+		{
+			"kind": "Title",
+			"id": "Blender Preferences",
+			"matching_strategy": "Equals"
+		},
+		{
+			"kind": "Title",
+			"id": "Blender File View",
+			"matching_strategy": "Equals"
+		},
+		{
+			"kind": "Exe",
+			"id": "RobloxStudio.*.exe",
+			"matching_strategy": "Regex"
+		},
+		{
+			"kind": "Exe",
+			"id": "pt2-clone-win64.exe",
+			"matching_strategy": "Equals"
+		},
+		[
+			{
+				"kind": "Exe",
+				"id": "godot-mono.exe",
+				"matching_strategy": "Equals"
+			},
+			{
+				"kind": "Title",
+				"id": "(DEBUG)",
+				"matching_strategy": "Contains"
+			}
+		],
+		[
+			{
+				"kind": "Exe",
+				"id": "godot-mono.exe",
+				"matching_strategy": "Equals"
+			},
+			{
+				"kind": "Title",
+				"id": "Godot Engine",
+				"matching_strategy": "DoesNotContain"
+			}
+		],
+		[
+			{
+				"kind": "Exe",
+				"id": "lmms.exe",
+				"matching_strategy": "Equals"
+			},
+			{
+				"kind": "Title",
+				"id": "Setup LMMS",
+				"matching_strategy": "Equals"
+			}
+		],
+		[
+			{
+				"kind": "Exe",
+				"id": "lmms.exe",
+				"matching_strategy": "Equals"
+			},
+			{
+				"kind": "Title",
+				"id": "Restart LMMS",
+				"matching_strategy": "Equals"
+			}
+		],
+		[
+			{
+				"kind": "Exe",
+				"id": "lmms.exe",
+				"matching_strategy": "Equals"
+			},
+			{
+				"kind": "Title",
+				"id": "Project not saved",
+				"matching_strategy": "Equals"
+			}
+		],
+		[
+			{
+				"kind": "Exe",
+				"id": "lmms.exe",
+				"matching_strategy": "Equals"
+			},
+			{
+				"kind": "Title",
+				"id": "Open SoundFont file",
+				"matching_strategy": "Equals"
+			}
+		],
+		[
+			{
+				"kind": "Exe",
+				"id": "lmms.exe",
+				"matching_strategy": "Equals"
+			},
+			{
+				"kind": "Title",
+				"id": "Soundfont patches",
+				"matching_strategy": "Contains"
+			}
+		],
+		[
+			{
+				"kind": "Exe",
+				"id": "lmms.exe",
+				"matching_strategy": "Equals"
+			},
+			{
+				"kind": "Title",
+				"id": "Save Project",
+				"matching_strategy": "Equals"
+			}
+		],
+		[
+			{
+				"kind": "Exe",
+				"id": "lmms.exe",
+				"matching_strategy": "Equals"
+			},
+			{
+				"kind": "Title",
+				"id": "Pitch",
+				"matching_strategy": "Equals"
+			}
+		],
+		{
+			"kind": "Exe",
+			"id": "BlackOps3.exe",
+			"matching_strategy": "Equals"
+		},
+		[
+			{
+				"kind": "Exe",
+				"id": "cockatrice.exe",
+				"matching_strategy": "Equals"
+			},
+			{
+				"kind": "Title",
+				"id": "Settings",
+				"matching_strategy": "Equals"
+			}
+		],
+		[
+			{
+				"kind": "Exe",
+				"id": "cockatrice.exe",
+				"matching_strategy": "Equals"
+			},
+			{
+				"kind": "Title",
+				"id": "Set Counters",
+				"matching_strategy": "Equals"
+			}
+		],
+		[
+			{
+				"kind": "Exe",
+				"id": "cockatrice.exe",
+				"matching_strategy": "Equals"
+			},
+			{
+				"kind": "Title",
+				"id": "Leave game",
+				"matching_strategy": "Equals"
+			}
+		],
+		[
+			{
+				"kind": "Exe",
+				"id": "cockatrice.exe",
+				"matching_strategy": "Equals"
+			},
+			{
+				"kind": "Title",
+				"id": "Edit user profile",
+				"matching_strategy": "Equals"
+			}
+		],
+		[
+			{
+				"kind": "Exe",
+				"id": "cockatrice.exe",
+				"matching_strategy": "Equals"
+			},
+			{
+				"kind": "Title",
+				"id": "Information",
+				"matching_strategy": "Equals"
+			}
+		],
+		[
+			{
+				"kind": "Exe",
+				"id": "cockatrice.exe",
+				"matching_strategy": "Equals"
+			},
+			{
+				"kind": "Title",
+				"id": "Error",
+				"matching_strategy": "Equals"
+			}
+		],
+		[
+			{
+				"kind": "Exe",
+				"id": "cockatrice.exe",
+				"matching_strategy": "Equals"
+			},
+			{
+				"kind": "Title",
+				"id": "Connect to Server",
+				"matching_strategy": "Equals"
+			}
+		],
+		[
+			{
+				"kind": "Exe",
+				"id": "cockatrice.exe",
+				"matching_strategy": "Equals"
+			},
+			{
+				"kind": "Title",
+				"id": "Idle Timeout",
+				"matching_strategy": "Equals"
+			}
+		],
+		[
+			{
+				"kind": "Exe",
+				"id": "ModOrganizer.exe",
+				"matching_strategy": "Equals"
+			},
+			{
+				"kind": "Title",
+				"id": "– Mod Organizer v",
+				"matching_strategy": "DoesNotContain"
+			}
+		]
+	],
+	"slow_application_identifiers": [],
+	"object_name_change_applications": [
+		{
+			"kind": "Exe",
+			"id": "godot-mono.exe",
+			"matching_strategy": "Equals"
+		},
+		{
+			"kind": "Exe",
+			"id": "XIVLauncher.exe",
+			"matching_strategy": "Equals"
+		},
+		{
+			"kind": "Exe",
+			"id": "luanti.exe",
+			"matching_strategy": "Equals"
+		}
+	],
+	"ignore_rules": [
+		{
+			"kind": "Exe",
+			"id": "nuhxboard.exe",
+			"matching_strategy": "Equals"
+		},
+		{
+			"kind": "Exe",
+			"id": "WindowsTerminal.exe",
+			"matching_strategy": "Equals"
+		},
+		{
+			"kind": "Exe",
+			"id": "Light Host.exe",
+			"matching_strategy": "Equals"
+		},
+		{
+			"kind": "Exe",
+			"id": "FalloutNV.exe",
+			"matching_strategy": "Equals"
+		},
+		{
+			"kind": "Exe",
+			"id": "zebar.exe",
+			"matching_strategy": "Equals"
+		},
+		{
+			"kind": "Title",
+			"id": "Please Confirm...",
+			"matching_strategy": "Equals"
+		},
+		{
+			"kind": "Class",
+			"id": "WindowPopup",
+			"matching_strategy": "Contains"
+		},
+		{
+			"kind": "Exe",
+			"id": "MilkyTracker.exe",
+			"matching_strategy": "Equals"
+		},
+		{
+			"kind": "Exe",
+			"id": "CrewChief",
+			"matching_strategy": "StartsWith"
+		},
+		{
+			"kind": "Exe",
+			"id": "freeciv-sdl2.exe",
+			"matching_strategy": "Equals"
+		}
+	]
+}

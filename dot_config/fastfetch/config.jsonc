@@ -1,0 +1,101 @@
+{
+	"$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+	"logo": {
+		"type": "raw",
+		"source": "C:/Users/Faith/.config/fastfetch/knifefoxtrans.sixel",
+		"width": 32,
+		"height": 13,
+		"position": "left",
+		"printRemaining": true,
+		"padding": {
+			"top": 0,
+			"right": 1,
+			"left": 1
+		}
+	},
+	"display": {
+		"constants": ["  "],
+		"key": {
+			"width": 15
+		}
+	},
+	"modules": [
+		{
+			"key": "{$1}User",
+			"keyColor": "38;5;44",
+			"type": "title"
+		},
+		{
+			"key": "{$1}Distro",
+			"keyColor": "38;5;44",
+			"type": "os"
+		},
+		{
+			"key": "{$1}WM",
+			"keyColor": "38;5;44",
+			"type": "command",
+			"text": "komorebi --version | head -1",
+			"format": "{1}"
+		},
+		{
+			"key": "{$1}Cursor",
+			"keyColor": "38;5;44",
+			"type": "cursor"
+		},
+		{
+			"key": "{$1}Terminal",
+			"keyColor": "38;5;147",
+			"type": "terminal"
+		},
+		{
+			"key": "{$1}Theme",
+			"keyColor": "38;5;147",
+			"type": "terminaltheme"
+		},
+		{
+			"key": "{$1}Font",
+			"keyColor": "38;5;147",
+			"type": "terminalfont"
+		},
+		{
+			"key": "{$1}Shell",
+			"keyColor": "38;5;147",
+			"type": "shell"
+		},
+		{
+			"key": "{$1}Packages",
+			"keyColor": "38;5;200",
+			"type": "packages"
+		},
+		{
+			"key": "{$1}Editor",
+			"keyColor": "38;5;200",
+			"type": "editor"
+		},
+		{
+			"key": "{$1}CPU",
+			"keyColor": "38;5;123",
+			"type": "cpu"
+		},
+		{
+			"key": "{$1}GPU",
+			"keyColor": "38;5;123",
+			"type": "gpu"
+		},
+		{
+			"key": "{$1}Memory",
+			"keyColor": "38;5;123",
+			"type": "memory",
+			"percent": {
+				"type": 2
+			}
+		},
+
+		"break",
+		{
+			"key": " ",
+			"type": "colors",
+			"symbol": "background"
+		}
+	]
+}

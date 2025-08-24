@@ -1,0 +1,4 @@
+clink="C:\Users\Faith\scoop\apps\clink\current\clink_x64.exe" $*
+history="C:\Users\Faith\scoop\apps\clink\current\clink_x64.exe" history $*
+ll=eza --icons --color=always -GF -a --group-directories-first $*
+la=eza --icons --color=always --long --classify --all --group-directories-first --group --header --git $*

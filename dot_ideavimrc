@@ -1,0 +1,61 @@
+let mapleader = " "
+
+" Plug 'tpope/vim-surround'
+" Plug 'tpope/vim-commentary'
+" Plug 'vim-scripts/argtextobj.vim'
+
+set surround
+set commentary
+set argtextobj
+
+let g:argtextobj_pairs="[:],(:),<:>"
+
+set scrolloff=8
+set relativenumber
+set incsearch
+
+" Mappings
+" add new line without entering insertmode
+nmap <M-o> o<Esc>
+nmap <M-S-O> O<Esc>
+
+" Visual mode move lines
+vmap <Down> :move '>+1<CR>:normal gv<CR>
+vmap <Up> :move '<-2<CR>:normal gv<CR>
+
+" keep cursor in same place when combining lines
+" nmap J mzJ`z
+
+" IntelliJ actions
+nmap <leader>rn <Action>(RenameElement)
+nmap <leader>ld <Action>(GotoDeclaration)
+nmap <leader>lD <Action>(GotoTypeDeclaration)
+nmap <leader>lr <Action>(FindUsages)
+nmap <leader>li <Action>(GotoImplementation)
+nmap <leader>a <Action>(ShowIntentionActions)
+nmap <leader>dk <Action>(GotoPreviousError)
+nmap <leader>dj <Action>(GotoNextError)
+nmap <S-k> <Action>(ShowHoverInfo)
+nmap <leader>dl <Action>(ShowHoverInfo)
+nmap <leader>ef <Action>(ActivateProjectToolWindow)
+
+nmap <leader>z <Action>(ToggleDistractionFreeMode)
+nmap <leader>bc <Action>(CloseContent)
+nmap <leader>bc <Action>(CloseContent)
+
+nmap <leader>fL <Action>(FindInPath)
+nmap <leader>fb <Action>(GotoFile)
+
+" Fuzzier plugin
+nmap <Leader>fp <action>(com.mituuz.fuzzier.Fuzzier)
+" map <Leader>f <action>(com.mituuz.fuzzier.FuzzyMover)
+" map <Leader>f <action>(com.mituuz.fuzzier.FuzzierVCS)
+
+" HarpoonJ plugin
+nmap <C-h> :action GotoHarpoon1<cr>
+nmap <C-j> :action GotoHarpoon2<cr>
+nmap <C-k> :action GotoHarpoon3<cr>
+nmap <C-l> :action GotoHarpoon4<cr>
+
+nmap <leader>me :action ShowHarpoon<cr>
+nmap <leader>ma :action AddToHarpoon<cr>

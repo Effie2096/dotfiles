@@ -1,0 +1,77 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LGUG2Z/komorebi/v0.1.37/schema.bar.json",
+  "monitor": 1,
+  "height": 22,
+  "margin":{
+    "horizontal": 10,
+    "vertical": [5, 0]
+  },
+  "widget_spacing": 3,
+  // "grouping": {
+  //   "kind": "Alignment",
+  //   "style": "DefaultWithShadowB4O1S3",
+  //   "rounding": 10,
+  //   "transparency_alpha": 255
+  // },
+  "transparency_alpha": 255,
+  "frame": {
+    "inner_margin": {
+      "x": 1.0,
+      "y": 0.0
+    }
+  },
+  "font_family": "Segoe UI Variable",
+  "font_size": 13.0,
+  "icon_scale": 1.2,
+  "left_widgets": [
+    {
+      "Komorebi": {
+        "workspaces": {
+          "enable": true,
+          "hide_empty_workspaces": true,
+          "display": "AllIconsAndText"
+        },
+        "layout": {
+          "enable": true,
+          "display": "Icon"
+        }
+      }
+    }
+  ],
+  "center_widgets": [ 
+    {
+      "Komorebi": {
+        "focused_window": {
+          "enable": true,
+          "show_icon": true
+        }
+      }
+    }
+  ],
+  "right_widgets": [
+    {
+      "Media": {
+        "enable": true
+      }
+    },
+    {
+      "Date": {
+        "enable": true,
+        "format": "DayDateMonthYear",
+        "label_prefix":"None"
+      }
+    },
+    {
+      "Time": {
+        "enable": true,
+        "format": "TwentyFourHourWithoutSeconds",
+        "label_prefix": "None"
+      }
+    },
+    {
+      "Battery": {
+        "enable": false
+      }
+    }
+  ]
+}
