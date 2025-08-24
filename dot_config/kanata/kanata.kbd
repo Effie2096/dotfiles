@@ -1,0 +1,171 @@
+(defcfg
+	process-unmapped-keys yes
+  tray-icon "./kanata.ico"
+  tooltip-layer-changes   	yes  	;;|false|
+  tooltip-show-blank      	yes  	;;|no|
+  tooltip-duration        	500  	;;|500|
+  tooltip-size            	24,24	;;|24 24|
+  notify-cfg-reload       	yes  	;;|yes|
+  notify-cfg-reload-silent	no   	;;|no|
+  notify-error            	yes  	;;|yes|
+)
+
+(defvar
+  tap-repress-timeout   100
+  hold-timeout  200
+  tt $tap-repress-timeout
+  ht $hold-timeout
+)
+
+;; home row mods
+(defalias  
+	;; canary
+	LMET_C (tap-hold $tt $ht c lmet)
+	LALT_R (tap-hold $tt $ht r lalt)
+	LCTL_S (tap-hold $tt $ht s lctl)
+	LSFT_T (tap-hold $tt $ht t lsft)
+	RSFT_N (tap-hold $tt $ht n rsft)
+	RCTL_E (tap-hold $tt $ht e rctl)
+	RALT_I (tap-hold $tt $ht i ralt)
+	RMET_A (tap-hold $tt $ht a rmet)
+
+	;; qwerty
+	LMET_A (tap-hold $tt $ht a lmet)
+	LALT_S (tap-hold $tt $ht s lalt)
+	LCTL_D (tap-hold $tt $ht d lctl)
+	LSFT_F (tap-hold $tt $ht f lsft)
+	RSFT_J (tap-hold $tt $ht j rsft)
+	RCTL_K (tap-hold $tt $ht k rctl)
+	RALT_L (tap-hold $tt $ht l ralt)
+	RMET_; (tap-hold $tt $ht ; rmet)
+
+	;; raise
+	LMET_1 (tap-hold $tt $ht 1 lmet)
+	LALT_2 (tap-hold $tt $ht 2 lalt)
+	LCTL_3 (tap-hold $tt $ht 3 lctl)
+	LSFT_4 (tap-hold $tt $ht 4 lsft)
+	RSFT_7 (tap-hold $tt $ht 7 rsft)
+	RCTL_8 (tap-hold $tt $ht 8 rctl)
+	RALT_9 (tap-hold $tt $ht 9 ralt)
+	RMET_0 (tap-hold $tt $ht 0 rmet)
+)
+
+(defalias
+  magic (switch
+    ((key-history a 1)) (macro u) break
+    ;; ((key-history b 1)) (macro e f o r e) break
+    ((key-history c 1)) (macro q) break
+    ((key-history d 1)) (macro g) break
+    ((key-history e 1)) (macro f) break
+    ((key-history f 1)) (macro e) break
+    ;; ((key-history g 1)) (macro y) break
+    ((key-history h 1)) (macro n) break
+    ((key-history i 1)) (macro o) break
+    ;; ((key-history j 1)) (macro u s t) break
+    ;; ((key-history k 1)) (macro s) break
+    ((key-history l 1)) (macro r) break
+    ((key-history m 1)) (macro n) break
+    ((key-history n 1)) (macro h) break
+    ((key-history o 1)) (macro i) break
+    ((key-history p 1)) (macro t) break
+
+    ((key-history q 1)) (macro u) break
+    ((key-history r 1)) (macro l) break
+    ((key-history s 1)) (macro y) break
+    ((key-history t 1)) (macro p) break
+    ((key-history u 1)) (macro a) break
+    ;; ((key-history v 1)) (macro e r) break
+    ((key-history w 1)) (macro c) break
+    ;; ((key-history x 1)) (macro e s) break
+    ((key-history y 1)) (macro s) break
+    ;;((key-history z 1)) (macro --) break
+    ((key-history , 1)) (macro b u t) break
+    ((key-history . 1)) (macro \) break
+    ;;((key-history / 1)) (macro --) break
+    ((key-history - 1)) (macro S-.) break
+    ((key-history = 1)) (macro S-.) break
+    ((or
+      (key-history spc 1)
+      (key-history tab 1)
+      (key-history ret 1)
+    )) (macro t h e) break
+    ((key-history 0 1)) (macro ;) break
+		((key-history 9 1)) (macro S-') break
+  )
+)
+
+(defalias
+  raise (one-shot-release 2000 (layer-while-held raise))
+  np (layer-switch numpad)
+  nav (layer-switch navigation)
+)
+
+(defalias
+	spccap (tap-dance 200 (spc (caps-word 1000)))
+  lp S-9
+  rp S-0
+)
+
+(defalias
+ can (layer-switch canary)
+ qwr (layer-switch qwerty)
+ lay (layer-toggle layers)
+ grl (tap-hold $tt $ht grv @lay)
+)
+
+(defsrc
+  esc 1   2   3   4   5   6   7   8   9   0   -      =     bspc
+  tab  q   w   e   r   t   y   u   i   o   p   [      ]     \
+  caps  a   s   d   f   g   h   j   k   l   ;   '      ret
+  lsft   z   x   c   v   b   n   m   ,   .   /   rsft
+  lctl lmet lalt           spc            ralt rmet rctl
+)
+
+(deflayer (canary icon ./icons/keyboard1.png)
+  @grl  w        l        y        p        b    XX      XX      z        f        o        u        '    del
+  .     @LMET_C  @LALT_R  @LCTL_S  @LSFT_T  g    XX      m       @RSFT_N  @RCTL_E  @RALT_I  @RMET_A  XX  XX
+  ,     q        j        v        d        k    XX      x       h        @lp      @rp      ;        XX
+  XX    @nav     tab      bspc     @spccap  ret  @magic  @raise  rpt      esc       @np      XX
+  XX XX XX           XX            XX XX XX
+)
+
+(deflayer (qwerty icon ./icons/keyboard2.png)
+  @grl  q        w        e        r        t    XX      y       u        i        o        p        '    del
+  .     @LMET_A  @LALT_S  @LCTL_D  @LSFT_F  g    XX      h       @RSFT_J  @RCTL_K  @RALT_L  @RMET_;  XX  XX
+  ,     z        x        c        v        b    XX      n       m        @lp      @rp      ;        XX
+  XX    @nav     tab      bspc     spc      ret  @magic  @raise  rpt      esc       @np      XX
+  XX XX XX           XX            XX XX XX
+)
+
+(deflayer layers
+  _    @can @qwr _ _ _ _ _ _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _              _              _    _    _
+)
+
+(deflayer (raise icon ./icons/keyboard3.png)
+  F1 F2       F3       F4       F5       F6      XX  XX       F7       F8       F9       F10      F11      F12
+  _  @LMET_1  @LALT_2  @LCTL_3  @LSFT_4  -   XX  =   @RSFT_7  @RCTL_8  @RALT_9  @RMET_0  _        _
+  _  \        XX       XX       5        XX  XX  XX  6        [        ]        /        XX
+  XX     _  _  _  _  _  _  _  _  _ _  _
+  XX XX XX           XX            XX XX XX
+)
+
+(deflayer (numpad icon ./icons/keyboard4.png)
+  XX kp+  kp7  kp8  kp9  kp*  XX  XX  XX  XX  XX  XX  XX  XX
+  XX kp0  kp4  kp5  kp6  kp.  XX  XX  XX  XX  XX  XX  XX  XX
+  XX kp-  kp1  kp2  kp3  kp/  XX  XX  XX  XX  XX  XX  XX
+  XX     _  _  _  _  _  _  _  _  _ @np  _
+  XX XX XX           XX           XX XX XX
+)
+
+(deflayer (navigation icon ./icons/keyboard4.png)
+  XX XX   XX   XX   XX   XX   XX   XX   home   pgdn   pgup   end      XX     XX
+  XX  XX   XX   XX   XX   XX   XX   lft   down   up   right   XX      XX     XX
+  XX  XX   XX   XX   XX   XX   XX   voldwn   volu   prev   next   pp      XX
+  XX     @nav  _  _  _  _  _  _  _  _ _  _
+  XX XX XX           XX            XX XX XX
+)
+
