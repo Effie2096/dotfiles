@@ -99,7 +99,7 @@ local current_scheme = light_scheme
 -- Function to determine scheme based on current hour
 local function choose_scheme_by_time()
 	local hour = tonumber(os.date("%H"))
-	if hour >= 8 and hour < 20 then
+	if hour >= 8 and hour < 19 then
 		current_scheme = light_scheme
 	else
 		current_scheme = dark_scheme

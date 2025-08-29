@@ -38,13 +38,13 @@ $plugins | each {
 	|plugin| plugin add $"nu_plugin_($plugin)(if $nu.os-info.name == 'windows' {'.exe'})"
 }
 
-$env.CURRENT_THEME = "light"
+# $env.CURRENT_THEME = "light"
 def set-theme-based-on-time [] {
 	let now = (date now)
-	let last_check = ($env.LAST_THEME_CHECK? | default ($now - 10min))
-
-	if ($now - $last_check) > 5min {
-		$env.LAST_THEME_CHECK = $now
+	# let last_check = ($env.LAST_THEME_CHECK? | default ($now - 10min))
+	#
+	# if ($now - $last_check) > 5min {
+		# $env.LAST_THEME_CHECK = $now
 
 		let hour = ($now | format date "%H" | into int)
 		let new_theme = if $hour >= 7 and $hour < 20 { "light" } else { "dark" }
@@ -67,7 +67,7 @@ def set-theme-based-on-time [] {
 			}
 			$env.CURRENT_THEME = $new_theme
 		}
-	}
+	# }
 }
 set-theme-based-on-time
 
@@ -133,7 +133,7 @@ alias la = eza --icons --color=always --long --classify --all --group-directorie
 
 alias bat = bat --theme=$"(if $env.CURRENT_THEME == 'light' { 'Catppuccin Latte' } else { 'Catppuccin Mocha' })"
 
-alias dots = git --git-dir=$"($env.HOME | path join .dotfiles)" --work-tree=$"($env.HOME)"
+alias dots = git --git-dir=$"($env.XDG_DATA_HOME | path join chezmoi)"
 
 $env.config.keybindings ++= [{
 	name: clear_term
@@ -150,3 +150,4 @@ $env.config.keybindings ++= [{
 }]
 
 tput cup (tput lines) 0
+fastfetch

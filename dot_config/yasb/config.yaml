@@ -54,7 +54,7 @@ bars:
           # "disk",
           # "wallpapers",
           # "power_menu",
-          "clock"
+          "clock",
         ]
 widgets:
   bluetooth:
@@ -98,11 +98,6 @@ widgets:
       round_corners_type: "normal"
       border_color: ""
       distance: 10
-      container_padding: 
-        top: 0
-        left: 0
-        bottom: 0
-        right: 0
       alignment: "left"
       direction: "down"
       menu_labels:
@@ -169,11 +164,6 @@ widgets:
         offset_top: 6
         offset_left: 0
         show_layout_icons: true
-      container_padding: 
-        top: 0
-        left: 8
-        bottom: 0
-        right: 8
       label_shadow:
         enabled: false
         color: "black"
@@ -367,11 +357,6 @@ widgets:
       bar_width: 4
       sleep_timer: 0
       hide_empty: true
-      container_padding:
-        top: 0
-        left: 0
-        bottom: 0
-        right: 0
   github:
     type: "yasb.github.GithubWidget"
     options:
@@ -404,13 +389,24 @@ widgets:
       show_battery: false
       show_volume: false
       show_network: false
-      container_padding:
-          left: 0
-          top: 0
-          right: 0
-          bottom: 0
       btn_shadow:
         enabled: false
+        color: "black"
+        radius: 3
+        offset: [ 1, 1 ]
+  notifications:
+    type: "yasb.notifications.NotificationsWidget"
+    options:
+      label: "<span>\uf476</span> {count}"
+      label_alt: "{count} notifications"
+      hide_empty: true
+      tooltip: false
+      callbacks:
+        on_left: "toggle_notification"
+        on_right: "do_nothing"
+        on_middle: "toggle_label"
+      label_shadow:
+        enabled: true
         color: "black"
         radius: 3
         offset: [ 1, 1 ]
