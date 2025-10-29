@@ -3,11 +3,122 @@
 
 ConfigPath := EnvGet("KOMOREBI_CONFIG_HOME")
 
-; Run applications
-#e::Run "explorer.exe"
-; #e::Run("explorer.exe shell:AppsFolder\Files_1y0xx7n9077q4!App", , "Hide")
-#Enter::Run("wezterm.exe", , "Hide")
-; #Enter::Run("powershell.exe wt", , "Hide")
+Groups := Map(
+	"Meta", [
+		{ bind: "#^!r", desc: "Restart Komorebi", cb: (*) => (Komorebic("stop --ahk"), Komorebic("start --ahk")), arg: "" },
+		{ bind: "#^!q", desc: "Quit Komorebi", cb: Komorebic, arg: "stop --ahk" },
+		{ bind: "#!h", desc: "Toggle Keybind Help", cb: toggle_help },
+		{ bind: "#b", desc: "Toggle Status Bar", cb: toggle_yasb },
+	],
+	"Apps", [
+		{ bind: "#e", desc: "Open File Explorer", cb: Run, arg: "explorer.exe" },
+		{ bind: "#Enter", desc: "Open Terminal", cb: RunHidden, arg: "wezterm.exe" }
+	],
+	"Focus Windows", [
+		{ bind: "#h", desc: "Left", cb: Komorebic, arg: "focus left" },
+		{ bind: "#j", desc: "Down", cb: Komorebic, arg: "focus down" },
+		{ bind: "#k", desc: "Up", cb: Komorebic, arg: "focus up" },
+		{ bind: "#l", desc: "Right", cb: Komorebic, arg: "focus right" },
+	],
+	"Move Windows", [
+		{ bind: "#+h", desc: "Left", cb: Komorebic, arg: "move left" },
+		{ bind: "#+j", desc: "Down", cb: Komorebic, arg: "move down" },
+		{ bind: "#+k", desc: "Up", cb: Komorebic, arg: "move up" },
+		{ bind: "#+l", desc: "Right", cb: Komorebic, arg: "move right" },
+		{ bind: "#+p", desc: "Promote", cb: Komorebic, arg: "promote" },
+	],
+	"Move windows across workspaces", [
+		{ bind: "#+1", desc: "Workspace 1", cb: Komorebic, arg: "move-to-workspace 0" },
+		{ bind: "#+2", desc: "Workspace 2", cb: Komorebic, arg: "move-to-workspace 1" },
+		{ bind: "#+3", desc: "Workspace 3", cb: Komorebic, arg: "move-to-workspace 2" },
+		{ bind: "#+4", desc: "Workspace 4", cb: Komorebic, arg: "move-to-workspace 3" },
+		{ bind: "#+5", desc: "Workspace 5", cb: Komorebic, arg: "move-to-workspace 4" },
+		{ bind: "#+6", desc: "Workspace 6", cb: Komorebic, arg: "move-to-workspace 5" },
+		{ bind: "#+7", desc: "Workspace 7", cb: Komorebic, arg: "move-to-workspace 6" },
+		{ bind: "#+8", desc: "Workspace 8", cb: Komorebic, arg: "move-to-workspace 7" },
+		{ bind: "#+9", desc: "Workspace 9", cb: Komorebic, arg: "move-to-workspace 8" },
+		{ bind: "#+0", desc: "Workspace 10", cb: Komorebic, arg: "move-to-workspace 9" },
+	],
+	"Stack Windows", [
+		{ bind: "#+Left", desc: "Left", cb: Komorebic, arg: "stack left" },
+		{ bind: "#+Down", desc: "Down", cb: Komorebic, arg: "stack down" },
+		{ bind: "#+Up", desc: "Up", cb: Komorebic, arg: "stack up" },
+		{ bind: "#+Right", desc: "Right", cb: Komorebic, arg: "stack right" },
+		{ bind: "#;", desc: "Unstack", cb: Komorebic, arg: "unstack" },
+		{ bind: "#Left", desc: "Focus Previous", cb: Komorebic, arg: "cycle-stack previous" },
+		{ bind: "#Right", desc: "Focus Next", cb: Komorebic, arg: "cycle-stack next" },
+	],
+	"Resize", [
+		{ bind: "#=", desc: "Increase Horizontal", cb: Komorebic, arg: "resize-axis horizontal increase" },
+		{ bind: "#-", desc: "Decrease Horizontal", cb: Komorebic, arg: "resize-axis horizontal decrease" },
+		{ bind: "#+=", desc: "Increase Vertical", cb: Komorebic, arg: "resize-axis vertical increase" },
+		{ bind: "#+_", desc: "Decrease Vertical", cb: Komorebic, arg: "resize-axis vertical decrease" },
+	],
+	"Window State", [
+		{ bind: "#f", desc: "Toggle Float", cb: Komorebic, arg: "toggle-float" },
+		{ bind: "#m", desc: "Toggle Monocle", cb: Komorebic, arg: "toggle-monocle" },
+		{ bind: "#+m", desc: "Maximize", cb: Komorebic, arg: "toggle-maximize" },
+		{ bind: "#+n", desc: "Minimize", cb: Komorebic, arg: "minimize" },
+		{ bind: "#c", desc: "Close", cb: Komorebic, arg: "close" },
+		{ bind: "#!l", desc: "Lock Container", cb: Komorebic, arg: "toggle-lock" },
+	],
+	"Layouts", [
+		{ bind: "#s", desc: "Vertical Stack", cb: Komorebic, arg: "change-layout vertical-stack" },
+		{ bind: "#g", desc: "Grid", cb: Komorebic, arg: "change-layout grid" },
+		{ bind: "#x", desc: "Flip Horizontal", cb: Komorebic, arg: "flip-layout horizontal" },
+		{ bind: "#v", desc: "Flip Vertical", cb: Komorebic, arg: "flip-layout vertical" },
+		{ bind: "#!o", desc: "Next Layout", cb: Komorebic, arg: "cycle-layout next" },
+		{ bind: "#!i", desc: "Previous Layout", cb: Komorebic, arg: "cycle-layout previous" },
+		{ bind: "#!=", desc: "Increase Scroll Columns", cb: RunHidden, arg: "nu ./komo_nu.nu scroll-columns true" },
+		{ bind: "#!-", desc: "Decrease Scroll Columns", cb: RunHidden, arg: "nu ./komo_nu.nu scroll-columns false" },
+	],
+	"Workspaces", [
+		{ bind: "#1", desc: "Focus Workspace 1", cb: Focus_Workspace, arg: "focus-workspace 0" },
+		{ bind: "#2", desc: "Focus Workspace 2", cb: Focus_Workspace, arg: "focus-workspace 1" },
+		{ bind: "#3", desc: "Focus Workspace 3", cb: Focus_Workspace, arg: "focus-workspace 2" },
+		{ bind: "#4", desc: "Focus Workspace 4", cb: Focus_Workspace, arg: "focus-workspace 3" },
+		{ bind: "#5", desc: "Focus Workspace 5", cb: Focus_Workspace, arg: "focus-workspace 4" },
+		{ bind: "#6", desc: "Focus Workspace 6", cb: Focus_Workspace, arg: "focus-workspace 5" },
+		{ bind: "#7", desc: "Focus Workspace 7", cb: Focus_Workspace, arg: "focus-workspace 6" },
+		{ bind: "#8", desc: "Focus Workspace 8", cb: Focus_Workspace, arg: "focus-workspace 7" },
+		{ bind: "#9", desc: "Focus Workspace 9", cb: Focus_Workspace, arg: "focus-workspace 8" },
+		{ bind: "#0", desc: "Focus Workspace 10", cb: Focus_Workspace, arg: "focus-workspace 9" },
+	],
+	"Monitors", [
+		{ bind: "#i", desc: "Focus Monitor Left", cb: Komorebic, arg: "focus-monitor 1" },
+		{ bind: "#o", desc: "Focus Monitor Right", cb: Komorebic, arg: "focus-monitor 0" },
+		{ bind: "#+i", desc: "Move Window to Monitor Left", cb: Komorebic, arg: "move-to-monitor 1" },
+		{ bind: "#+o", desc: "Move Window to Monitor Right", cb: Komorebic, arg: "move-to-monitor 0" },
+	],
+	"Debug", [
+		{ bind: "#+r", desc: "Retile Windows", cb: Komorebic, arg: "retile" },
+		{ bind: "#a", desc: "Manage Window", cb: Komorebic, arg: "manage" },
+		{ bind: "#+a", desc: "Unmanage Window", cb: Komorebic, arg: "unmanage" },
+	]
+)
+
+hotkey_callback(spec) {
+	cb := spec.cb
+	arg := spec.HasOwnProp("arg") ? spec.arg : ""
+	callback(*) {
+		if (arg != "") {
+			cb(arg)
+		} else {
+			cb()
+		}
+	}
+	return callback
+}
+
+for group, hotkeys in Groups {
+	for hk in hotkeys {
+		Hotkey(hk.bind, hotkey_callback(hk))
+	}
+}
+
+RunHidden(cmd) {
+	Run(format("{}", cmd), , "Hide")
+}
 
 Komorebic(cmd) {
 	RunWait(format("komorebic.exe {}", cmd), , "Hide")
@@ -17,212 +128,90 @@ Yasb(cmd) {
 	RunWait(format("yasbc.exe {}", cmd), , "Hide")
 }
 
-; Meta Binds
-; Restart Komorebi
-^#!r::{
-	Komorebic("stop --ahk")
-	Komorebic("start --ahk")
+Focus_Workspace(cmd) {
+	Komorebic("focus-monitor-at-cursor")
+	Komorebic(cmd)
 }
-; Restart just Bars
-; #!r::{
-;     RunWait("powershell Stop-Process -Name:komorebi-bar -ErrorAction SilentlyContinue", , "Hide")
-;     Run(format("komorebi-bar.exe -c {}{}", ConfigPath, "\komorebi.bar.json"), , "Hide")
-;     Run(format("komorebi-bar.exe -c {}{}", ConfigPath, "\komorebi.bar.2.json"), , "Hide")
-; }
-; Quit Komorebi
-#!+q::Komorebic("stop --ahk")
 
-
-#c::Komorebic("close")
-
-BarShowing := true
-#b::{
-	global BarShowing
-	if BarShowing {
+toggle_yasb() {
+	if WinExist("YasbBar") {
 		Yasb("hide-bar")
-			Komorebic("global-work-area-offset 0 -- -32 0 -32")
-			BarShowing := false
+		Komorebic("global-work-area-offset -- 0 -27 0 -27")
 	} else {
-
 		Yasb("show-bar")
-			Komorebic("global-work-area-offset 0 -- -5 0 0")
-			BarShowing := true
+		Komorebic("global-work-area-offset -- 0 0 0 0")
 	}
-
 }
 
 Spacer := false
 #+s::{
 	global Spacer
 	if Spacer {
-                Komorebic("monitor-work-area-offset 0 -- 0 -5 0 -5")
-                Spacer := false
-        } else {
-                Komorebic("monitor-work-area-offset 0 -- 0 -5 500 -5")
-                Spacer := true
-        }
+		Komorebic("monitor-work-area-offset 0 -- 0 0 0 0")
+		Spacer := false
+	} else {
+		Komorebic("monitor-work-area-offset 0 -- 0 0 500 0")
+		Spacer := true
+	}
 }
 
-; Focus windows
-#h::Komorebic("focus left")
-#j::Komorebic("focus down")
-#k::Komorebic("focus up")
-#l::Komorebic("focus right")
+GuiTitle := "Komorebi - Hotkeys"
+HotkeyGUI := Gui("+AlwaysOnTop -Caption +ToolWindow -Resize", GuiTitle)
+HotkeyGUI.BackColor := "1E1E2E"  ; Can be any RGB color (it will be made transparent below).
+HotkeyGUI.SetFont("s14 w700")
+HotkeyGUI.Add("Text", "cF5C2E7", "Komorebi - Hotkeys")  ; XX & YY serve to auto-size the window.
+; Make all pixels of this color transparent and make the text itself translucent (150):
 
-; Move windows
-#+h::Komorebic("move left")
-#+j::Komorebic("move down")
-#+k::Komorebic("move up")
-#+l::Komorebic("move right")
+sub_keysym(hk) {
+	str := hk
+	str := StrReplace(str, "+", "Shift+")
+	str := StrReplace(str, "#", "Win+")
+	str := StrReplace(str, "^", "Ctrl+")
+	str := StrReplace(str, "!", "Alt+")
 
-; Stack windows
-#+Left::Komorebic("stack left")
-#+Down::Komorebic("stack down")
-#+Up::Komorebic("stack up")
-#+Right::Komorebic("stack right")
-#;::Komorebic("unstack")
-#Left::Komorebic("cycle-stack previous")
-#Right::Komorebic("cycle-stack next")
-
-; Resize
-#=::Komorebic("resize-axis horizontal increase")
-#-::Komorebic("resize-axis horizontal decrease")
-#+=::Komorebic("resize-axis vertical increase")
-#+_::Komorebic("resize-axis vertical decrease")
-
-; Manipulate windows
-#f::Komorebic("toggle-float")
-#m::Komorebic("toggle-monocle")
-#+m::Komorebic("toggle-maximize")
-#+n::Komorebic("minimize")
-
-; Window manager options
-#+r::Komorebic("retile")
-#p::{
-	Komorebic("toggle-pause")
-	Komorebic("toggle-mouse-follows-focus")
+	return str
 }
-#a::Komorebic("manage")
-#+a::Komorebic("unmanage")
-
-; Layouts
-#s::Komorebic("change-layout vertical-stack")
-#g::Komorebic("change-layout grid")
-#x::Komorebic("flip-layout horizontal")
-#v::Komorebic("flip-layout vertical")
-#!o::Komorebic("cycle-layout next")
-#!i::Komorebic("cycle-layout previous")
-
-
-; Workspaces
-Focus_Workspace(cmd) {
-	Komorebic("focus-monitor-at-cursor")
-	Komorebic(cmd)
+guiHeight := 24
+y := 0
+x := 0
+colWidth := 400
+lineHeight := 20
+xpad := 15
+ypad := 15
+descWidth := 250
+for group, hotkeys in Groups {
+	if y >= 24 {
+		y := 0
+		x += colWidth
+		ypad := 15
+	}
+	ypad += 10
+	HotkeyGUI.SetFont("s12 w700")
+	HotkeyGUI.Add("Text", format("cF5C2E7 x{} y{}", x + xpad, (y*lineHeight)+lineHeight + ypad), format("{}", group))
+	y += 1
+	for hk in hotkeys {
+		doffset := (x + colWidth) - StrLen(hk.desc)
+		HotkeyGUI.SetFont("s12 w400")
+		HotkeyGUI.AddText(format( "x{} y{} w{} +Left cCDD6F4", x + xpad, (y*lineHeight) + lineHeight + ypad, colWidth - descWidth), sub_keysym(hk.bind))
+		HotkeyGUI.AddText(format( "x{} y{} w{} +Right cCDD6F4", x + xpad + colWidth - descWidth - xpad, (y*lineHeight) + lineHeight + ypad, descWidth), hk.desc)
+		y += 1
+	}
 }
-#1::Focus_Workspace("focus-workspace 0")
-#2::Focus_Workspace("focus-workspace 1")
-#3::Focus_Workspace("focus-workspace 2")
-#4::Focus_Workspace("focus-workspace 3")
-#5::Focus_Workspace("focus-workspace 4")
-#6::Focus_Workspace("focus-workspace 5")
-#7::Focus_Workspace("focus-workspace 6")
-#8::Focus_Workspace("focus-workspace 7")
-#9::Focus_Workspace("focus-workspace 8")
-#0::Focus_Workspace("focus-workspace 9")
+toggle_help() {
+	If WinExist("ahk_id" HotkeyGUI.Hwnd) {
+		HotkeyGUI.Hide()
+	} Else {
+		HotkeyGUI.Show()
+	}
+}
 
-; Move windows across workspaces
-#+1::Komorebic("move-to-workspace 0")
-#+2::Komorebic("move-to-workspace 1")
-#+3::Komorebic("move-to-workspace 2")
-#+4::Komorebic("move-to-workspace 3")
-#+5::Komorebic("move-to-workspace 4")
-#+6::Komorebic("move-to-workspace 5")
-#+7::Komorebic("move-to-workspace 6")
-#+8::Komorebic("move-to-workspace 7")
-#+9::Komorebic("move-to-workspace 8")
-#+0::Komorebic("move-to-workspace 9")
-
-; Monitors
-#i::Komorebic("focus-monitor 1")
-#o::Komorebic("focus-monitor 0")
-
-#+i::Komorebic("move-to-monitor 1")
-#+o::Komorebic("move-to-monitor 0")
-
-
-
-; #+c::Send "#!+c"
-
-; ; Focus windows
-; #h::Send "#!h"
-; #j::Send "#!j"
-; #k::Send "#!k"
-; #l::SendInput "#!l"
-
-; ; Move windows
-; #+h::Send "#!+h"
-; #+j::Send "#!+j"
-; #+k::Send "#!+k"
-; #+l::Send "#!+l"
-
-; ; Stack windows
-; ; #+Left::Send "#!+Left"
-; ; #+Down::Send "#!+Down"
-; ; #+Up::Send "#!+Up"
-; ; #+Right::Send "#!+Right"
-; ; #;::Send "#!;"
-; ; #Left::Send "#!Left"
-; ; #Right::Send "#!Right"
-
-; ; Resize
-; #=::Send "#!="
-; #-::Send "#!-"
-; #+=::Send "#!+="
-; #+-::Send "#!+-"
-
-; ; Manipulate windows
-; #f::Send "#!f"
-; #+f::Send "#!+f"
-; #m::Send "#!m"
-; #+m::Send "#!+m"
-; #N::Send "#!n"
-
-; ; Window manager options
-; #+q::Send "#!+q"
-; #+r::Send "#!+r"
-; #p::Send "#!p"
-
-; ; Layouts
-; ; #x::Send "#!x"
-; #v::Send "#!v"
-
-; ; Workspaces
-; #1::Send "#!1"
-; #2::Send "#!2"
-; #3::Send "#!3"
-; #4::Send "#!4"
-; #5::Send "#!5"
-; #6::Send "#!6"
-; #7::Send "#!7"
-; #8::Send "#!8"
-; #9::Send "#!9"
-; #0::Send "#!0"
-
-; ; Move windows across workspaces
-; #+1::Send "#!+1"
-; #+2::Send "#!+2"
-; #+3::Send "#!+3"
-; #+4::Send "#!+4"
-; #+5::Send "#!+5"
-; #+6::Send "#!+6"
-; #+7::Send "#!+7"
-; #+8::Send "#!+8"
-; #+9::Send "#!+9"
-; #+0::Send "#!+0"
-
-; ; Monitors
-; #i::Send "#!i"
-; #o::Send "#!o"
-
-; #+i::Send "#!+i"
-; #+o::Send "#!+o"
+Loop {
+	HWNDS := WinGetList("ahk_exe sclang.exe")
+	Loop HWNDS.length {
+		exStyle := WinGetExStyle(HWNDS[A_Index])
+		if (exStyle & 0x00000008) {
+			continue
+		}
+	 WinSetAlwaysOnTop(1, HWNDS[A_Index])
+	}
+}

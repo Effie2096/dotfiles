@@ -8,7 +8,7 @@ komorebi:
 bars:
   primary-bar:
     enabled: true
-    screens: ['*'] 
+    screens: ["*"]
     class_name: "yasb-bar"
     alignment:
       position: "top"
@@ -26,24 +26,16 @@ bars:
       auto_hide: false
     dimensions:
       width: "100%"
-      height: 28
+      height: 24
     padding:
-      top: 4
-      left: 8
-      bottom: 2
-      right: 8
+      top: 0
+      left: 0
+      bottom: 0
+      right: 0
     widgets:
-      left:
-        [
-          "komorebi_workspaces",
-          "komorebi_active_layout",
-        ]
-      center:
-        [
-          "komorebi_stack",
-        ]
-      right:
-        [
+      left: ["komorebi_workspaces", "komorebi_active_layout"]
+      center: ["komorebi_stack"]
+      right: [
           "media",
           # "cava",
           "systray",
@@ -66,7 +58,7 @@ widgets:
       label_device_separator: ", "
       max_length: 10
       max_length_ellipsis: "..."
-      icons: 
+      icons:
         bluetooth_on: "\udb80\udcaf"
         bluetooth_off: "\udb80\udcb2"
         bluetooth_connected: "\udb80\udcb1"
@@ -80,17 +72,17 @@ widgets:
         enabled: true
         color: "black"
         radius: 3
-        offset: [ 1, 1 ]
+        offset: [1, 1]
   home:
     type: "yasb.home.HomeWidget"
     options:
       label: "<span>\udb80\udf5c</span>"
       menu_list:
-      - { title: "Home", path: "~" }
-      - { title: "Downloads", path: "E:\\Downloads"}
-      - { title: "Documents", path: "~\\Documents"}
-      - { title: "Pictures", path: "~\\Pictures"}
-      - { title: "Videos", path: "~\\Videos"}
+        - { title: "Home", path: "~" }
+        - { title: "Downloads", path: "E:\\Downloads" }
+        - { title: "Documents", path: "~\\Documents" }
+        - { title: "Pictures", path: "~\\Pictures" }
+        - { title: "Videos", path: "~\\Videos" }
       system_menu: true
       power_menu: false
       blur: true
@@ -118,10 +110,10 @@ widgets:
       label_workspace_populated_btn: "{name}"
       label_default_name: "{index}"
       label_zero_index: false
-      hide_empty_workspaces: true
+      hide_empty_workspaces: false
       hide_if_offline: false
       animation: true
-      app_icons: 
+      app_icons:
         enabled_populated: true
         enabled_active: true
         size: 16
@@ -134,7 +126,18 @@ widgets:
     options:
       hide_if_offline: true
       label: "{icon} {layout_name}"
-      layouts: ['bsp', 'columns', 'rows', 'grid', 'scrolling', 'vertical_stack', 'horizontal_stack', 'ultrawide_vertical_stack','right_main_vertical_stack']
+      layouts:
+        [
+          "bsp",
+          "columns",
+          "rows",
+          "grid",
+          "scrolling",
+          "vertical_stack",
+          "horizontal_stack",
+          "ultrawide_vertical_stack",
+          "right_main_vertical_stack",
+        ]
       layout_icons:
         bsp: "\uebeb"
         columns: "\uebf7"
@@ -151,9 +154,9 @@ widgets:
         paused: "\udb83\udf89"
         tiling: "\udb81\ude40"
       callbacks:
-        on_left: 'toggle_layout_menu'
-        on_middle: 'next_layout'
-        on_right: 'prev_layout'
+        on_left: "toggle_layout_menu"
+        on_middle: "next_layout"
+        on_right: "prev_layout"
       layout_menu:
         blur: true
         round_corners: true
@@ -168,7 +171,7 @@ widgets:
         enabled: false
         color: "black"
         radius: 3
-        offset: [ 1, 1 ]
+        offset: [1, 1]
   komorebi_stack:
     type: "komorebi.stack.StackWidget"
     options:
@@ -186,7 +189,7 @@ widgets:
       hide_if_offline: true
       show_only_stack: false
       animation: true
-      enable_scroll_switching : true
+      enable_scroll_switching: true
       container_shadow:
         enabled: false
         color: "#000000"
@@ -211,7 +214,7 @@ widgets:
       update_interval: 600 #Update interval in seconds, Min 600
       units: "metric"
       hide_decimal: true
-      location: 'UK Peterhead AB42 3EX'
+      location: "UK Peterhead AB42 3EX"
       callbacks:
         on_left: "toggle_card"
         on_middle: "toggle_label"
@@ -226,7 +229,7 @@ widgets:
         snowyIcyDay: "\udb81\udd99"
         snowyIcyNight: "\udb81\udd99"
         blizzardDay: "\udb81\udd99"
-        default: "\udb81\udd99" 
+        default: "\udb81\udd99"
   media:
     type: "yasb.media.MediaWidget"
     options:
@@ -248,12 +251,13 @@ widgets:
       thumbnail_padding: 12
       thumbnail_corner_radius: 12
       symmetric_corner_radius: true
-      thumbnail_edge_fade: false
+      thumbnail_edge_fade: true
       icons:
         prev_track: ""
         next_track: ""
         play: "<span>\uf001</span>"
         pause: "<span>\uf001</span>"
+
   active_window:
     type: "yasb.active_window.ActiveWindowWidget"
     options:
@@ -271,11 +275,11 @@ widgets:
       label: "<span>{icon}</span> {level}"
       label_alt: "{volume}"
       volume_icons:
-        - "\ueee8"  # Icon for muted
-        - "\uf026"  # Icon for 0-10% volume
-        - "\uf027"  # Icon for 11-30% volume
-        - "\uf027"  # Icon for 31-60% volume
-        - "\uf028"  # Icon for 61-100% volume
+        - "\ueee8" # Icon for muted
+        - "\uf026" # Icon for 0-10% volume
+        - "\uf027" # Icon for 11-30% volume
+        - "\uf027" # Icon for 31-60% volume
+        - "\uf028" # Icon for 61-100% volume
       callbacks:
         on_right: "exec cmd.exe /c start ms-settings:sound"
   clock:
@@ -333,14 +337,14 @@ widgets:
       uptime: True
       blur: False
       blur_background: True
-      animation_duration: 250 # Milisecond 
+      animation_duration: 250 # Milisecond
       button_row: 5 # Number of buttons in row, min 1 max 5
       buttons:
-        signout: ["\udb80\udf43","Sign out"]
-        shutdown: ["\uf011","Shut Down"]
-        restart: ["\uead2","Restart"]
-        hibernate: ["\uf28e","Hibernate"]
-        cancel: ["\udb81\udf3a","Cancel"]
+        signout: ["\udb80\udf43", "Sign out"]
+        shutdown: ["\uf011", "Shut Down"]
+        restart: ["\uead2", "Restart"]
+        hibernate: ["\uf28e", "Hibernate"]
+        cancel: ["\udb81\udf3a", "Cancel"]
   cava:
     type: "yasb.cava.CavaWidget"
     options:
@@ -349,9 +353,9 @@ widgets:
       reverse: 0
       sensitivity: 100
       foreground: "#89b4fa"
-      gradient_color_1: '#74c7ec'
-      gradient_color_2: '#89b4fa'
-      gradient_color_3: '#cba6f7'
+      gradient_color_1: "#74c7ec"
+      gradient_color_2: "#89b4fa"
+      gradient_color_3: "#cba6f7"
       bars_number: 8
       bar_spacing: 2
       bar_width: 4
@@ -364,7 +368,7 @@ widgets:
       label_alt: "Notifications {data}" # {data} return number of unread notification
       token: env # GitHub Personal access tokens (classic) https://github.com/settings/tokens
       max_notification: 20 # Max number of notification displaying in menu max: 50
-      only_unread: false # Show only unread or all notifications; 
+      only_unread: false # Show only unread or all notifications;
       max_field_size: 54 # Max characters in title before truncation.
       update_interval: 300 # Check for new notification in seconds
       menu:
@@ -393,7 +397,7 @@ widgets:
         enabled: false
         color: "black"
         radius: 3
-        offset: [ 1, 1 ]
+        offset: [1, 1]
   notifications:
     type: "yasb.notifications.NotificationsWidget"
     options:
@@ -409,4 +413,4 @@ widgets:
         enabled: true
         color: "black"
         radius: 3
-        offset: [ 1, 1 ]
+        offset: [1, 1]

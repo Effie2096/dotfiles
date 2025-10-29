@@ -19,6 +19,8 @@ set incsearch
 nmap <M-o> o<Esc>
 nmap <M-S-O> O<Esc>
 
+imap <M-o> <Space><Esc>r<CR>O
+
 " Visual mode move lines
 vmap <Down> :move '>+1<CR>:normal gv<CR>
 vmap <Up> :move '<-2<CR>:normal gv<CR>
@@ -27,14 +29,14 @@ vmap <Up> :move '<-2<CR>:normal gv<CR>
 " nmap J mzJ`z
 
 " IntelliJ actions
-nmap <leader>rn <Action>(RenameElement)
-nmap <leader>ld <Action>(GotoDeclaration)
-nmap <leader>lD <Action>(GotoTypeDeclaration)
-nmap <leader>lr <Action>(FindUsages)
-nmap <leader>li <Action>(GotoImplementation)
-nmap <leader>a <Action>(ShowIntentionActions)
-nmap <leader>dk <Action>(GotoPreviousError)
-nmap <leader>dj <Action>(GotoNextError)
+nmap grn <Action>(RenameElement)
+nmap grd <Action>(GotoDeclaration)
+nmap grD <Action>(GotoTypeDeclaration)
+nmap grr <Action>(FindUsages)
+nmap gri <Action>(GotoImplementation)
+nmap gra <Action>(ShowIntentionActions)
+nmap [d <Action>(GotoPreviousError)
+nmap ]d <Action>(GotoNextError)
 nmap <S-k> <Action>(ShowHoverInfo)
 nmap <leader>dl <Action>(ShowHoverInfo)
 nmap <leader>ef <Action>(ActivateProjectToolWindow)

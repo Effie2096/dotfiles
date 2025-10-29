@@ -1,5 +1,5 @@
 {
-	"$schema": "https://raw.githubusercontent.com/LGUG2Z/komorebi/v0.1.37/schema.json",
+	"$schema": "https://raw.githubusercontent.com/LGUG2Z/komorebi/v0.1.38/schema.json",
 	"app_specific_configuration_path": "$Env:KOMOREBI_CONFIG_HOME/applications.json",
 	"display_index_preferences": {
 		"0": "ACR03E3-5&114d6bd7&0&UID4355",
@@ -12,15 +12,15 @@
 	"window_handling_behaviour": "Async",
 	"window_hiding_behaviour": "Cloak",
 	"floating_window_aspect_ratio": "Widescreen",
-	"resize_delta": 200,
+	"resize_delta": 100,
 	"animation": {
 		"enabled": true,
 		"style": {
-			"movement": "EaseInOutElastic",
+			"movement": "EaseOutBack",
 			"transparency": "Linear"
 		},
 		"fps": 60,
-		"duration": 250
+		"duration": 120
 	},
 	"mouse_follows_focus": true,
 	"transparency": false,
@@ -53,11 +53,11 @@
 		}
 	],
 	"cross_monitor_move_behaviour": "Insert",
-	"default_workspace_padding": 5,
+	"default_workspace_padding": 4,
 	"default_container_padding": 2,
 	"global_work_area_offset": {
-		"top": -5,
-		"bottom": -5,
+		"top": 0,
+		"bottom": 0,
 		"left": 0,
 		"right": 0
 	},
@@ -89,28 +89,58 @@
 		{
 			"workspaces": [
 				{
-					"name": "1:\uf120",
-					"layout": "BSP"
+					"name": "1",
+					"layout": "BSP",
+					"layout_options": {
+						"scrolling": {
+							"columns": 1
+						}
+					}
 				},
 				{
-					"name": "2:\udb81\udd9f",
-					"layout": "BSP"
+					"name": "2",
+					"layout": "BSP",
+					"layout_options": {
+						"scrolling": {
+							"columns": 1
+						}
+					}
 				},
 				{
-					"name": "3:\udb80\ude4b",
-					"layout": "BSP"
+					"name": "3",
+					"layout": "BSP",
+					"layout_options": {
+						"scrolling": {
+							"columns": 1
+						}
+					}
 				},
 				{
 					"name": "4",
-					"layout": "BSP"
+					"layout": "BSP",
+					"layout_options": {
+						"scrolling": {
+							"columns": 1
+						}
+					}
 				},
 				{
 					"name": "5",
-					"layout": "BSP"
+					"layout": "BSP",
+					"layout_options": {
+						"scrolling": {
+							"columns": 1
+						}
+					}
 				},
 				{
-					"name": "6:\udb81\uddba",
+					"name": "6",
 					"layout": "BSP",
+					"layout_options": {
+						"scrolling": {
+							"columns": 1
+						}
+					},
 					"initial_workspace_rules": [
 						{
 							"kind": "Exe",
@@ -119,8 +149,13 @@
 					]
 				},
 				{
-					"name": "7:\udb81\udf5a",
+					"name": "7",
 					"layout": "BSP",
+					"layout_options": {
+						"scrolling": {
+							"columns": 1
+						}
+					},
 					"initial_workspace_rules": [
 						{
 							"kind": "Exe",
@@ -130,15 +165,30 @@
 				},
 				{
 					"name": "8",
-					"layout": "BSP"
+					"layout": "BSP",
+					"layout_options": {
+						"scrolling": {
+							"columns": 1
+						}
+					}
 				},
 				{
 					"name": "9",
-					"layout": "BSP"
+					"layout": "BSP",
+					"layout_options": {
+						"scrolling": {
+							"columns": 1
+						}
+					}
 				},
 				{
 					"name": "10",
-					"layout": "BSP"
+					"layout": "BSP",
+					"layout_options": {
+						"scrolling": {
+							"columns": 1
+						}
+					}
 				}
 			]
 		},
@@ -146,11 +196,21 @@
 			"workspaces": [
 				{
 					"name": "1",
-					"layout": "BSP"
+					"layout": "BSP",
+					"layout_options": {
+						"scrolling": {
+							"columns": 1
+						}
+					}
 				},
 				{
 					"name": "2",
 					"layout": "BSP",
+					"layout_options": {
+						"scrolling": {
+							"columns": 1
+						}
+					},
 					"initial_workspace_rules": [
 						{
 							"kind": "Exe",
@@ -160,35 +220,75 @@
 				},
 				{
 					"name": "3",
-					"layout": "BSP"
+					"layout": "BSP",
+					"layout_options": {
+						"scrolling": {
+							"columns": 1
+						}
+					}
 				},
 				{
 					"name": "4",
-					"layout": "BSP"
+					"layout": "BSP",
+					"layout_options": {
+						"scrolling": {
+							"columns": 1
+						}
+					}
 				},
 				{
 					"name": "5",
-					"layout": "BSP"
+					"layout": "BSP",
+					"layout_options": {
+						"scrolling": {
+							"columns": 1
+						}
+					}
 				},
 				{
 					"name": "6",
-					"layout": "BSP"
+					"layout": "BSP",
+					"layout_options": {
+						"scrolling": {
+							"columns": 1
+						}
+					}
 				},
 				{
 					"name": "7",
-					"layout": "BSP"
+					"layout": "BSP",
+					"layout_options": {
+						"scrolling": {
+							"columns": 1
+						}
+					}
 				},
 				{
 					"name": "8",
-					"layout": "BSP"
+					"layout": "BSP",
+					"layout_options": {
+						"scrolling": {
+							"columns": 1
+						}
+					}
 				},
 				{
 					"name": "9",
-					"layout": "BSP"
+					"layout": "BSP",
+					"layout_options": {
+						"scrolling": {
+							"columns": 1
+						}
+					}
 				},
 				{
 					"name": "10",
-					"layout": "BSP"
+					"layout": "BSP",
+					"layout_options": {
+						"scrolling": {
+							"columns": 1
+						}
+					}
 				}
 			]
 		}
@@ -240,6 +340,11 @@
 		}
 	],
 	"floating_applications": [
+		{
+			"kind": "Exe",
+			"id": "sclang.exe",
+			"matching_strategy": "Equals"
+		},
 		[
 			{
 				"kind": "Exe",
@@ -587,6 +692,11 @@
 	],
 	"slow_application_identifiers": [],
 	"object_name_change_applications": [
+		{
+			"kind": "Exe",
+			"id": "Rack.exe",
+			"matching_strategy": "Equals"
+		},
 		{
 			"kind": "Exe",
 			"id": "godot-mono.exe",

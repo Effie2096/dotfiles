@@ -25,6 +25,19 @@ $env.XDG_STATE_HOME = ($env.HOME | path join .local/state)
 $env.BAT_CONFIG_DIR = ($env.XDG_CONFIG_HOME | path join bat)
 $env.YAZI_CONFIG_HOME = ($env.XDG_CONFIG_HOME | path join yazi)
 
+if not (which fnm | is-empty) {
+	fnm env --json | from json | load-env
+	$env.PATH = $env.PATH
+		| prepend (
+			$env.FNM_MULTISHELL_PATH | (if $nu.os-info.name != 'windows' { $in | path join 'bin' } else { $in }))
+	$env.config.hooks.env_change.PWD = (
+		$env.config.hooks.env_change.PWD? | append {
+			condition: {|| ['.nvmrc' '.node-version'] | any {|el| $el | path exists}}
+			code: {|| fnm use}
+		}
+	)
+}
+
 const NU_PLUGIN_DIRS = [
   ($nu.current-exe | path dirname)
   ...$NU_PLUGIN_DIRS
@@ -38,8 +51,7 @@ $plugins | each {
 	|plugin| plugin add $"nu_plugin_($plugin)(if $nu.os-info.name == 'windows' {'.exe'})"
 }
 
-# $env.CURRENT_THEME = "light"
-def set-theme-based-on-time [] {
+def --env set-theme-based-on-time [] {
 	let now = (date now)
 	# let last_check = ($env.LAST_THEME_CHECK? | default ($now - 10min))
 	#
@@ -123,7 +135,7 @@ $env.TRANSIENT_PROMPT_COMMAND = {||
 	$" (starship module directory)(starship module character)"
 }
 $env.TRANSIENT_PROMPT_COMMAND_RIGHT = {||
- $"(starship module status --status $env.LAST_EXIT_CODE)(starship module cmd_duration --cmd-duration $env.CMD_DURATION_MS)(starship module time)"
+ $"(starship module time)"
 }
 
 zoxide init nushell --cmd cd | save -f ($nu.data-dir | path join "vendor/autoload/zoxide.nu")
@@ -132,6 +144,8 @@ alias ll = eza --icons --color=always -GF -a --group-directories-first
 alias la = eza --icons --color=always --long --classify --all --group-directories-first --group --header --git
 
 alias bat = bat --theme=$"(if $env.CURRENT_THEME == 'light' { 'Catppuccin Latte' } else { 'Catppuccin Mocha' })"
+
+# alias gitui = gitui --theme=$"(if $env.CURRENT_THEME == 'light' { 'catppuccin-latte.ron' } else { 'catppuccin-mocha.ron' })"
 
 alias dots = git --git-dir=$"($env.XDG_DATA_HOME | path join chezmoi)"
 
@@ -150,4 +164,3 @@ $env.config.keybindings ++= [{
 }]
 
 tput cup (tput lines) 0
-fastfetch
