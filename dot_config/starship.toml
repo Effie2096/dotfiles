@@ -1,5 +1,5 @@
 "$schema" = "https://starship.rs/config-schema.json"
-palette = "catppuccin_mocha"
+palette = "catppuccin_latte"
 format = "[$fill](fg:pink) $os$username$hostname[$fill](fg:pink)$line_break[ ]()$directory$git_branch$git_commit$git_state$git_metrics$git_status$all[$fill](hidden) [[ ](bg:#5bcffa)[ ](bg:#ffb5cd)[ ](bg:#ffffff)[ ](bg:#ffb5cd)[ ](bg:#5bcffa) ](bold)$line_break[ ]()$character"
 right_format = "$status$mise$container$shlvl$shell"
 add_newline = false

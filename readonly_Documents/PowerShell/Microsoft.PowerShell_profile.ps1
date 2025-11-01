@@ -26,8 +26,6 @@ function prompt
 	$host.ui.rawui.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0, ($host.ui.rawui.WindowSize.Height - 1)
 }
 
-$Env:KOMOREBI_CONFIG_HOME = $Env:XDG_CONFIG_HOME + '/komorebi'
-
 New-Alias which Get-Command
 
 # This is an example profile for PSReadLine.
@@ -758,7 +756,6 @@ Set-PSReadLineKeyHandler -Chord 'Alt+x' `
 	[Microsoft.PowerShell.PSConsoleReadLine]::Insert($unicode)
 }
 
-Invoke-Expression (&scoop-search --hook)
+. ([ScriptBlock]::Create((& scoop-search --hook | Out-String)))
 Remove-Alias cd
-Invoke-Expression (& { (zoxide init powershell --cmd cd | Out-String) })
-# Invoke-Expression "$(direnv hook pwsh)"
+Invoke-Expression (& { (zoxide init powershell | Out-String) })

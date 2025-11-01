@@ -3,7 +3,8 @@
 	"app_specific_configuration_path": "$Env:KOMOREBI_CONFIG_HOME/applications.json",
 	"display_index_preferences": {
 		"0": "ACR03E3-5&114d6bd7&0&UID4355",
-		"1": "ACR03E3-5&114d6bd7&0&UID4352"
+		"1": "ACR03E3-5&114d6bd7&0&UID4352",
+		"2": "VES3700-5&114d6bd7&0&UID4355"
 	},
 	"bar_configurations": [
 		"$Env:KOMOREBI_CONFIG_HOME/komorebi.bar.json",
@@ -20,9 +21,9 @@
 			"transparency": "Linear"
 		},
 		"fps": 60,
-		"duration": 120
+		"duration": 200
 	},
-	"mouse_follows_focus": true,
+	"mouse_follows_focus": false,
 	"transparency": false,
 	"transparency_alpha": 240,
 	"transparency_ignore_rules": [
@@ -291,7 +292,108 @@
 					}
 				}
 			]
-		}
+		},
+		{
+			"workspace_padding": 10,
+			"workspaces": [
+				{
+					"name": "1",
+					"layout": "BSP",
+					"layout_options": {
+						"scrolling": {
+							"columns": 1
+						}
+					}
+				},
+				{
+					"name": "2",
+					"layout": "BSP",
+					"layout_options": {
+						"scrolling": {
+							"columns": 1
+						}
+					},
+					"initial_workspace_rules": [
+						{
+							"kind": "Exe",
+							"id": "Discord.exe"
+						}
+					]
+				},
+				{
+					"name": "3",
+					"layout": "BSP",
+					"layout_options": {
+						"scrolling": {
+							"columns": 1
+						}
+					}
+				},
+				{
+					"name": "4",
+					"layout": "BSP",
+					"layout_options": {
+						"scrolling": {
+							"columns": 1
+						}
+					}
+				},
+				{
+					"name": "5",
+					"layout": "BSP",
+					"layout_options": {
+						"scrolling": {
+							"columns": 1
+						}
+					}
+				},
+				{
+					"name": "6",
+					"layout": "BSP",
+					"layout_options": {
+						"scrolling": {
+							"columns": 1
+						}
+					}
+				},
+				{
+					"name": "7",
+					"layout": "BSP",
+					"layout_options": {
+						"scrolling": {
+							"columns": 1
+						}
+					}
+				},
+				{
+					"name": "8",
+					"layout": "BSP",
+					"layout_options": {
+						"scrolling": {
+							"columns": 1
+						}
+					}
+				},
+				{
+					"name": "9",
+					"layout": "BSP",
+					"layout_options": {
+						"scrolling": {
+							"columns": 1
+						}
+					}
+				},
+				{
+					"name": "10",
+					"layout": "BSP",
+					"layout_options": {
+						"scrolling": {
+							"columns": 1
+						}
+					}
+				}
+			]
+		},
 	],
 	"tray_and_multi_window_applications": [
 		{

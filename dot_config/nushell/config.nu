@@ -17,11 +17,6 @@
 # You can remove these comments if you want or leave
 # them for future reference.
 
-$env.XDG_CONFIG_HOME = ($env.HOME | path join .config)
-$env.XDG_DATA_HOME = ($env.HOME | path join .local/share)
-$env.XDG_CACHE_HOME = ($env.HOME | path join .cache)
-$env.XDG_STATE_HOME = ($env.HOME | path join .local/state)
-
 $env.BAT_CONFIG_DIR = ($env.XDG_CONFIG_HOME | path join bat)
 $env.YAZI_CONFIG_HOME = ($env.XDG_CONFIG_HOME | path join yazi)
 
@@ -106,10 +101,9 @@ def --wrapped scoop [...args] {
 	}
 }
 
-$env.CARAPACE_BRIDGES = 'zsh,fish,bash,inshellisense'
-mkdir ($env.XDG_CACHE_HOME | path join carapace)
-carapace _carapace nushell | save --force ($env.XDG_CACHE_HOME | path join carapace/init.nu)
-source ~/.cache/carapace/init.nu
+if (~/.cache/carapace/init.nu | path exists) {
+	source ~/.cache/carapace/init.nu
+}
 
 let carapace_completer = {|spans|
   carapace $spans.0 nushell ...$spans | from json
@@ -138,7 +132,7 @@ $env.TRANSIENT_PROMPT_COMMAND_RIGHT = {||
  $"(starship module time)"
 }
 
-zoxide init nushell --cmd cd | save -f ($nu.data-dir | path join "vendor/autoload/zoxide.nu")
+zoxide init nushell | save -f ($nu.data-dir | path join "vendor/autoload/zoxide.nu")
 
 alias ll = eza --icons --color=always -GF -a --group-directories-first
 alias la = eza --icons --color=always --long --classify --all --group-directories-first --group --header --git
@@ -163,4 +157,4 @@ $env.config.keybindings ++= [{
 	]
 }]
 
-tput cup (tput lines) 0
+(tput cup (tput lines) 0)

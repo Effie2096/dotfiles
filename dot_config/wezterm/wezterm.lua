@@ -212,7 +212,7 @@ config.background = {
 	},
 	{
 		source = {
-			File = "E:/pictures/flowers3.gif",
+			File = "G:/pictures/flowers3.gif",
 		},
 		opacity = 0.1,
 		width = 400 .. "px",
@@ -224,7 +224,7 @@ config.background = {
 	},
 	{
 		source = {
-			File = "E:/pictures/foggs/tatujapatuah.gif",
+			File = "G:/pictures/foggs/tatujapatuah.gif",
 		},
 		opacity = 0.1,
 		width = 100 * 1.5 .. "px",
@@ -238,7 +238,7 @@ config.background = {
 	},
 	{
 		source = {
-			File = "E:/pictures/foggs/xenia-2.png",
+			File = "G:/pictures/foggs/xenia-2.png",
 		},
 		opacity = 0.2,
 		width = 1452 / 4 .. "px",
@@ -250,7 +250,7 @@ config.background = {
 	},
 	{
 		source = {
-			File = "E:/pictures/foggs/foxlick.png",
+			File = "G:/pictures/foggs/foxlick.png",
 		},
 		opacity = 0.12,
 		width = 600 / 2 .. "px",
@@ -263,7 +263,7 @@ config.background = {
 	},
 	{
 		source = {
-			File = "E:/pictures/10thprestigebby.gif",
+			File = "G:/pictures/10thprestigebby.gif",
 		},
 		opacity = 0.1,
 		width = 200 / 2 .. "px",
@@ -277,7 +277,7 @@ config.background = {
 	},
 	{
 		source = {
-			File = "E:/pictures/weed-leaf.gif",
+			File = "G:/pictures/weed-leaf.gif",
 		},
 		opacity = 0.1,
 		width = 128 * 0.8 .. "px",

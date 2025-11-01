@@ -16,3 +16,7 @@
 #
 # You can remove these comments if you want or leave
 # them for future reference.
+
+$env.CARAPACE_BRIDGES = 'zsh,fish,bash,inshellisense'
+mkdir ($env.XDG_CACHE_HOME | path join carapace)
+carapace _carapace nushell | save --force ($env.XDG_CACHE_HOME | path join carapace/init.nu)

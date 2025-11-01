@@ -1,0 +1,9 @@
+{{ if ne .chezmoi.os "windows" }}
+AppData/
+.config/komorebi/
+.config/cmd/
+.config/yasb/
+default_inputrc
+default_settings
+.inputrc
+{{ end }}

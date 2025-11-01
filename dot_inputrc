@@ -13,5 +13,7 @@ set vi-cmd-mode-string "`"
 set vi-ins-mode-string " "
 set visible-stats on
 
+C-l: "cls\r"
+
 $endif
 
