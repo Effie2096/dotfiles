@@ -1,4 +1,4 @@
-{{ if ne .chezmoi.os "windows" }}
+{{- if ne .chezmoi.os "windows" }}
 AppData/
 .config/komorebi/
 .config/cmd/
@@ -6,4 +6,4 @@ AppData/
 default_inputrc
 default_settings
 .inputrc
-{{ end }}
+{{- end }}
