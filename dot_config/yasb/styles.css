@@ -204,6 +204,15 @@
 	color: var(--mocha-pink);
 }
 
+.komorebi-layout-menu .menu-item {
+	padding: 2px 8px;
+	font-size: 16px;
+	font-weight: 600;
+}
+.komorebi-layout-menu .menu-item-icon {
+	font-size: 16px;
+}
+
 .uptime {
 	margin-bottom: 10px;
 	color: rgba(191, 202, 219, 0.726);

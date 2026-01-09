@@ -54,10 +54,12 @@ nmap <Leader>fp <action>(com.mituuz.fuzzier.Fuzzier)
 " map <Leader>f <action>(com.mituuz.fuzzier.FuzzierVCS)
 
 " HarpoonJ plugin
-nmap <C-h> :action GotoHarpoon1<cr>
-nmap <C-j> :action GotoHarpoon2<cr>
-nmap <C-k> :action GotoHarpoon3<cr>
-nmap <C-l> :action GotoHarpoon4<cr>
+nmap <M-h> :action GotoHarpoon1<cr>
+nmap <M-j> :action GotoHarpoon2<cr>
+nmap <M-k> :action GotoHarpoon3<cr>
+nmap <M-l> :action GotoHarpoon4<cr>
+nmap <M-;> :action GotoHarpoon5<cr>
 
 nmap <leader>me :action ShowHarpoon<cr>
 nmap <leader>ma :action AddToHarpoon<cr>
+set ideajoin

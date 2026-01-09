@@ -16,12 +16,9 @@
 	"resize_delta": 100,
 	"animation": {
 		"enabled": true,
-		"style": {
-			"movement": "EaseOutBack",
-			"transparency": "Linear"
-		},
+		"style": "EaseOutQuart",
 		"fps": 60,
-		"duration": 200
+		"duration": 100
 	},
 	"mouse_follows_focus": false,
 	"transparency": false,
@@ -63,10 +60,10 @@
 		"right": 0
 	},
 	"border": true,
-	"border_implementation": "Komorebi",
-	"border_style": "Rounded",
-	"border_width": 7,
-	"border_offset": -1,
+	"border_implementation": "Windows",
+	"border_style": "System",
+	"border_width": 0,
+	"border_offset": 1,
 	"theme": {
 		"palette": "Catppuccin",
 		"name": "Mocha",
@@ -393,7 +390,7 @@
 					}
 				}
 			]
-		},
+		}
 	],
 	"tray_and_multi_window_applications": [
 		{
@@ -442,6 +439,11 @@
 		}
 	],
 	"floating_applications": [
+		{
+			"kind": "Exe",
+			"id": "Wow.exe",
+			"matching_strategy": "Equals"
+		},
 		{
 			"kind": "Exe",
 			"id": "sclang.exe",
@@ -816,6 +818,33 @@
 		}
 	],
 	"ignore_rules": [
+		{
+			"kind": "Exe",
+			"id": "RoR.exe",
+			"matching_strategy": "Equals"
+		},
+		{
+			"kind": "Exe",
+			"id": "CoCMainWin32.exe",
+			"matching_strategy": "Equals"
+		},
+		{
+			"kind": "Exe",
+			"id": "GTA5.exe",
+			"matching_strategy": "Equals"
+		},
+		[
+			{
+				"kind": "Exe",
+				"id": "OverKeys.exe",
+				"matching_strategy": "Equals"
+			},
+			{
+				"kind": "Title",
+				"id": "OverKeys",
+				"matching_strategy": "Equals"
+			}
+		],
 		{
 			"kind": "Exe",
 			"id": "nuhxboard.exe",

@@ -93,106 +93,7 @@ config.window_padding = {
 local light_scheme = "Catppuccin Latte"
 local dark_scheme = "Catppuccin Mocha"
 
-local function read_file(path)
-	local f = io.open(path, "r")
-	if not f then
-		wezterm.log_error("Could not open file: " .. path)
-		return nil
-	end
-	local content = f:read("*a")
-	f:close()
-	return content
-end
-
-local function read_json(path)
-	local content = read_file(path)
-	if not content then
-		return {}
-	end
-	local ok, data = pcall(wezterm.json_parse, content)
-	if not ok then
-		wezterm.log_error("Error decoding JSON: " .. tostring(data))
-		return {}
-	end
-	return data
-end
-
-local astronomy = read_json(os.getenv("XDG_STATE_HOME") .. "/astronomy.json")
-
-local function seconds_until_theme_switch(current_hour, current_minute)
-	local minutes_per_day = 24 * 60
-	local current_total = current_hour * 60 + current_minute
-
-	local dark_total = (astronomy.today.sunset.hour * 60)
-		+ astronomy.today.sunset.minute
-	local light_total = (astronomy.today.sunrise.hour * 60)
-		+ astronomy.today.sunrise.minute
-
-	-- Time until each switch (mod to handle wraparound)
-	local until_dark = (dark_total - current_total) % minutes_per_day
-	local until_light = (light_total - current_total) % minutes_per_day
-
-	local next_minutes = math.min(
-		until_dark > 0 and until_dark or minutes_per_day,
-		until_light > 0 and until_light or minutes_per_day
-	)
-
-	return next_minutes * 60
-end
-
-local function time_to_seconds(hour, min)
-	return hour * 3600 + min * 60
-end
-
-local function now_in_seconds()
-	local now = os.date("*t")
-	return now.hour * 3600 + now.min * 60 + now.sec
-end
-
-local function get_scheme_for_time()
-	local now = now_in_seconds()
-	if
-		now
-			>= time_to_seconds(
-				astronomy.today.sunrise.hour,
-				astronomy.today.sunrise.minute
-			)
-		and now
-			< time_to_seconds(
-				astronomy.today.sunset.hour,
-				astronomy.today.sunset.minute
-			)
-	then
-		return light_scheme
-	else
-		return dark_scheme
-	end
-end
-
--- schedule reload at next switch
--- schedule a single reload at next switch
-local function schedule_next_switch()
-	if wezterm.GLOBAL_THEME_SCHEDULED then
-		wezterm.log_info("Theme switch already scheduled, skipping")
-		return
-	end
-
-	wezterm.GLOBAL_THEME_SCHEDULED = true
-	local hour = tonumber(os.date("%H"))
-	local minute = tonumber(os.date("%M"))
-	local delay = seconds_until_theme_switch(hour, minute)
-	wezterm.log_info("Scheduling next theme switch in " .. delay .. " seconds")
-
-	wezterm.time.call_after(delay, function()
-		wezterm.log_info("Triggering theme reload now")
-		wezterm.GLOBAL_THEME_SCHEDULED = false -- allow re-scheduling after reload
-		wezterm.reload_configuration()
-	end)
-end
-
--- Set the initial scheme
-config.color_scheme = get_scheme_for_time()
-schedule_next_switch()
+config.color_scheme = dark_scheme
 
 -- config.color_scheme = dark_scheme
 config.force_reverse_video_cursor = true
@@ -311,8 +212,8 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 	})
 	lm:add({
 		label = "WSL: Arch",
-		args = { "wsl", "-d", "Arch" },
-		cwd = [[\\wsl$\Arch\home\effie]],
+		args = { "wsl", "-d", "archlinux" },
+		cwd = [[\\wsl$\archlinux\home\effie]],
 	})
 	lm:add({
 		label = "Bash",
@@ -456,53 +357,52 @@ config.keys = {
 			SplitHorizontal = { domain = "CurrentPaneDomain" },
 		}),
 	},
-	{ key = "o", mods = "LEADER", action = "TogglePaneZoomState" },
 	{ key = "z", mods = "LEADER", action = "TogglePaneZoomState" },
 	{
 		key = "c",
 		mods = "LEADER",
 		action = wezterm.action({ SpawnTab = "CurrentPaneDomain" }),
 	},
-	{
-		key = "h",
-		mods = "ALT",
-		action = wezterm.action({ ActivatePaneDirection = "Left" }),
-	},
-	{
-		key = "j",
-		mods = "ALT",
-		action = wezterm.action({ ActivatePaneDirection = "Down" }),
-	},
-	{
-		key = "k",
-		mods = "ALT",
-		action = wezterm.action({ ActivatePaneDirection = "Up" }),
-	},
-	{
-		key = "l",
-		mods = "ALT",
-		action = wezterm.action({ ActivatePaneDirection = "Right" }),
-	},
-	{
-		key = "H",
-		mods = "LEADER|SHIFT",
-		action = wezterm.action({ AdjustPaneSize = { "Left", 5 } }),
-	},
-	{
-		key = "J",
-		mods = "LEADER|SHIFT",
-		action = wezterm.action({ AdjustPaneSize = { "Down", 5 } }),
-	},
-	{
-		key = "K",
-		mods = "LEADER|SHIFT",
-		action = wezterm.action({ AdjustPaneSize = { "Up", 5 } }),
-	},
-	{
-		key = "L",
-		mods = "LEADER|SHIFT",
-		action = wezterm.action({ AdjustPaneSize = { "Right", 5 } }),
-	},
+	-- {
+	-- 	key = "h",
+	-- 	mods = "ALT",
+	-- 	action = wezterm.action({ ActivatePaneDirection = "Left" }),
+	-- },
+	-- {
+	-- 	key = "j",
+	-- 	mods = "ALT",
+	-- 	action = wezterm.action({ ActivatePaneDirection = "Down" }),
+	-- },
+	-- {
+	-- 	key = "k",
+	-- 	mods = "ALT",
+	-- 	action = wezterm.action({ ActivatePaneDirection = "Up" }),
+	-- },
+	-- {
+	-- 	key = "l",
+	-- 	mods = "ALT",
+	-- 	action = wezterm.action({ ActivatePaneDirection = "Right" }),
+	-- },
+	-- {
+	-- 	key = "H",
+	-- 	mods = "LEADER|SHIFT",
+	-- 	action = wezterm.action({ AdjustPaneSize = { "Left", 5 } }),
+	-- },
+	-- {
+	-- 	key = "J",
+	-- 	mods = "LEADER|SHIFT",
+	-- 	action = wezterm.action({ AdjustPaneSize = { "Down", 5 } }),
+	-- },
+	-- {
+	-- 	key = "K",
+	-- 	mods = "LEADER|SHIFT",
+	-- 	action = wezterm.action({ AdjustPaneSize = { "Up", 5 } }),
+	-- },
+	-- {
+	-- 	key = "L",
+	-- 	mods = "LEADER|SHIFT",
+	-- 	action = wezterm.action({ AdjustPaneSize = { "Right", 5 } }),
+	-- },
 	{
 		key = "1",
 		mods = "LEADER",
@@ -559,12 +459,12 @@ config.keys = {
 		action = wezterm.action({ CloseCurrentPane = { confirm = true } }),
 	},
 
-	{ key = "UpArrow", mods = "ALT", action = wezterm.action.ScrollByLine(-1) },
-	{
-		key = "DownArrow",
-		mods = "ALT",
-		action = wezterm.action.ScrollByLine(1),
-	},
+	-- { key = "UpArrow", mods = "ALT", action = wezterm.action.ScrollByLine(-1) },
+	-- {
+	-- 	key = "DownArrow",
+	-- 	mods = "ALT",
+	-- 	action = wezterm.action.ScrollByLine(1),
+	-- },
 
 	{
 		key = "f",
@@ -604,7 +504,7 @@ smart_splits.apply_to_config(config, {
 
 	-- directional keys to use in order of: left, down, up, right
 	direction_keys = {
-		move = { "h", "j", "k", "l" },
+		move = { "LeftArrow", "DownArrow", "UpArrow", "RightArrow" },
 		resize = { "LeftArrow", "DownArrow", "UpArrow", "RightArrow" },
 	},
 	-- if you want to use separate direction keys for move vs. resize, you

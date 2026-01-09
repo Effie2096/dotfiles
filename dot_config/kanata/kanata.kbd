@@ -1,5 +1,9 @@
 (defcfg
-	process-unmapped-keys yes
+  process-unmapped-keys yes
+  concurrent-tap-hold yes
+  chords-v2-min-idle 5
+  movemouse-smooth-diagonals yes
+
   tray-icon "./kanata.ico"
   tooltip-layer-changes   	yes  	;;|false|
   tooltip-show-blank      	yes  	;;|no|
@@ -17,8 +21,30 @@
   ht $hold-timeout
 )
 
+;; Direct access to symbols
+(defalias
+  ! S-1
+  @ S-2
+  # S-3
+  $ S-4
+  % S-5
+  ^ S-6
+  & S-7
+  * S-8
+  lp S-9
+  rp S-0
+  _ S--
+  | S-\
+  ~ S-grv
+  { S-[
+  } S-]
+  ? S-/
+
+)
+
 (defalias
   magic (switch
+    ((key-history ' 1)) (macro a) break
     ((key-history a 1)) (macro ') break
     ((key-history b 1)) (macro g) break
     ((key-history c 1)) (macro q) break
@@ -60,50 +86,80 @@
 )
 
 (defalias
-  np (layer-switch numpad)
   sr use-defsrc
 
+  ;; escm (tap-hold $tt $ht esc (layer-while-held mouse))
+
+  src (layer-switch source)
   can (layer-switch canary)
   qwr (layer-switch qwerty)
-  src (layer-switch source)
+
+  nav (layer-while-held navigation)
+  sym (layer-while-held symbols)
+  num (layer-while-held numbers)
+
+  np (layer-switch numpad)
+
   lay (layer-toggle layers)
 )
 
 (defalias
-	tlmet (one-shot 2000 lmet)
-	tlalt (one-shot 2000 lalt)
-	tlctl (one-shot 2000 lctl)
-	tlsft (one-shot 2000 lsft)
-	trmet (one-shot 2000 rmet)
-	tralt (one-shot 2000 ralt)
-	trctl (one-shot 2000 rctl)
-	trsft (one-shot 2000 rsft)
+  tlmet (one-shot 2000 lmet)
+  tlalt (one-shot 2000 lalt)
+  tlctl (one-shot 2000 lctl)
+  tlsft (one-shot 2000 lsft)
+  trmet (one-shot 2000 rmet)
+  tralt (one-shot 2000 ralt)
+  trctl (one-shot 2000 rctl)
+  trsft (one-shot 2000 rsft)
 )
 
 (defalias
-  chr (chord shifty r)
-  chs (chord shifty s)
-  che (chord shifty e)
-  chi (chord shifty i)
-)
-(defchords shifty 50
-  (r        ) r
-  (  s      ) s
-  (      e  ) e
-  (        i) i
-  (r s      ) (one-shot 500 lsft)
-  (      e i) (one-shot 500 rsft)
+  t[  (tap-hold $tt $tt [   (macro [ ]))         
+  t{  (tap-hold $tt $tt @{  (macro @{ @}))       
+  tlp (tap-hold $tt $tt @lp (macro @lp @rp))     
+  trp (tap-hold $tt $tt @rp (macro @lp @rp lft)) 
+  t}  (tap-hold $tt $tt @}  (macro @{ @} lft))   
+  t]  (tap-hold $tt $tt ]   (macro [ ] lft))     
 )
 
-(defalias
-  chnav (chord raise nav)
-  chsym (chord raise sym)
+(defchordsv2
+  (q w          ) (one-shot 500 lctl) 500 first-release (qwerty navigation symbols numbers function numpad)
+  (  w e        ) (one-shot 500 lsft) 500 first-release (qwerty navigation symbols numbers function numpad)
+  (        o p  ) (one-shot 500 rsft) 500 first-release (qwerty navigation symbols numbers function numpad)
+  (          p [) (one-shot 500 rctl) 500 first-release (qwerty navigation symbols numbers function numpad)
+
+
+  (1 2    ) @t[  40 first-release (qwerty navigation symbols numbers function numpad)
+  (  2 3  ) @t{  40 first-release (qwerty navigation symbols numbers function numpad)
+  (    3 4) @tlp 40 first-release (qwerty navigation symbols numbers function numpad)
+  (8 9    ) @trp 40 first-release (qwerty navigation symbols numbers function numpad)
+  (  9 0  ) @t}  40 first-release (qwerty navigation symbols numbers function numpad)
+  (    0 -) @t[  40 first-release (qwerty navigation symbols numbers function numpad)
+
+  ;; H diagraphs
+  (r o) (macro t h) 40 first-release (qwerty navigation symbols numbers function numpad)
+  (q o) (macro c h) 40 first-release (qwerty navigation symbols numbers function numpad)
+  (1 o) (macro w h) 40 first-release (qwerty navigation symbols numbers function numpad)
+  (e o) (macro s h) 40 first-release (qwerty navigation symbols numbers function numpad)
+  (t o) (macro g h) 40 first-release (qwerty navigation symbols numbers function numpad)
+  (4 o) (macro p h) 40 first-release (qwerty navigation symbols numbers function numpad)
+
+  (b m) (layer-while-held function) 40 first-release (qwerty navigation symbols numbers function numpad)
 )
-(defchords raise 15
-  (nav) (layer-while-held navigation)
-  (sym) (layer-while-held symbols)
-  (nav sym) (layer-while-held raise)
-)
+
+
+;; (defalias
+;;   cnav (chord raise nav)
+;;   csym (chord raise sym)
+;;   cnum (chord raise num)
+;; )
+;; (defchords raise 500
+;;   (nav) (layer-while-held navigation)
+;;   (sym) (layer-while-held symbols)
+;;   (num) (layer-while-held numbers)
+;;   (sym nav) (layer-while-held function)
+;; )
 
 (defsrc
   esc 1   2   3   4   5   6   7   8   9   0   -      =     bspc
@@ -114,18 +170,18 @@
 )
 
 (deflayer (canary icon ./icons/keyboard_pink.png)
-  @lay w    l    y  p      b   XX     z      f   o  u    '    del XX
-  [   c @chr @chs  t      g   XX     m      n   @che  @chi a ]  XX
-  ,   q    j    v  d      k   XX     x      h   @lp  @rp    ;    .
-  XX   XX   XX   XX @chnav spc @magic @chsym rpt XX @np  XX
+  @lay  w    l    y  p      b     XX     z      f   o    u     '  XX  XX
+  XX   c    r    s  t      g     XX     m      n   e    i     a   XX  XX
+  XX  q    j    v  d      k     XX     x      h   ,    .     ;    XX
+  XX   XX   XX  @num spc @sym @magic @nav rpt XX @np  XX
   XX XX XX           XX            XX XX XX
 )
 
 (deflayer (qwerty icon ./icons/keyboard_yellow.png)
- @lay q  w  e  r    t   XX     y        u   i   o   p  '   del
+ @lay q  w  e  r    t   XX     y        u   i   o   p  '   bspc
  XX    a  s  d  f    g   XX     h        j   k   l   ;  XX XX
  XX    z  x  c  v    b   XX     n        m   ,   .   ;  XX
-  XX    XX  XX  XX @chnav spc  @magic  @chsym  rpt XX   @np  XX
+  XX   XX   XX  @num spc @sym @magic @nav rpt XX @np  XX
   XX XX XX           XX            XX XX XX
 )
 
@@ -148,55 +204,63 @@
   _    _    _              _              _    _    _
 )
 
-;; Direct access to symbols
-(defalias
-  exc S-1
-  at S-2
-  oct S-3
-  dol S-4
-  per S-5
-  hat S-6
-  amp S-7
-  ast S-8
-  lp S-9
-  rp S-0
-  und S--
-  pipe S-\
-  til S-grv
-  lbrc S-[
-  rbrc S-]
-  qm S-/
+(deflayer (navigation icon ./icons/keyboard_green.png)
+  XX esc    _      _      _      _   XX  home pgdn   pgup end   del     XX XX
+  XX @tlmet @tlalt @tlctl @tlsft _   XX  lft  down   up   right XX      XX XX
+  XX XX     XX     XX     XX     _   XX  ret  bspc   XX   XX    XX      XX
+  XX XX    XX    _     tab _  _  _    _      XX    XX    XX
+  XX XX XX           XX            XX XX XX
 )
 
-(deflayer (navigation icon ./icons/keyboard_green.png)
-	_  XX    XX    XX    XX    XX XX home pgdn   pgup end   bspc XX XX
-	XX @tlmet @tlalt @tlctl @tlsft XX XX lft  down   up   right ret  XX XX
-	XX XX    XX    XX    XX    XX XX prev voldwn volu next  pp   XX
-	XX _     _     _     _     _  _  _    _      _    _     _
+(deflayer (numbers icon ./icons/keyboard_orange.png)
+  XX XX     _      _      _      _   XX  =  7 8 9 +   XX XX
+  XX @tlmet @tlalt @tlctl @tlsft .   XX  @* 4 5 6 -   XX XX
+  XX XX     _      spc    bspc   ret XX  0  1 2 3 /   XX
+  XX XX     XX     _     _     _  _  _    _      XX    XX     XX
   XX XX XX           XX            XX XX XX
 )
 
 (deflayer (symbols icon ./icons/keyboard_blue.png)
-  _  esc _    @lbrc _     grv      XX      @til _      @rbrc   _          _      _  _
-  _  +   @und =     @per  @ast     XX      @hat @trsft @trctl  @tralt     @trmet _  _
-  _  -   @at  @amp  @pipe \        XX      /    @exc   @oct    @dol       @qm    _
-  _  _   _    _     _     tab      _       _    _      _       _          _
+  XX @!     @@     @#     @$     @%   XX   @&   =      +      -      @_      XX XX
+  XX @tlmet @tlalt @tlctl @tlsft @^   XX   @*   @tlp   @t{    @t[    @?      XX XX
+  XX @|     \      spc    bspc   ret  XX   @~   @trp   @t}    @t]    /       XX
+  XX  XX   XX  _   _       _      _     _    _      XX       XX      XX
   _  _  _     _     _  _  _
 )
 
-(deflayer (raise icon ./icons/keyboard_mauve.png)
-	_  1     2     3     4     5  XX 6  7     8     9     0     _ _
-	_  @tlmet @tlalt @tlctl @tlsft f6 XX f7 @trsft @trctl @tralt @trmet _ _
-	_  f1    f2    f4    f4    f5 XX f8 f9    f10   f11   f12   _
-	XX _     _     _     _     _  _  _  _     _     _     _
+(deflayer (function icon ./icons/keyboard_mauve.png)
+  XX prev   voldwn volu   next    pp XX  prnt  f7 f8 f9 f12     XX XX
+  XX @tlmet @tlalt @tlctl @tlsft  _  XX  _     f4 f5 f6 f11     XX XX
+  XX _    _    _    _             _  XX  _     f1 f2 f3 f10     XX
+  XX XX    XX    _     _     _  _  _  _     XX     XX     XX
   XX XX XX           XX            XX XX XX
 )
 
-(deflayer (numpad icon ./icons/keyboard_orange.png)
-	_  kp+ kp7 kp8 kp9 kp* XX XX XX XX XX   XX XX XX
-	XX kp0 kp4 kp5 kp6 kp. XX XX XX XX XX   XX XX XX
-	XX kp- kp1 kp2 kp3 kp/ XX XX XX XX XX   XX XX
-	XX _   _   _   _   _   _  _  _  _  @can _
+(deflayer numpad
+  _  kp+ kp7 kp8 kp9 kp* XX   XX   XX     XX     XX     XX       XX XX
+  XX kp0 kp4 kp5 kp6 kp. XX   XX   @trsft @trctl @tralt @trmet   XX XX
+  XX kp- kp1 kp2 kp3 kp/ XX   XX   XX     XX     XX     XX       XX
+  XX _   _   _   _   _   _  _  _  _  @can _
   XX XX XX           XX           XX XX XX
 )
 
+;; ! up and right have a delay
+;; (defalias
+;;   lmo (tap-hold $tt $ht mltp mlft)
+;;   rmo (tap-hold $tt $ht mrtp mrgt)
+;;   mmo (tap-hold $tt $ht mmtp mmid)
+;; 
+;;   msl (movemouse-left 1 1)
+;;   msd (movemouse-down 1 1)
+;;   msu (movemouse-up 1 1)
+;;   msr (movemouse-right 1 1)
+;; 
+;;   mfst (movemouse-speed 200)
+;; )
+;; (deflayer (mouse icon ./icons/keyboard_orange.png)
+;;   _     XX     XX     XX     XX     XX      XX      XX XX XX XX XX    XX XX
+;;   XX    @tlmet @tlalt @tlctl @tlsft XX      XX      @msl @msd @msu @msr XX    XX XX
+;;   XX    XX     @mfst  XX     XX     XX      XX      XX XX XX XX XX    XX
+;;   XX    _   _   _   _   _                           @rmo  @lmo  @mmo  _  @can  _
+;;   XX XX XX           XX           XX XX XX
+;; )

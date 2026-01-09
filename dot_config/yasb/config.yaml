@@ -37,15 +37,8 @@ bars:
       center: ["komorebi_stack"]
       right: [
           "media",
-          # "cava",
           "systray",
-          # "bluetooth",
-          # "volume",
           "weather",
-          # "github",
-          # "disk",
-          # "wallpapers",
-          # "power_menu",
           "clock",
         ]
 widgets:
@@ -69,7 +62,7 @@ widgets:
         on_left: "toggle_label"
         on_right: "exec cmd.exe /c start ms-settings:bluetooth"
       label_shadow:
-        enabled: true
+        enabled: false
         color: "black"
         radius: 3
         offset: [1, 1]
@@ -110,7 +103,7 @@ widgets:
       label_workspace_populated_btn: "{name}"
       label_default_name: "{index}"
       label_zero_index: false
-      hide_empty_workspaces: false
+      hide_empty_workspaces: true
       hide_if_offline: false
       animation: true
       app_icons:
@@ -257,7 +250,6 @@ widgets:
         next_track: ""
         play: "<span>\uf001</span>"
         pause: "<span>\uf001</span>"
-
   active_window:
     type: "yasb.active_window.ActiveWindowWidget"
     options:
@@ -410,7 +402,7 @@ widgets:
         on_right: "do_nothing"
         on_middle: "toggle_label"
       label_shadow:
-        enabled: true
+        enabled: false
         color: "black"
         radius: 3
         offset: [1, 1]
