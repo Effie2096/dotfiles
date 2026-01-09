@@ -17,8 +17,19 @@
 # You can remove these comments if you want or leave
 # them for future reference.
 
+$env.XDG_CONFIG_HOME = ($env.HOME | path join .config)
+$env.XDG_DATA_HOME = ($env.HOME | path join .local/share)
+$env.XDG_STATE_HOME = ($env.HOME | path join .local/state)
+$env.XDG_CACHE_HOME = ($env.HOME | path join .cache)
+
+$env.CODESTATS_KEY = open --raw ($env.HOME | path join .secrets/codestats_key)
+
 $env.BAT_CONFIG_DIR = ($env.XDG_CONFIG_HOME | path join bat)
 $env.YAZI_CONFIG_HOME = ($env.XDG_CONFIG_HOME | path join yazi)
+
+$env.LS_COLORS = (vivid generate catppuccin-mocha)
+
+const IS_WINDOWS = ($nu.os-info.name == "windows")
 
 if not (which fnm | is-empty) {
 	fnm env --json | from json | load-env
@@ -46,42 +57,10 @@ $plugins | each {
 	|plugin| plugin add $"nu_plugin_($plugin)(if $nu.os-info.name == 'windows' {'.exe'})"
 }
 
-def --env set-theme-based-on-time [] {
-	let now = (date now)
-	# let last_check = ($env.LAST_THEME_CHECK? | default ($now - 10min))
-	#
-	# if ($now - $last_check) > 5min {
-		# $env.LAST_THEME_CHECK = $now
-
-		let hour = ($now | format date "%H" | into int)
-		let new_theme = if $hour >= 7 and $hour < 20 { "light" } else { "dark" }
-
-		if $env.CURRENT_THEME? != $new_theme {
-			if $new_theme == "light" {
-				source ~/.config/nushell/themes/catppuccin_latte.nu
-				open ($env.XDG_CONFIG_HOME
-					| path join starship.toml)
-				| update palette "catppuccin_latte"
-				| save --force ($env.XDG_CONFIG_HOME
-					| path join starship.toml)
-			} else {
-				source ~/.config/nushell/themes/catppuccin_mocha.nu
-				open ($env.XDG_CONFIG_HOME
-					| path join starship.toml)
-				| update palette "catppuccin_mocha"
-				| save --force ($env.XDG_CONFIG_HOME
-					| path join starship.toml)
-			}
-			$env.CURRENT_THEME = $new_theme
-		}
-	# }
-}
-set-theme-based-on-time
+source ~/.config/nushell/themes/catppuccin_mocha.nu
 
 $env.STARSHIP_SHELL = "nu"
 $env.EDITOR = "nvim"
-
-$env.CODESTATS_KEY = open --raw ($env.HOME | path join .secrets/codestats_key)
 
 $env.config.show_banner = false
 $env.config.edit_mode = 'vi'
@@ -101,12 +80,31 @@ def --wrapped scoop [...args] {
 	}
 }
 
-if (~/.cache/carapace/init.nu | path exists) {
+$env.CARAPACE_BRIDGES = 'zsh,fish,bash,inshellisense'
+mkdir ($env.XDG_CACHE_HOME | path join carapace)
+carapace _carapace nushell | save --force ($env.XDG_CACHE_HOME | path join carapace/init.nu)
+if ($"$env.XDG_CACHE_HOME/carapace/init.nu" | path exists) {
 	source ~/.cache/carapace/init.nu
 }
 
 let carapace_completer = {|spans|
   carapace $spans.0 nushell ...$spans | from json
+}
+
+def "nu-complete zoxide path" [context: string] {
+	let parts = $context | split row " " | skip 1
+	{
+		options: {
+			sort: false,
+			completion_algorithm: substring,
+			case_sensitive: false,
+		},
+		completions: (^zoxide query --list --exclude $env.PWD -- ...$parts | lines),
+	}
+}
+
+def --env --wrapped z [...rest: string@"nu-complete zoxide path"] {
+	__zoxide_z ...$rest
 }
 
 # Enable the external completer
@@ -120,24 +118,21 @@ source ~/.config/nushell/completions/komorebic-completions.nu
 
 $env.config.render_right_prompt_on_last_line = true
 starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
-$env.starship_prompt_command = $env.PROMPT_COMMAND
-$env.PROMPT_COMMAND = {
-    set-theme-based-on-time
-    do $env.starship_prompt_command
-}
 $env.TRANSIENT_PROMPT_COMMAND = {||
 	$" (starship module directory)(starship module character)"
 }
 $env.TRANSIENT_PROMPT_COMMAND_RIGHT = {||
- $"(starship module time)"
+  $"(starship module status --status $env.LAST_EXIT_CODE)(starship module cmd_duration --cmd-duration $env.CMD_DURATION_MS)(starship module time)"
 }
 
 zoxide init nushell | save -f ($nu.data-dir | path join "vendor/autoload/zoxide.nu")
 
+mise activate nu | save -f ($nu.data-dir | path join "vendor/autoload/mise.nu")
+
 alias ll = eza --icons --color=always -GF -a --group-directories-first
 alias la = eza --icons --color=always --long --classify --all --group-directories-first --group --header --git
 
-alias bat = bat --theme=$"(if $env.CURRENT_THEME == 'light' { 'Catppuccin Latte' } else { 'Catppuccin Mocha' })"
+alias bat = bat --theme='Catppuccin Mocha'
 
 # alias gitui = gitui --theme=$"(if $env.CURRENT_THEME == 'light' { 'catppuccin-latte.ron' } else { 'catppuccin-mocha.ron' })"
 

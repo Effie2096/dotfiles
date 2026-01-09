@@ -1,0 +1,36 @@
+# Lines configured by zsh-newuser-install
+HISTFILE=$XDG_STATE_HOME/zsh/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+setopt extendedglob
+bindkey -v
+# End of lines configured by zsh-newuser-install
+# The following lines were added by compinstall
+zstyle :compinstall filename "$ZDOTDIR/.zshrc"
+
+# autoload -Uz compinit
+# compinit
+# End of lines added by compinstall
+
+export LS_COLORS=$(vivid generate catppuccin-mocha)
+
+alias ll='eza --icons --color=always -GF -a --group-directories-first'
+alias la='eza --icons --color=always --long --classify --all --group-directories-first --group --header --git'
+
+export ANTIDOTE_HOME="$XDG_CACHE_HOME/antidote"
+source '/usr/share/zsh-antidote/antidote.zsh'
+antidote bundle <$ZDOTDIR/.zsh_plugins.txt >$ANTIDOTE_HOME/.zsh_plugins.zsh
+antidote load
+
+# ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+
+# carapace
+export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
+zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+zstyle ':completion:*' group-order 'main commands' 'alias commands' 'external commands'
+source <(carapace _carapace zsh)
+
+eval "$(zoxide init zsh)"
+eval "$(mise activate zsh)"
+
+eval "$(starship init zsh)"

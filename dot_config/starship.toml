@@ -1,7 +1,13 @@
 "$schema" = "https://starship.rs/config-schema.json"
-palette = "catppuccin_latte"
-format = "[$fill](fg:pink) $os$username$hostname[$fill](fg:pink)$line_break[ ]()$directory$git_branch$git_commit$git_state$git_metrics$git_status$all[$fill](hidden) [[ ](bg:#5bcffa)[ ](bg:#ffb5cd)[ ](bg:#ffffff)[ ](bg:#ffb5cd)[ ](bg:#5bcffa) ](bold)$line_break[ ]()$character"
-right_format = "$status$mise$container$shlvl$shell"
+palette = "catppuccin_mocha"
+format = """
+[$fill](fg:pink) $os$username$hostname[$fill](fg:pink)$line_break\
+[ ]()$directory$git_branch$git_commit$git_state$git_metrics$git_status\
+[$fill](hidden) \
+[[ ](bg:#5bcffa)[ ](bg:#ffb5cd)[ ](bg:#ffffff)[ ](bg:#ffb5cd)[ ](bg:#5bcffa) ](bold)$line_break\
+[ ]()$character
+"""
+right_format = "$container$shlvl$shell$mise"
 add_newline = false
 command_timeout = 2000
 
@@ -14,7 +20,12 @@ disabled = false
 
 [character]
 format = "$symbol"
-vimcmd_symbol = "[❮](green)"
+success_symbol = "[>](bold green)"
+error_symbol = "[>](bold red)"
+vimcmd_symbol = "[<](bold green)"
+vimcmd_replace_one_symbol = "[<](bold purple)"
+vimcmd_replace_symbol = "[<](bold purple)"
+vimcmd_visual_symbol = "[<](bold yellow)"
 
 [sudo]
 disabled = false
@@ -74,7 +85,7 @@ style = "bold blue"
 use_os_path_sep = true
 
 [cmd_duration]
-disabled = true
+disabled = false
 min_time = 0
 show_milliseconds = true
 format = "[$duration ]($style)"
@@ -95,7 +106,7 @@ style = "pink"
 format = "[$ssh_symbol$hostname](fg:pink blink) "
 
 [time]
-disabled = true
+disabled = false
 format = "[ $time]($style) "
 style = "bold yellow"
 
@@ -113,6 +124,14 @@ format = "[$indicator]($style) "
 disabled = false
 symbol = " "
 format = "[$symbol$shlvl]($style) "
+
+[mise]
+disabled=false
+symbol='mise '
+style='bold purple'
+healthy_symbol=' '
+unhealthy_symbol=' '
+format='| [$symbol$health]($style)'
 
 [aws]
 symbol = " "
