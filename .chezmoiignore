@@ -6,4 +6,5 @@ AppData/
 default_inputrc
 default_settings
 .inputrc
+bin/scoop.bat
 {{- end }}
