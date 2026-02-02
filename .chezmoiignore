@@ -8,3 +8,7 @@ default_settings
 .inputrc
 bin/scoop.bat
 {{- end }}
+
+{{ if ne .chezmoi.os "linux" }}
+.config/zellij/
+{{- end }}
