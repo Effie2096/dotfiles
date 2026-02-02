@@ -1,5 +1,6 @@
 {{- if ne .chezmoi.os "windows" }}
 AppData/
+Documents/voicemeeter-settings.xml
 .config/komorebi/
 .config/cmd/
 .config/yasb/
