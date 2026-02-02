@@ -22,12 +22,38 @@ $env.XDG_DATA_HOME = ($env.HOME | path join .local/share)
 $env.XDG_STATE_HOME = ($env.HOME | path join .local/state)
 $env.XDG_CACHE_HOME = ($env.HOME | path join .cache)
 
+$env.EDITOR = "nvim"
+
 $env.CODESTATS_KEY = open --raw ($env.HOME | path join .secrets/codestats_key)
 
 $env.BAT_CONFIG_DIR = ($env.XDG_CONFIG_HOME | path join bat)
 $env.YAZI_CONFIG_HOME = ($env.XDG_CONFIG_HOME | path join yazi)
 
-$env.LS_COLORS = (vivid generate catppuccin-mocha)
+let astronomy = open ($env.XDG_STATE_HOME | path join astronomy.json)
+$env.CURRENT_THEME = "light"
+
+def --env "set-theme" [] {
+  let now = date now | format date "%H:%M" | split row ":" | each {|el| $el | into int}
+
+  mut theme = ""
+    if ($now.0 >= $astronomy.today.sunrise.hour and
+	$now.1 >= $astronomy.today.sunrise.minute
+	and
+	$now.0 <= $astronomy.today.sunset.hour and
+	$now.1 <= $astronomy.today.sunset.minute
+       ) {
+      $theme = "dark"
+    } else {
+      $theme = "light"
+    }
+  if $env.CURRENT_THEME != $theme {
+    $env.LS_COLORS = (^vivid generate (if $theme == "light" { "catppuccin-latte" } else { "catppuccin-mocha" }))
+  }
+  $env.CURRENT_THEME = $theme
+}
+
+set-theme
+$env.LS_COLORS = (^vivid generate (if $env.CURRENT_THEME == "light" { "catppuccin-latte" } else { "catppuccin-mocha" }))
 
 const IS_WINDOWS = ($nu.os-info.name == "windows")
 
@@ -35,7 +61,7 @@ if not (which fnm | is-empty) {
 	fnm env --json | from json | load-env
 	$env.PATH = $env.PATH
 		| prepend (
-			$env.FNM_MULTISHELL_PATH | (if $nu.os-info.name != 'windows' { $in | path join 'bin' } else { $in }))
+			$env.FNM_MULTISHELL_PATH | (if not $IS_WINDOWS { $in | path join 'bin' } else { $in }))
 	$env.config.hooks.env_change.PWD = (
 		$env.config.hooks.env_change.PWD? | append {
 			condition: {|| ['.nvmrc' '.node-version'] | any {|el| $el | path exists}}
@@ -54,13 +80,10 @@ const plugins = [
 	"query"
 ]
 $plugins | each {
-	|plugin| plugin add $"nu_plugin_($plugin)(if $nu.os-info.name == 'windows' {'.exe'})"
+	|plugin| plugin add $"nu_plugin_($plugin)(if $IS_WINDOWS {'.exe'})"
 }
 
-source ~/.config/nushell/themes/catppuccin_mocha.nu
-
 $env.STARSHIP_SHELL = "nu"
-$env.EDITOR = "nvim"
 
 $env.config.show_banner = false
 $env.config.edit_mode = 'vi'
@@ -117,26 +140,24 @@ $env.config.completions.external = {
 source ~/.config/nushell/completions/komorebic-completions.nu
 
 $env.config.render_right_prompt_on_last_line = true
-starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
+^starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
 $env.TRANSIENT_PROMPT_COMMAND = {||
-	$" (starship module directory)(starship module character)"
+  set-theme
+  $" (^starship module directory)(starship module character)"
 }
 $env.TRANSIENT_PROMPT_COMMAND_RIGHT = {||
-  $"(starship module status --status $env.LAST_EXIT_CODE)(starship module cmd_duration --cmd-duration $env.CMD_DURATION_MS)(starship module time)"
+  $"(^starship module status --status $env.LAST_EXIT_CODE)(starship module cmd_duration --cmd-duration $env.CMD_DURATION_MS)(starship module time)"
 }
 
-zoxide init nushell | save -f ($nu.data-dir | path join "vendor/autoload/zoxide.nu")
+source ($nu.data-dir | path join zoxide.nu)
+use ($nu.data-dir | path join mise.nu)
 
-mise activate nu | save -f ($nu.data-dir | path join "vendor/autoload/mise.nu")
+alias ll = ^eza --icons --color=always -GF -a --group-directories-first
+alias la = ^eza --icons --color=always --long --classify --all --group-directories-first --group --header --git
 
-alias ll = eza --icons --color=always -GF -a --group-directories-first
-alias la = eza --icons --color=always --long --classify --all --group-directories-first --group --header --git
+alias bat = ^bat --theme=$"(if $env.CURRENT_THEME == 'light' { 'Catppuccin Latte' } else { 'Catppuccin Mocha' })"
 
-alias bat = bat --theme='Catppuccin Mocha'
-
-# alias gitui = gitui --theme=$"(if $env.CURRENT_THEME == 'light' { 'catppuccin-latte.ron' } else { 'catppuccin-mocha.ron' })"
-
-alias dots = git --git-dir=$"($env.XDG_DATA_HOME | path join chezmoi)"
+# alias gitui = ^gitui --theme=$"(if $env.CURRENT_THEME == 'light' { 'catppuccin-latte.ron' } else { 'catppuccin-mocha.ron' })"
 
 $env.config.keybindings ++= [{
 	name: clear_term
@@ -152,4 +173,4 @@ $env.config.keybindings ++= [{
 	]
 }]
 
-(tput cup (tput lines) 0)
+(^tput cup (^tput lines) 0)

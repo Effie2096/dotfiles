@@ -12,7 +12,7 @@ config.font = wezterm.font_with_fallback({
 		weight = "Regular",
 	},
 	{
-		family = "Lilex Nerd Font Propo",
+		family = "Lilex Nerd Font",
 		weight = "Regular",
 	},
 	{
@@ -23,7 +23,7 @@ config.font = wezterm.font_with_fallback({
 })
 config.warn_about_missing_glyphs = false
 
-config.font_size = 10.5
+config.font_size = 11
 config.underline_thickness = "400%"
 config.underline_position = "200%"
 config.adjust_window_size_when_changing_font_size = false
@@ -63,14 +63,14 @@ end)
 local gui = wezterm.gui
 if gui then
 	for _, gpu in ipairs(gui.enumerate_gpus()) do
-		-- if gpu.backend == "Dx12" and gpu.device_type == "DiscreteGpu" then
-		-- 	config.webgpu_preferred_adapter = gpu
-		-- 	config.front_end = "WebGpu"
-		-- end
-		if gpu.backend == "Gl" and gpu.device_type == "DiscreteGpu" then
+		if gpu.backend == "Dx12" and gpu.device_type == "DiscreteGpu" then
 			config.webgpu_preferred_adapter = gpu
-			config.front_end = "OpenGL"
+			config.front_end = "WebGpu"
 		end
+		-- if gpu.backend == "Gl" and gpu.device_type == "DiscreteGpu" then
+		-- 	config.webgpu_preferred_adapter = gpu
+		-- 	config.front_end = "OpenGL"
+		-- end
 	end
 end
 
@@ -91,7 +91,7 @@ config.window_padding = {
 
 -- color schemes
 local light_scheme = "Catppuccin Latte"
-local dark_scheme = "Catppuccin Mocha"
+local dark_scheme = "Eldritch"
 
 local function read_file(path)
 	local f = io.open(path, "r")
@@ -212,7 +212,7 @@ config.background = {
 	},
 	{
 		source = {
-			File = "G:/pictures/flowers3.gif",
+			File = "E:/pictures/flowers3.gif",
 		},
 		opacity = 0.1,
 		width = 400 .. "px",
@@ -224,7 +224,7 @@ config.background = {
 	},
 	{
 		source = {
-			File = "G:/pictures/foggs/tatujapatuah.gif",
+			File = "E:/pictures/foggs/tatujapatuah.gif",
 		},
 		opacity = 0.1,
 		width = 100 * 1.5 .. "px",
@@ -238,7 +238,7 @@ config.background = {
 	},
 	{
 		source = {
-			File = "G:/pictures/foggs/xenia-2.png",
+			File = "E:/pictures/foggs/xenia-2.png",
 		},
 		opacity = 0.2,
 		width = 1452 / 4 .. "px",
@@ -250,7 +250,7 @@ config.background = {
 	},
 	{
 		source = {
-			File = "G:/pictures/foggs/foxlick.png",
+			File = "E:/pictures/foggs/foxlick.png",
 		},
 		opacity = 0.12,
 		width = 600 / 2 .. "px",
@@ -263,7 +263,7 @@ config.background = {
 	},
 	{
 		source = {
-			File = "G:/pictures/10thprestigebby.gif",
+			File = "E:/pictures/10thprestigebby.gif",
 		},
 		opacity = 0.1,
 		width = 200 / 2 .. "px",
@@ -277,7 +277,7 @@ config.background = {
 	},
 	{
 		source = {
-			File = "G:/pictures/weed-leaf.gif",
+			File = "E:/pictures/weed-leaf.gif",
 		},
 		opacity = 0.1,
 		width = 128 * 0.8 .. "px",
@@ -311,8 +311,8 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 	})
 	lm:add({
 		label = "WSL: Arch",
-		args = { "wsl", "-d", "Arch" },
-		cwd = [[\\wsl$\Arch\home\effie]],
+		args = { "wsl", "-d", "archlinux" },
+		cwd = [[\\wsl$\archlinux\home\effie]],
 	})
 	lm:add({
 		label = "Bash",
@@ -333,7 +333,7 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 	-- config.default_prog = { "wsl", "-d", "Arch" }
 	-- config.default_cwd = [[\\wsl$\Arch\home\effie]]
 	config.default_prog = { "nu" }
-	config.default_cwd = [[~]]
+	-- config.default_cwd = [[~]]
 end
 
 config.launch_menu = lm
@@ -456,53 +456,52 @@ config.keys = {
 			SplitHorizontal = { domain = "CurrentPaneDomain" },
 		}),
 	},
-	{ key = "o", mods = "LEADER", action = "TogglePaneZoomState" },
 	{ key = "z", mods = "LEADER", action = "TogglePaneZoomState" },
 	{
 		key = "c",
 		mods = "LEADER",
 		action = wezterm.action({ SpawnTab = "CurrentPaneDomain" }),
 	},
-	{
-		key = "h",
-		mods = "ALT",
-		action = wezterm.action({ ActivatePaneDirection = "Left" }),
-	},
-	{
-		key = "j",
-		mods = "ALT",
-		action = wezterm.action({ ActivatePaneDirection = "Down" }),
-	},
-	{
-		key = "k",
-		mods = "ALT",
-		action = wezterm.action({ ActivatePaneDirection = "Up" }),
-	},
-	{
-		key = "l",
-		mods = "ALT",
-		action = wezterm.action({ ActivatePaneDirection = "Right" }),
-	},
-	{
-		key = "H",
-		mods = "LEADER|SHIFT",
-		action = wezterm.action({ AdjustPaneSize = { "Left", 5 } }),
-	},
-	{
-		key = "J",
-		mods = "LEADER|SHIFT",
-		action = wezterm.action({ AdjustPaneSize = { "Down", 5 } }),
-	},
-	{
-		key = "K",
-		mods = "LEADER|SHIFT",
-		action = wezterm.action({ AdjustPaneSize = { "Up", 5 } }),
-	},
-	{
-		key = "L",
-		mods = "LEADER|SHIFT",
-		action = wezterm.action({ AdjustPaneSize = { "Right", 5 } }),
-	},
+	-- {
+	-- 	key = "h",
+	-- 	mods = "ALT",
+	-- 	action = wezterm.action({ ActivatePaneDirection = "Left" }),
+	-- },
+	-- {
+	-- 	key = "j",
+	-- 	mods = "ALT",
+	-- 	action = wezterm.action({ ActivatePaneDirection = "Down" }),
+	-- },
+	-- {
+	-- 	key = "k",
+	-- 	mods = "ALT",
+	-- 	action = wezterm.action({ ActivatePaneDirection = "Up" }),
+	-- },
+	-- {
+	-- 	key = "l",
+	-- 	mods = "ALT",
+	-- 	action = wezterm.action({ ActivatePaneDirection = "Right" }),
+	-- },
+	-- {
+	-- 	key = "H",
+	-- 	mods = "LEADER|SHIFT",
+	-- 	action = wezterm.action({ AdjustPaneSize = { "Left", 5 } }),
+	-- },
+	-- {
+	-- 	key = "J",
+	-- 	mods = "LEADER|SHIFT",
+	-- 	action = wezterm.action({ AdjustPaneSize = { "Down", 5 } }),
+	-- },
+	-- {
+	-- 	key = "K",
+	-- 	mods = "LEADER|SHIFT",
+	-- 	action = wezterm.action({ AdjustPaneSize = { "Up", 5 } }),
+	-- },
+	-- {
+	-- 	key = "L",
+	-- 	mods = "LEADER|SHIFT",
+	-- 	action = wezterm.action({ AdjustPaneSize = { "Right", 5 } }),
+	-- },
 	{
 		key = "1",
 		mods = "LEADER",
@@ -559,12 +558,12 @@ config.keys = {
 		action = wezterm.action({ CloseCurrentPane = { confirm = true } }),
 	},
 
-	{ key = "UpArrow", mods = "ALT", action = wezterm.action.ScrollByLine(-1) },
-	{
-		key = "DownArrow",
-		mods = "ALT",
-		action = wezterm.action.ScrollByLine(1),
-	},
+	-- { key = "UpArrow", mods = "ALT", action = wezterm.action.ScrollByLine(-1) },
+	-- {
+	-- 	key = "DownArrow",
+	-- 	mods = "ALT",
+	-- 	action = wezterm.action.ScrollByLine(1),
+	-- },
 
 	{
 		key = "f",
@@ -604,7 +603,7 @@ smart_splits.apply_to_config(config, {
 
 	-- directional keys to use in order of: left, down, up, right
 	direction_keys = {
-		move = { "h", "j", "k", "l" },
+		move = { "LeftArrow", "DownArrow", "UpArrow", "RightArrow" },
 		resize = { "LeftArrow", "DownArrow", "UpArrow", "RightArrow" },
 	},
 	-- if you want to use separate direction keys for move vs. resize, you

@@ -56,8 +56,6 @@
 	--underline-height: 2px;
 }
 
-
-
 * {
 	color: var(--text);
 	font-size: 12px;
@@ -114,7 +112,7 @@
 	color: var(--latte-text);
 	padding: 5px 10px;
 	font-size: 14px;
-	font-family: 'Segoe UI';
+	font-family: "Segoe UI";
 	font-weight: 600;
 	margin-top: 4px;
 }
@@ -202,6 +200,15 @@
 
 .yasb-bar.dark .komorebi-stack .window.active .label {
 	color: var(--mocha-pink);
+}
+
+.komorebi-layout-menu .menu-item {
+	padding: 2px 8px;
+	font-size: 16px;
+	font-weight: 600;
+}
+.komorebi-layout-menu .menu-item-icon {
+	font-size: 16px;
 }
 
 .uptime {
@@ -302,11 +309,14 @@
 	color: var(--mocha-yellow);
 }
 
-.weather-widget .icon {}
+.weather-widget .icon {
+}
 
-.weather-widget .icon.clearNight {}
+.weather-widget .icon.clearNight {
+}
 
-.weather-widget .icon.cloudyNight {}
+.weather-widget .icon.cloudyNight {
+}
 
 .memory-widget {
 	border-bottom: 1px solid #cba6f7;
@@ -431,4 +441,19 @@
 
 .yasb.dark .systray .unpinned-visibility-btn:hover {
 	background-color: var(--mocha-pink);
+}
+
+.wallpapers-widget {
+	padding: 0 0px 0 0px;
+	margin: 0px;
+}
+.wallpapers-widget .widget-container {
+	padding: 0 0px 0 0px;
+	margin: 0px;
+}
+.wallpapers-gallery-window {
+	background-color: var(--latte-overlay0);
+}
+.yasb.dark .wallpapers-gallery-window {
+	background-color: var(--mocha-overlay0);
 }

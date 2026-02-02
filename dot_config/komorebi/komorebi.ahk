@@ -7,8 +7,8 @@ Groups := Map(
 	"Meta", [
 		{ bind: "#^!r", desc: "Restart Komorebi", cb: (*) => (Komorebic("stop --ahk"), Komorebic("start --ahk")), arg: "" },
 		{ bind: "#^!q", desc: "Quit Komorebi", cb: Komorebic, arg: "stop --ahk" },
-		{ bind: "#!h", desc: "Toggle Keybind Help", cb: toggle_help },
-		{ bind: "#b", desc: "Toggle Status Bar", cb: toggle_yasb },
+		{ bind: "#?", desc: "Toggle Keybind Help", cb: toggle_help },
+		{ bind: "#!b", desc: "Toggle Status Bar", cb: toggle_yasb },
 	],
 	"Apps", [
 		{ bind: "#e", desc: "Open File Explorer", cb: Run, arg: "explorer.exe" },
@@ -63,14 +63,15 @@ Groups := Map(
 		{ bind: "#!l", desc: "Lock Container", cb: Komorebic, arg: "toggle-lock" },
 	],
 	"Layouts", [
-		{ bind: "#s", desc: "Vertical Stack", cb: Komorebic, arg: "change-layout vertical-stack" },
+		{ bind: "#b", desc: "BSP", cb: Komorebic, arg: "change-layout bsp" },
+		{ bind: "#s", desc: "Scrolling", cb: Komorebic, arg: "change-layout scrolling" },
 		{ bind: "#g", desc: "Grid", cb: Komorebic, arg: "change-layout grid" },
 		{ bind: "#x", desc: "Flip Horizontal", cb: Komorebic, arg: "flip-layout horizontal" },
 		{ bind: "#v", desc: "Flip Vertical", cb: Komorebic, arg: "flip-layout vertical" },
 		{ bind: "#!o", desc: "Next Layout", cb: Komorebic, arg: "cycle-layout next" },
 		{ bind: "#!i", desc: "Previous Layout", cb: Komorebic, arg: "cycle-layout previous" },
-		{ bind: "#!=", desc: "Increase Scroll Columns", cb: RunHidden, arg: "nu ./komo_nu.nu scroll-columns true" },
-		{ bind: "#!-", desc: "Decrease Scroll Columns", cb: RunHidden, arg: "nu ./komo_nu.nu scroll-columns false" },
+		{ bind: "#!=", desc: "Increase Scroll Columns", cb: Nukomo, arg: "scroll-columns increase" },
+		{ bind: "#!-", desc: "Decrease Scroll Columns", cb: Nukomo, arg: "scroll-columns decrease" },
 	],
 	"Workspaces", [
 		{ bind: "#1", desc: "Focus Workspace 1", cb: Focus_Workspace, arg: "focus-workspace 0" },
@@ -83,12 +84,15 @@ Groups := Map(
 		{ bind: "#8", desc: "Focus Workspace 8", cb: Focus_Workspace, arg: "focus-workspace 7" },
 		{ bind: "#9", desc: "Focus Workspace 9", cb: Focus_Workspace, arg: "focus-workspace 8" },
 		{ bind: "#0", desc: "Focus Workspace 10", cb: Focus_Workspace, arg: "focus-workspace 9" },
+
+		{ bind: "#+f", desc: "Toggle Workspace Float Override", cb: Komorebic, arg: "toggle-workspace-float-override" },
+		{ bind: "#!f", desc: "Toggle Workspace Layer", cb: Komorebic, arg: "toggle-workspace-layer" },
 	],
 	"Monitors", [
-		{ bind: "#i", desc: "Focus Monitor Left", cb: Komorebic, arg: "focus-monitor 1" },
-		{ bind: "#o", desc: "Focus Monitor Right", cb: Komorebic, arg: "focus-monitor 0" },
-		{ bind: "#+i", desc: "Move Window to Monitor Left", cb: Komorebic, arg: "move-to-monitor 1" },
-		{ bind: "#+o", desc: "Move Window to Monitor Right", cb: Komorebic, arg: "move-to-monitor 0" },
+		{ bind: "#i", desc: "Focus Monitor Left", cb: Komorebic, arg: "cycle-monitor previous" },
+		{ bind: "#o", desc: "Focus Monitor Right", cb: Komorebic, arg: "cycle-monitor next" },
+		{ bind: "#+i", desc: "Move Window to Monitor Left", cb: Komorebic, arg: "cycle-move-to-monitor previous" },
+		{ bind: "#+o", desc: "Move Window to Monitor Right", cb: Komorebic, arg: "cycle-move-to-monitor next" },
 	],
 	"Debug", [
 		{ bind: "#+r", desc: "Retile Windows", cb: Komorebic, arg: "retile" },
@@ -133,25 +137,17 @@ Focus_Workspace(cmd) {
 	Komorebic(cmd)
 }
 
+Nukomo(cmd) {
+	RunWait(format("nu ./nukomo.nu {}", cmd), , "Hide")
+}
+
 toggle_yasb() {
 	if WinExist("YasbBar") {
 		Yasb("hide-bar")
-		Komorebic("global-work-area-offset -- 0 -27 0 -27")
+		Nukomo("bar-offset")
 	} else {
 		Yasb("show-bar")
 		Komorebic("global-work-area-offset -- 0 0 0 0")
-	}
-}
-
-Spacer := false
-#+s::{
-	global Spacer
-	if Spacer {
-		Komorebic("monitor-work-area-offset 0 -- 0 0 0 0")
-		Spacer := false
-	} else {
-		Komorebic("monitor-work-area-offset 0 -- 0 0 500 0")
-		Spacer := true
 	}
 }
 
@@ -205,13 +201,13 @@ toggle_help() {
 	}
 }
 
-Loop {
-	HWNDS := WinGetList("ahk_exe sclang.exe")
-	Loop HWNDS.length {
-		exStyle := WinGetExStyle(HWNDS[A_Index])
-		if (exStyle & 0x00000008) {
-			continue
-		}
-	 WinSetAlwaysOnTop(1, HWNDS[A_Index])
-	}
-}
+; Loop {
+; 	HWNDS := WinGetList("ahk_exe sclang.exe")
+; 	Loop HWNDS.length {
+; 		exStyle := WinGetExStyle(HWNDS[A_Index])
+; 		if (exStyle & 0x00000008) {
+; 			continue
+; 		}
+; 	 WinSetAlwaysOnTop(1, HWNDS[A_Index])
+; 	}
+; }

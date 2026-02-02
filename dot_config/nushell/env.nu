@@ -16,3 +16,9 @@
 #
 # You can remove these comments if you want or leave
 # them for future reference.
+
+let zoxide_path = $nu.data-dir | path join zoxide.nu
+zoxide init nushell | save $zoxide_path --force
+
+let mise_path = $nu.data-dir | path join mise.nu
+^mise activate nu | save $mise_path --force

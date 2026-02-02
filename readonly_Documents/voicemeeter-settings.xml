@@ -10,7 +10,7 @@
 	<InputDev index='4' name="-" />
 	<InputDev index='5' type='4' name="Microphone (Realtek Audio USB)" />
 	<OutputDev index='1' type='4' name="Speakers (Realtek(R) Audio)" />
-	<OutputDev index='2' type='4' name="K242HL (NVIDIA High Definition Audio)" />
+	<OutputDev index='2' type='4' name="55UHD_LCD_TV (NVIDIA High Definition Audio)" />
 	<OutputDev index='3' name="-" pOut1='0' pOut2='0' pOut3='0' pOut4='0' pOut5='0' pOut6='0' pOut7='0' pOut8='0'  />
 	<OutputDev index='4' name="-" pOut1='0' pOut2='0' pOut3='0' pOut4='0' pOut5='0' pOut6='0' pOut7='0' pOut8='0'  />
 	<OutputDev index='5' name="-" pOut1='0' pOut2='0' pOut3='0' pOut4='0' pOut5='0' pOut6='0' pOut7='0' pOut8='0'  />
@@ -47,7 +47,7 @@
 	<Strip index='6' mute='0' solo='0' mono='0' muc='0' busa='1' busa2='1' busa3='0' busa4='0' busa5='0' busb='0' busb2='0' busb3='0' karaoke='0' dblevel='-6.00' dblimit='12.00' layer1='-6.00' layer2='-6.00' layer3='-6.00' layer4='-6.00' layer5='-6.00' layer6='-6.00' layer7='-6.00' layer8='-6.00' />
 	<Strip index='6' sendR='0.00' postR='0' sendD='0.00' postD='0' sendFx1='0.00' postFx1='0' sendFx2='0.00' postFx2='0' />
 	<Strip index='6' EQGain1='0.00' EQGain2='0.00' EQGain3='0.00' Panel3Dx='0.000' Panel3Dy='0.000' />
-	<Strip index='7' mute='0' solo='0' mono='0' muc='0' busa='1' busa2='1' busa3='0' busa4='0' busa5='0' busb='0' busb2='0' busb3='0' karaoke='0' dblevel='0.00' dblimit='12.00' layer1='0.00' layer2='0.00' layer3='0.00' layer4='0.00' layer5='0.00' layer6='0.00' layer7='0.00' layer8='0.00' />
+	<Strip index='7' mute='0' solo='0' mono='0' muc='0' busa='1' busa2='1' busa3='0' busa4='0' busa5='0' busb='0' busb2='0' busb3='0' karaoke='0' dblevel='-12.00' dblimit='12.00' layer1='-12.00' layer2='-12.00' layer3='-12.00' layer4='-12.00' layer5='-12.00' layer6='-12.00' layer7='-12.00' layer8='-12.00' />
 	<Strip index='7' sendR='0.00' postR='0' sendD='0.00' postD='0' sendFx1='0.00' postFx1='0' sendFx2='0.00' postFx2='0' />
 	<Strip index='7' EQGain1='0.00' EQGain2='0.00' EQGain3='0.00' Panel3Dx='0.000' Panel3Dy='0.000' />
 	<Strip index='8' mute='0' solo='0' mono='0' muc='0' busa='1' busa2='1' busa3='0' busa4='0' busa5='0' busb='0' busb2='0' busb3='0' karaoke='0' dblevel='-6.00' dblimit='-16.00' layer1='-6.00' layer2='-6.00' layer3='-6.00' layer4='-6.00' layer5='-6.00' layer6='-6.00' layer7='-6.00' layer8='-6.00' />

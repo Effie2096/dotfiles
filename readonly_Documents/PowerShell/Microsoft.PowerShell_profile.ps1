@@ -757,5 +757,7 @@ Set-PSReadLineKeyHandler -Chord 'Alt+x' `
 }
 
 . ([ScriptBlock]::Create((& scoop-search --hook | Out-String)))
-Remove-Alias cd
+
 Invoke-Expression (& { (zoxide init powershell | Out-String) })
+
+mise activate pwsh | Out-String | Invoke-Expression

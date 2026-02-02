@@ -2,9 +2,9 @@ watch_stylesheet: true
 watch_config: true
 debug: false
 komorebi:
-  start_command: "komorebic start --ahk"
-  stop_command: "komorebic stop --ahk"
-  reload_command: "komorebic stop --ahk && komorebic start --ahk"
+  start_command: "komorebic start --ahk --masir"
+  stop_command: "komorebic stop --ahk --masir"
+  reload_command: "komorebic stop --ahk --masir && komorebic start --ahk --masir"
 bars:
   primary-bar:
     enabled: true
@@ -35,19 +35,7 @@ bars:
     widgets:
       left: ["komorebi_workspaces", "komorebi_active_layout"]
       center: ["komorebi_stack"]
-      right: [
-          "media",
-          # "cava",
-          "systray",
-          # "bluetooth",
-          # "volume",
-          "weather",
-          # "github",
-          # "disk",
-          # "wallpapers",
-          # "power_menu",
-          "clock",
-        ]
+      right: ["media", "systray", "wallpapers", "weather", "clock"]
 widgets:
   bluetooth:
     type: "yasb.bluetooth.BluetoothWidget"
@@ -69,7 +57,7 @@ widgets:
         on_left: "toggle_label"
         on_right: "exec cmd.exe /c start ms-settings:bluetooth"
       label_shadow:
-        enabled: true
+        enabled: false
         color: "black"
         radius: 3
         offset: [1, 1]
@@ -110,7 +98,7 @@ widgets:
       label_workspace_populated_btn: "{name}"
       label_default_name: "{index}"
       label_zero_index: false
-      hide_empty_workspaces: false
+      hide_empty_workspaces: true
       hide_if_offline: false
       animation: true
       app_icons:
@@ -176,7 +164,7 @@ widgets:
     type: "komorebi.stack.StackWidget"
     options:
       label_offline: ""
-      label_window: "{process}"
+      label_window: "{title}"
       label_window_active: "{title}"
       label_no_window: ""
       label_zero_index: false
@@ -257,7 +245,6 @@ widgets:
         next_track: ""
         play: "<span>\uf001</span>"
         pause: "<span>\uf001</span>"
-
   active_window:
     type: "yasb.active_window.ActiveWindowWidget"
     options:
@@ -310,26 +297,6 @@ widgets:
         on_left: "toggle_group"
         on_middle: "toggle_label"
         on_right: "exec explorer C:\\" # Open disk C in file explorer
-  wallpapers:
-    type: "yasb.wallpapers.WallpapersWidget"
-    options:
-      label: "<span>\udb83\ude09</span>"
-      image_path: "E:\\Pictures\\Wallpapers"
-      change_automatically: false
-      update_interval: 60
-      gallery:
-        enabled: true
-        blur: true
-        image_width: 296
-        image_per_page: 6
-        show_buttons: true
-        orientation: "portrait"
-        image_spacing: 10
-        lazy_load: true
-        lazy_load_delay: 10
-        lazy_load_fadein: 200
-        image_corner_radius: 20
-        enable_cache: true
   power_menu:
     type: "yasb.power_menu.PowerMenuWidget"
     options:
@@ -398,6 +365,44 @@ widgets:
         color: "black"
         radius: 3
         offset: [1, 1]
+  wallpapers:
+    type: "yasb.wallpapers.WallpapersWidget"
+    options:
+      label: "<span>\udb83\ude09</span>"
+      # Example path to folder with images. Can be a single string or a list of strings.
+      # image_path: "C:\\Users\\{Username}\\Images"
+      image_path:
+        - "E:\\pictures\\Wallpapers"
+      change_automatically: false # Automatically change wallpaper
+      update_interval: 60 # If change_automatically is true, update interval in seconds
+      gallery:
+        enabled: true
+        blur: true
+        image_width: 440
+        image_per_page: 6
+        gallery_columns: 3 # 0 = auto, matches image_per_page for a single row
+        horizontal_position: "center" # left/center/right placement on screen
+        vertical_position: "center" # top/center/bottom placement
+        position_offset: 0 # minimum gap (px) from screen edges - see below for advanced options
+        respect_work_area: true # clamp to OS work area (avoids Windows taskbar)
+        show_buttons: false
+        orientation: "landscape"
+        image_spacing: 8
+        lazy_load: true
+        lazy_load_fadein: 400
+        image_corner_radius: 12
+      # run_after: # List of functions to run after wallpaper is updated
+      #   - "wal -s -t -e -q -n -i {image}" # Example command to run after wallpaper is updated
+      #   - "cmd.exe /c start /min pwsh ./yasb.ps1" # Example command to run after wallpaper is updated
+      label_shadow:
+        enabled: true
+        color: "black"
+        radius: 3
+        offset: [1, 1]
+      callbacks:
+        on_left: "toggle_gallery"
+        on_middle: "do_nothing"
+        on_right: "change_wallpaper"
   notifications:
     type: "yasb.notifications.NotificationsWidget"
     options:
@@ -410,7 +415,7 @@ widgets:
         on_right: "do_nothing"
         on_middle: "toggle_label"
       label_shadow:
-        enabled: true
+        enabled: false
         color: "black"
         radius: 3
         offset: [1, 1]
