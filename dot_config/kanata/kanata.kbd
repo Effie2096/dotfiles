@@ -39,7 +39,6 @@
   { S-[
   } S-]
   ? S-/
-
 )
 
 (defalias
@@ -124,10 +123,10 @@
 )
 
 (defchordsv2
-  (q w          ) (one-shot 500 lctl) 500 first-release (qwerty navigation symbols numbers function numpad)
-  (  w e        ) (one-shot 500 lsft) 500 first-release (qwerty navigation symbols numbers function numpad)
-  (        o p  ) (one-shot 500 rsft) 500 first-release (qwerty navigation symbols numbers function numpad)
-  (          p [) (one-shot 500 rctl) 500 first-release (qwerty navigation symbols numbers function numpad)
+  (q w          ) (one-shot 500 lctl) 250 first-release (qwerty navigation symbols numbers function numpad)
+  (  w e        ) (one-shot 500 lsft) 250 first-release (qwerty navigation symbols numbers function numpad)
+  (        o p  ) (one-shot 500 rsft) 250 first-release (qwerty navigation symbols numbers function numpad)
+  (          p [) (one-shot 500 rctl) 250 first-release (qwerty navigation symbols numbers function numpad)
 
 
   (1 2    ) @t[  40 first-release (qwerty navigation symbols numbers function numpad)

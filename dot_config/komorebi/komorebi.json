@@ -1,5 +1,5 @@
 {
-	"$schema": "https://raw.githubusercontent.com/LGUG2Z/komorebi/v0.1.38/schema.json",
+	"$schema": "https://raw.githubusercontent.com/LGUG2Z/komorebi/v0.1.39/schema.json",
 	"app_specific_configuration_path": "$Env:KOMOREBI_CONFIG_HOME/applications.json",
 	"display_index_preferences": {
 		"0": "ACR03E3-5&114d6bd7&0&UID4355",
@@ -20,7 +20,7 @@
 		"fps": 60,
 		"duration": 100
 	},
-	"mouse_follows_focus": false,
+	"mouse_follows_focus": true,
 	"transparency": false,
 	"transparency_alpha": 240,
 	"transparency_ignore_rules": [
@@ -60,10 +60,10 @@
 		"right": 0
 	},
 	"border": true,
-	"border_implementation": "Windows",
+	"border_implementation": "Komorebi",
 	"border_style": "System",
-	"border_width": 0,
-	"border_offset": 1,
+	"border_width": 5,
+	"border_offset": -1,
 	"theme": {
 		"palette": "Catppuccin",
 		"name": "Mocha",

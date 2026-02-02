@@ -12,7 +12,7 @@ config.font = wezterm.font_with_fallback({
 		weight = "Regular",
 	},
 	{
-		family = "Lilex Nerd Font Propo",
+		family = "Lilex Nerd Font",
 		weight = "Regular",
 	},
 	{
@@ -23,7 +23,7 @@ config.font = wezterm.font_with_fallback({
 })
 config.warn_about_missing_glyphs = false
 
-config.font_size = 10.5
+config.font_size = 11
 config.underline_thickness = "400%"
 config.underline_position = "200%"
 config.adjust_window_size_when_changing_font_size = false
@@ -63,14 +63,14 @@ end)
 local gui = wezterm.gui
 if gui then
 	for _, gpu in ipairs(gui.enumerate_gpus()) do
-		-- if gpu.backend == "Dx12" and gpu.device_type == "DiscreteGpu" then
-		-- 	config.webgpu_preferred_adapter = gpu
-		-- 	config.front_end = "WebGpu"
-		-- end
-		if gpu.backend == "Gl" and gpu.device_type == "DiscreteGpu" then
+		if gpu.backend == "Dx12" and gpu.device_type == "DiscreteGpu" then
 			config.webgpu_preferred_adapter = gpu
-			config.front_end = "OpenGL"
+			config.front_end = "WebGpu"
 		end
+		-- if gpu.backend == "Gl" and gpu.device_type == "DiscreteGpu" then
+		-- 	config.webgpu_preferred_adapter = gpu
+		-- 	config.front_end = "OpenGL"
+		-- end
 	end
 end
 
@@ -91,9 +91,108 @@ config.window_padding = {
 
 -- color schemes
 local light_scheme = "Catppuccin Latte"
-local dark_scheme = "Catppuccin Mocha"
+local dark_scheme = "Eldritch"
 
-config.color_scheme = dark_scheme
+local function read_file(path)
+	local f = io.open(path, "r")
+	if not f then
+		wezterm.log_error("Could not open file: " .. path)
+		return nil
+	end
+	local content = f:read("*a")
+	f:close()
+	return content
+end
+
+local function read_json(path)
+	local content = read_file(path)
+	if not content then
+		return {}
+	end
+	local ok, data = pcall(wezterm.json_parse, content)
+	if not ok then
+		wezterm.log_error("Error decoding JSON: " .. tostring(data))
+		return {}
+	end
+	return data
+end
+
+local astronomy = read_json(os.getenv("XDG_STATE_HOME") .. "/astronomy.json")
+
+local function seconds_until_theme_switch(current_hour, current_minute)
+	local minutes_per_day = 24 * 60
+	local current_total = current_hour * 60 + current_minute
+
+	local dark_total = (astronomy.today.sunset.hour * 60)
+		+ astronomy.today.sunset.minute
+	local light_total = (astronomy.today.sunrise.hour * 60)
+		+ astronomy.today.sunrise.minute
+
+	-- Time until each switch (mod to handle wraparound)
+	local until_dark = (dark_total - current_total) % minutes_per_day
+	local until_light = (light_total - current_total) % minutes_per_day
+
+	local next_minutes = math.min(
+		until_dark > 0 and until_dark or minutes_per_day,
+		until_light > 0 and until_light or minutes_per_day
+	)
+
+	return next_minutes * 60
+end
+
+local function time_to_seconds(hour, min)
+	return hour * 3600 + min * 60
+end
+
+local function now_in_seconds()
+	local now = os.date("*t")
+	return now.hour * 3600 + now.min * 60 + now.sec
+end
+
+local function get_scheme_for_time()
+	local now = now_in_seconds()
+	if
+		now
+			>= time_to_seconds(
+				astronomy.today.sunrise.hour,
+				astronomy.today.sunrise.minute
+			)
+		and now
+			< time_to_seconds(
+				astronomy.today.sunset.hour,
+				astronomy.today.sunset.minute
+			)
+	then
+		return light_scheme
+	else
+		return dark_scheme
+	end
+end
+
+-- schedule reload at next switch
+-- schedule a single reload at next switch
+local function schedule_next_switch()
+	if wezterm.GLOBAL_THEME_SCHEDULED then
+		wezterm.log_info("Theme switch already scheduled, skipping")
+		return
+	end
+
+	wezterm.GLOBAL_THEME_SCHEDULED = true
+	local hour = tonumber(os.date("%H"))
+	local minute = tonumber(os.date("%M"))
+	local delay = seconds_until_theme_switch(hour, minute)
+	wezterm.log_info("Scheduling next theme switch in " .. delay .. " seconds")
+
+	wezterm.time.call_after(delay, function()
+		wezterm.log_info("Triggering theme reload now")
+		wezterm.GLOBAL_THEME_SCHEDULED = false -- allow re-scheduling after reload
+		wezterm.reload_configuration()
+	end)
+end
+
+-- Set the initial scheme
+config.color_scheme = get_scheme_for_time()
+schedule_next_switch()
 
 -- config.color_scheme = dark_scheme
 config.force_reverse_video_cursor = true
@@ -113,7 +212,7 @@ config.background = {
 	},
 	{
 		source = {
-			File = "G:/pictures/flowers3.gif",
+			File = "E:/pictures/flowers3.gif",
 		},
 		opacity = 0.1,
 		width = 400 .. "px",
@@ -125,7 +224,7 @@ config.background = {
 	},
 	{
 		source = {
-			File = "G:/pictures/foggs/tatujapatuah.gif",
+			File = "E:/pictures/foggs/tatujapatuah.gif",
 		},
 		opacity = 0.1,
 		width = 100 * 1.5 .. "px",
@@ -139,7 +238,7 @@ config.background = {
 	},
 	{
 		source = {
-			File = "G:/pictures/foggs/xenia-2.png",
+			File = "E:/pictures/foggs/xenia-2.png",
 		},
 		opacity = 0.2,
 		width = 1452 / 4 .. "px",
@@ -151,7 +250,7 @@ config.background = {
 	},
 	{
 		source = {
-			File = "G:/pictures/foggs/foxlick.png",
+			File = "E:/pictures/foggs/foxlick.png",
 		},
 		opacity = 0.12,
 		width = 600 / 2 .. "px",
@@ -164,7 +263,7 @@ config.background = {
 	},
 	{
 		source = {
-			File = "G:/pictures/10thprestigebby.gif",
+			File = "E:/pictures/10thprestigebby.gif",
 		},
 		opacity = 0.1,
 		width = 200 / 2 .. "px",
@@ -178,7 +277,7 @@ config.background = {
 	},
 	{
 		source = {
-			File = "G:/pictures/weed-leaf.gif",
+			File = "E:/pictures/weed-leaf.gif",
 		},
 		opacity = 0.1,
 		width = 128 * 0.8 .. "px",
@@ -234,7 +333,7 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 	-- config.default_prog = { "wsl", "-d", "Arch" }
 	-- config.default_cwd = [[\\wsl$\Arch\home\effie]]
 	config.default_prog = { "nu" }
-	config.default_cwd = [[~]]
+	-- config.default_cwd = [[~]]
 end
 
 config.launch_menu = lm
