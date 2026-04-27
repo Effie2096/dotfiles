@@ -11,6 +11,7 @@ bin/ahk/
 bin/ahk/**
 AppData/
 AppData/**
+Documents/voicemeeter-settings.xml
 .config/komorebi/
 .config/komorebi/**
 .config/cmd/
@@ -23,4 +24,8 @@ default_inputrc
 default_settings
 .inputrc
 bin/scoop.bat
+{{- end }}
+
+{{ if ne .chezmoi.os "linux" }}
+.config/zellij/
 {{- end }}
