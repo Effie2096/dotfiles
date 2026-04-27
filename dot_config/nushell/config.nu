@@ -3,14 +3,26 @@ $env.XDG_DATA_HOME = ($env.HOME | path join .local/share)
 $env.XDG_STATE_HOME = ($env.HOME | path join .local/state)
 $env.XDG_CACHE_HOME = ($env.HOME | path join .cache)
 
-$env.EDITOR = "nvim"
+$env.Path = ($env.Path | prepend ($env.HOME | path join .cargo/bin))
 
+$env.EDITOR = "nvim"
 $env.CODESTATS_KEY = open --raw ($env.HOME | path join .secrets/codestats_key)
 
 $env.BW_SESSION = open --raw ($env.HOME | path join .secrets/bw_session)
 
 $env.BAT_CONFIG_DIR = ($env.XDG_CONFIG_HOME | path join bat)
 $env.YAZI_CONFIG_HOME = ($env.XDG_CONFIG_HOME | path join yazi)
+
+if not ("GEOCO" in $env) and not ("YASB_WEATHER_API_KEY" in $env) {
+	let weather_secrets = open --raw ($env.HOME | path join .secrets/weather)
+		| lines
+		| where $it !~ '^\s*(#|$)'
+		| parse "{key}={value}"
+		| transpose -r --as-record
+
+	load-env $weather_secrets
+	nu ($env.HOME | path join bin/astronomy.nu)
+}
 
 let astronomy = open ($env.XDG_STATE_HOME | path join astronomy.json)
 $env.CURRENT_THEME = "light"
@@ -31,6 +43,7 @@ def "set-alacritty-theme" [theme:string] {
 		| save --force $alacritty_conf_path
 }
 
+<<<<<<< HEAD
 def --env set-theme [] {
 	let now = date now
 	let today = $astronomy.today
