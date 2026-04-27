@@ -16,9 +16,9 @@
 	"resize_delta": 100,
 	"animation": {
 		"enabled": true,
-		"style": "EaseOutQuart",
+		"style": "EaseOutExpo",
 		"fps": 60,
-		"duration": 100
+		"duration": 200
 	},
 	"mouse_follows_focus": true,
 	"transparency": false,
@@ -52,14 +52,8 @@
 	],
 	"cross_monitor_move_behaviour": "Insert",
 	"default_workspace_padding": 4,
-	"default_container_padding": 2,
-	"global_work_area_offset": {
-		"top": 0,
-		"bottom": 0,
-		"left": 0,
-		"right": 0
-	},
-	"border": true,
+	"default_container_padding": 6,
+	"border": false,
 	"border_implementation": "Komorebi",
 	"border_style": "System",
 	"border_width": 5,
@@ -68,19 +62,19 @@
 		"palette": "Catppuccin",
 		"name": "Mocha",
 		"bar_accent": "Pink",
-		"monocle_accent": "Mauve",
-		"single_border": "Pink",
-		"stackbar_focused_text": "Pink"
+		"stackbar_focused_text": "Pink",
+		"stackbar_unfocused_text": "Subtext0",
+		"stackbar_background": "Base",
+		"floating_border": "Yellow",
+		"stack_border": "Green",
+		"monocle_border": "Mauve"
 	},
 	"stackbar": {
-		"height": 24,
-		"mode": "Never",
+		"height": 20,
+		"mode": "OnStack",
 		"label": "Title",
 		"tabs": {
-			"width": 300,
-			"focused_text": "#f5c2e7",
-			"unfocused_text": "#cdd6f4",
-			"background": "#1e1e2e"
+			"width": 300
 		}
 	},
 	"monitors": [
@@ -168,7 +162,17 @@
 						"scrolling": {
 							"columns": 1
 						}
-					}
+					},
+					"initial_workspace_rules": [
+						{
+							"kind": "Exe",
+							"id": "Discord.exe"
+						},
+						{
+							"kind": "Exe",
+							"id": "stoat-desktop.exe"
+						}
+					]
 				},
 				{
 					"name": "9",
@@ -209,12 +213,7 @@
 							"columns": 1
 						}
 					},
-					"initial_workspace_rules": [
-						{
-							"kind": "Exe",
-							"id": "Discord.exe"
-						}
-					]
+					"initial_workspace_rules": []
 				},
 				{
 					"name": "3",
@@ -395,6 +394,11 @@
 	"tray_and_multi_window_applications": [
 		{
 			"kind": "Exe",
+			"id": "qjackctl.exe",
+			"matching_strategy": "Equals"
+		},
+		{
+			"kind": "Exe",
 			"id": "cockatrice.exe",
 			"matching_strategy": "Equals"
 		},
@@ -439,6 +443,16 @@
 		}
 	],
 	"floating_applications": [
+		{
+			"kind": "Exe",
+			"id": "loopMIDI.exe",
+			"matching_strategy": "Equals"
+		},
+		{
+			"kind": "Exe",
+			"id": "qjackctl.exe",
+			"matching_strategy": "Equals"
+		},
 		{
 			"kind": "Exe",
 			"id": "Wow.exe",
@@ -795,6 +809,7 @@
 		]
 	],
 	"slow_application_identifiers": [],
+	"object_name_change_title_ignore_list": [],
 	"object_name_change_applications": [
 		{
 			"kind": "Exe",
@@ -818,6 +833,11 @@
 		}
 	],
 	"ignore_rules": [
+		{
+			"kind": "Exe",
+			"id": "MusicBee.exe",
+			"matching_strategy": "Equals"
+		},
 		{
 			"kind": "Exe",
 			"id": "RoR.exe",

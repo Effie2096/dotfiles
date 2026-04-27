@@ -49,62 +49,6 @@ Set-PSReadLineOption -HistorySearchCursorMovesToEnd
 Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
 Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
 
-# This key handler shows the entire or filtered history using Out-GridView. The
-# typed text is used as the substring pattern for filtering. A selected command
-# is inserted to the command line without invoking. Multiple command selection
-# is supported, e.g. selected by Ctrl + Click.
-Set-PSReadLineKeyHandler -Key F7 `
-	-BriefDescription History `
-	-LongDescription 'Show command history' `
-	-ScriptBlock {
-	$pattern = $null
-	[Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$pattern, [ref]$null)
-	if ($pattern)
-	{
-		$pattern = [regex]::Escape($pattern)
-	}
-
-	$history = [System.Collections.ArrayList]@(
-		$last = ''
-		$lines = ''
-		foreach ($line in [System.IO.File]::ReadLines((Get-PSReadLineOption).HistorySavePath))
-		{
-			if ($line.EndsWith('`'))
-			{
-				$line = $line.Substring(0, $line.Length - 1)
-				$lines = if ($lines)
-				{
-					"$lines`n$line"
-				} else
-				{
-					$line
-				}
-				continue
-			}
-
-			if ($lines)
-			{
-				$line = "$lines`n$line"
-				$lines = ''
-			}
-
-			if (($line -cne $last) -and (!$pattern -or ($line -match $pattern)))
-			{
-				$last = $line
-				$line
-			}
-		}
-	)
-	$history.Reverse()
-
-	$command = $history | Out-GridView -Title History -PassThru
-	if ($command)
-	{
-		[Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
-		[Microsoft.PowerShell.PSConsoleReadLine]::Insert(($command -join "`n"))
-	}
-}
-
 # This is an example of a macro that you might use to execute a command.
 # This will add the command to history.
 Set-PSReadLineKeyHandler -Key Ctrl+b `
@@ -116,29 +60,9 @@ Set-PSReadLineKeyHandler -Key Ctrl+b `
 	[Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
 }
 
-# In Emacs mode - Tab acts like in bash, but the Windows style completion
-# is still useful sometimes, so bind some keys so we can do both
-Set-PSReadLineKeyHandler -Key Ctrl+q -Function TabCompleteNext
-Set-PSReadLineKeyHandler -Key Ctrl+Q -Function TabCompletePrevious
-
 # Clipboard interaction is bound by default in Windows mode, but not Emacs mode.
 Set-PSReadLineKeyHandler -Key Ctrl+C -Function Copy
 Set-PSReadLineKeyHandler -Key Ctrl+v -Function Paste
-
-# CaptureScreen is good for blog posts or email showing a transaction
-# of what you did when asking for help or demonstrating a technique.
-Set-PSReadLineKeyHandler -Chord 'Ctrl+d,Ctrl+c' -Function CaptureScreen
-
-# The built-in word movement uses character delimiters, but token based word
-# movement is also very useful - these are the bindings you'd use if you
-# prefer the token based movements bound to the normal emacs word movement
-# key bindings.
-Set-PSReadLineKeyHandler -Key Alt+d -Function ShellKillWord
-Set-PSReadLineKeyHandler -Key Alt+Backspace -Function ShellBackwardKillWord
-Set-PSReadLineKeyHandler -Key Alt+b -Function ShellBackwardWord
-Set-PSReadLineKeyHandler -Key Alt+f -Function ShellForwardWord
-Set-PSReadLineKeyHandler -Key Alt+B -Function SelectShellBackwardWord
-Set-PSReadLineKeyHandler -Key Alt+F -Function SelectShellForwardWord
 
 #region Smart Insert/Delete
 
@@ -759,5 +683,15 @@ Set-PSReadLineKeyHandler -Chord 'Alt+x' `
 . ([ScriptBlock]::Create((& scoop-search --hook | Out-String)))
 
 Invoke-Expression (& { (zoxide init powershell | Out-String) })
+
+function y {
+	$tmp = (New-TemporaryFile).FullName
+	yazi $args --cwd-file="$tmp"
+	$cwd = Get-Content -Path $tmp -Encoding UTF8
+	if ($cwd -ne $PWD.Path -and (Test-Path -LiteralPath $cwd -PathType Container)) {
+		Set-Location -LiteralPath (Resolve-Path -LiteralPath $cwd).Path
+	}
+	Remove-Item -Path $tmp
+}
 
 mise activate pwsh | Out-String | Invoke-Expression

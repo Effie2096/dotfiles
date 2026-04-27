@@ -3,6 +3,16 @@
 
 ConfigPath := EnvGet("KOMOREBI_CONFIG_HOME")
 
+Movement := Map(
+	"Left", "m",
+	"Down", "n",
+	"Up", "e",
+	"Right", "i",
+	"MonLeft", "o",
+	"MonRight", "u",
+)
+
+; # Win | ^ Ctrl | ! Alt | + Shift
 Groups := Map(
 	"Meta", [
 		{ bind: "#^!r", desc: "Restart Komorebi", cb: (*) => (Komorebic("stop --ahk"), Komorebic("start --ahk")), arg: "" },
@@ -11,20 +21,20 @@ Groups := Map(
 		{ bind: "#!b", desc: "Toggle Status Bar", cb: toggle_yasb },
 	],
 	"Apps", [
-		{ bind: "#e", desc: "Open File Explorer", cb: Run, arg: "explorer.exe" },
+		{ bind: "#y", desc: "Open File Explorer", cb: Run, arg: "explorer.exe" },
 		{ bind: "#Enter", desc: "Open Terminal", cb: RunHidden, arg: "wezterm.exe" }
 	],
 	"Focus Windows", [
-		{ bind: "#h", desc: "Left", cb: Komorebic, arg: "focus left" },
-		{ bind: "#j", desc: "Down", cb: Komorebic, arg: "focus down" },
-		{ bind: "#k", desc: "Up", cb: Komorebic, arg: "focus up" },
-		{ bind: "#l", desc: "Right", cb: Komorebic, arg: "focus right" },
+		{ bind: format("#{1}", Movement["Left"]), desc: "Left", cb: Komorebic, arg: "focus left" },
+		{ bind: format("#{1}", Movement["Down"]), desc: "Down", cb: Komorebic, arg: "focus down" },
+		{ bind: format("#{1}", Movement["Up"]), desc: "Up", cb: Komorebic, arg: "focus up" },
+		{ bind: format("#{1}", Movement["Right"]), desc: "Right", cb: Komorebic, arg: "focus right" },
 	],
 	"Move Windows", [
-		{ bind: "#+h", desc: "Left", cb: Komorebic, arg: "move left" },
-		{ bind: "#+j", desc: "Down", cb: Komorebic, arg: "move down" },
-		{ bind: "#+k", desc: "Up", cb: Komorebic, arg: "move up" },
-		{ bind: "#+l", desc: "Right", cb: Komorebic, arg: "move right" },
+		{ bind: format("#+{1}", Movement["Left"]), desc: "Left", cb: Komorebic, arg: "move left" },
+		{ bind: format("#+{1}", Movement["Down"]), desc: "Down", cb: Komorebic, arg: "move down" },
+		{ bind: format("#+{1}", Movement["Up"]), desc: "Up", cb: Komorebic, arg: "move up" },
+		{ bind: format("#+{1}", Movement["Right"]), desc: "Right", cb: Komorebic, arg: "move right" },
 		{ bind: "#+p", desc: "Promote", cb: Komorebic, arg: "promote" },
 	],
 	"Move windows across workspaces", [
@@ -55,10 +65,9 @@ Groups := Map(
 		{ bind: "#+_", desc: "Decrease Vertical", cb: Komorebic, arg: "resize-axis vertical decrease" },
 	],
 	"Window State", [
-		{ bind: "#f", desc: "Toggle Float", cb: Komorebic, arg: "toggle-float" },
-		{ bind: "#m", desc: "Toggle Monocle", cb: Komorebic, arg: "toggle-monocle" },
-		{ bind: "#+m", desc: "Maximize", cb: Komorebic, arg: "toggle-maximize" },
-		{ bind: "#+n", desc: "Minimize", cb: Komorebic, arg: "minimize" },
+		{ bind: "#+f", desc: "Toggle Float", cb: Komorebic, arg: "toggle-float" },
+		{ bind: "#f", desc: "Toggle Focus", cb: Komorebic, arg: "toggle-monocle" },
+		{ bind: "#.", desc: "Minimize", cb: Komorebic, arg: "minimize" },
 		{ bind: "#c", desc: "Close", cb: Komorebic, arg: "close" },
 		{ bind: "#!l", desc: "Lock Container", cb: Komorebic, arg: "toggle-lock" },
 	],
@@ -68,8 +77,8 @@ Groups := Map(
 		{ bind: "#g", desc: "Grid", cb: Komorebic, arg: "change-layout grid" },
 		{ bind: "#x", desc: "Flip Horizontal", cb: Komorebic, arg: "flip-layout horizontal" },
 		{ bind: "#v", desc: "Flip Vertical", cb: Komorebic, arg: "flip-layout vertical" },
-		{ bind: "#!o", desc: "Next Layout", cb: Komorebic, arg: "cycle-layout next" },
-		{ bind: "#!i", desc: "Previous Layout", cb: Komorebic, arg: "cycle-layout previous" },
+		{ bind: format("#!{1}", Movement["MonRight"]), desc: "Next Layout", cb: Komorebic, arg: "cycle-layout next" },
+		{ bind: format("#!{1}", Movement["MonLeft"]), desc: "Previous Layout", cb: Komorebic, arg: "cycle-layout previous" },
 		{ bind: "#!=", desc: "Increase Scroll Columns", cb: Nukomo, arg: "scroll-columns increase" },
 		{ bind: "#!-", desc: "Decrease Scroll Columns", cb: Nukomo, arg: "scroll-columns decrease" },
 	],
@@ -84,15 +93,15 @@ Groups := Map(
 		{ bind: "#8", desc: "Focus Workspace 8", cb: Focus_Workspace, arg: "focus-workspace 7" },
 		{ bind: "#9", desc: "Focus Workspace 9", cb: Focus_Workspace, arg: "focus-workspace 8" },
 		{ bind: "#0", desc: "Focus Workspace 10", cb: Focus_Workspace, arg: "focus-workspace 9" },
-
-		{ bind: "#+f", desc: "Toggle Workspace Float Override", cb: Komorebic, arg: "toggle-workspace-float-override" },
-		{ bind: "#!f", desc: "Toggle Workspace Layer", cb: Komorebic, arg: "toggle-workspace-layer" },
+		{ bind: "#!f", desc: "Toggle Workspace Float Override", cb: Komorebic, arg: "toggle-workspace-float-override" },
+		{ bind: "#^f", desc: "Toggle Workspace Layer", cb: Komorebic, arg: "toggle-workspace-layer" },
 	],
 	"Monitors", [
-		{ bind: "#i", desc: "Focus Monitor Left", cb: Komorebic, arg: "cycle-monitor previous" },
-		{ bind: "#o", desc: "Focus Monitor Right", cb: Komorebic, arg: "cycle-monitor next" },
-		{ bind: "#+i", desc: "Move Window to Monitor Left", cb: Komorebic, arg: "cycle-move-to-monitor previous" },
-		{ bind: "#+o", desc: "Move Window to Monitor Right", cb: Komorebic, arg: "cycle-move-to-monitor next" },
+		{ bind: format("#{1}", Movement["MonLeft"]), desc: "Focus Monitor Left", cb: Komorebic, arg: "cycle-monitor previous" },
+		{ bind: format("#{1}", Movement["MonRight"]), desc: "Focus Monitor Right", cb: Komorebic, arg: "cycle-monitor next" },
+		{ bind: format("#+{1}", Movement["MonLeft"]), desc: "Move Window to Monitor Left", cb: Komorebic, arg: "cycle-move-to-monitor previous" },
+		{ bind: format("#+{1}", Movement["MonRight"]), desc: "Move Window to Monitor Right", cb: Komorebic, arg: "cycle-move-to-monitor next" },
+		{ bind: "#+s", desc: "Toggle Side Offset for Current", cb: Nukomo, arg: "side-offset" },
 	],
 	"Debug", [
 		{ bind: "#+r", desc: "Retile Windows", cb: Komorebic, arg: "retile" },
@@ -100,6 +109,31 @@ Groups := Map(
 		{ bind: "#+a", desc: "Unmanage Window", cb: Komorebic, arg: "unmanage" },
 	]
 )
+
+validate_keymaps() {
+	keysHash := Map()
+	for group, hotkeys in Groups {
+		for hk in hotkeys {
+			if (!keysHash.Has(hk.bind)) {
+				keysHash[(hk.bind)] := { group: group, desc: hk.desc }
+			} else {
+				extra :=
+					format("`t{1}:`n`t`t{2}: {3}`n`t{4}:`n`t`t{5}: {6}",
+						keysHash.Get(hk.bind)
+						.group, hk.bind, keysHash.get(hk.bind)
+						.desc,
+						group, hk.bind, hk.desc)
+				throw Error("duplicate binding " hk.bind, "komorebi.ahk", extra)
+			}
+		}
+	}
+}
+try {
+	validate_keymaps()
+} catch as err {
+	MsgBox Format("{1}: {2}.`n`n`nWhat:`t{3}`nExtra:`n{4}"
+		, type(err), err.Message, err.What, err.Extra)
+}
 
 hotkey_callback(spec) {
 	cb := spec.cb
@@ -147,16 +181,15 @@ toggle_yasb() {
 		Nukomo("bar-offset")
 	} else {
 		Yasb("show-bar")
-		Komorebic("global-work-area-offset -- 0 0 0 0")
+		Nukomo("bar-offset")
 	}
 }
 
 GuiTitle := "Komorebi - Hotkeys"
 HotkeyGUI := Gui("+AlwaysOnTop -Caption +ToolWindow -Resize", GuiTitle)
-HotkeyGUI.BackColor := "1E1E2E"  ; Can be any RGB color (it will be made transparent below).
+HotkeyGUI.BackColor := "1E1E2E"
 HotkeyGUI.SetFont("s14 w700")
-HotkeyGUI.Add("Text", "cF5C2E7", "Komorebi - Hotkeys")  ; XX & YY serve to auto-size the window.
-; Make all pixels of this color transparent and make the text itself translucent (150):
+HotkeyGUI.Add("Text", "cF5C2E7", "Komorebi - Hotkeys")
 
 sub_keysym(hk) {
 	str := hk
@@ -183,21 +216,24 @@ for group, hotkeys in Groups {
 	}
 	ypad += 10
 	HotkeyGUI.SetFont("s12 w700")
-	HotkeyGUI.Add("Text", format("cF5C2E7 x{} y{}", x + xpad, (y*lineHeight)+lineHeight + ypad), format("{}", group))
+	HotkeyGUI.Add("Text", format("cF5C2E7 x{} y{}", x + xpad, (y * lineHeight) + lineHeight + ypad), format("{}", group))
 	y += 1
 	for hk in hotkeys {
 		doffset := (x + colWidth) - StrLen(hk.desc)
 		HotkeyGUI.SetFont("s12 w400")
-		HotkeyGUI.AddText(format( "x{} y{} w{} +Left cCDD6F4", x + xpad, (y*lineHeight) + lineHeight + ypad, colWidth - descWidth), sub_keysym(hk.bind))
-		HotkeyGUI.AddText(format( "x{} y{} w{} +Right cCDD6F4", x + xpad + colWidth - descWidth - xpad, (y*lineHeight) + lineHeight + ypad, descWidth), hk.desc)
+		HotkeyGUI.AddText(format("x{} y{} w{} +Left cCDD6F4", x + xpad, (y * lineHeight) + lineHeight + ypad, colWidth - descWidth), sub_keysym(hk.bind))
+		HotkeyGUI.AddText(format("x{} y{} w{} +Right cCDD6F4", x + xpad + colWidth - descWidth - xpad, (y * lineHeight) + lineHeight + ypad, descWidth), hk.desc)
 		y += 1
 	}
 }
+
 toggle_help() {
 	If WinExist("ahk_id" HotkeyGUI.Hwnd) {
 		HotkeyGUI.Hide()
 	} Else {
 		HotkeyGUI.Show()
+		WinGetClientPos(&gX, &gY, &gWidth, &gHeight, HotkeyGUI.Hwnd)
+		WinSetRegion(Format("0-0 w{1} h{2} r30-30", gWidth, gHeight), HotkeyGUI.Hwnd)
 	}
 }
 

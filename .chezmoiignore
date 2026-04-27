@@ -1,8 +1,24 @@
+
+.ssh/
+.ssh/**
+.secrets/
+.secrets/**
+.keys/
+.keys/**
+
 {{- if ne .chezmoi.os "windows" }}
+bin/ahk/
+bin/ahk/**
 AppData/
+AppData/**
 .config/komorebi/
+.config/komorebi/**
 .config/cmd/
+.config/cmd/**
 .config/yasb/
+.config/yasb/**
+.config/tacky-borders/
+.config/tacky-borders/**
 default_inputrc
 default_settings
 .inputrc

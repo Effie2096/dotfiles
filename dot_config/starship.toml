@@ -4,8 +4,7 @@ format = """
 [ ]()$directory$git_branch$git_commit$git_state$git_metrics$git_status$python$ruby\
 [$fill](hidden) \
 [[ ](bg:#5bcffa)[ ](bg:#ffb5cd)[ ](bg:#ffffff)[ ](bg:#ffb5cd)[ ](bg:#5bcffa) ](bold)$line_break\
-[ ]()$character
-"""
+[ ]()$character"""
 right_format = "$container$shlvl$shell$mise"
 add_newline = false
 command_timeout = 2000
@@ -126,11 +125,11 @@ format = "[$symbol$shlvl]($style) "
 
 [mise]
 disabled = false
-symbol = 'mise '
-style = 'bold purple'
-healthy_symbol = ' '
-unhealthy_symbol = ' '
-format = '| [$symbol$health]($style)'
+symbol = "mise "
+style = "bold purple"
+healthy_symbol = " "
+unhealthy_symbol = " "
+format = "| [$symbol$health]($style)"
 
 [aws]
 symbol = " "

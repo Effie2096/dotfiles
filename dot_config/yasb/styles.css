@@ -457,3 +457,74 @@
 .yasb.dark .wallpapers-gallery-window {
 	background-color: var(--mocha-overlay0);
 }
+
+.pomodoro-widget {
+	padding: 0;
+}
+.pomodoro-menu {
+	background-color: var(--latte-surface);
+	color: var(--latte-subtext1);
+}
+.yasb.dark .pomodoro-menu {
+	background-color: var(--mocha-surface);
+	color: var(--mocha-subtext1);
+}
+.pomodoro-menu .header {
+	font-size: 16px;
+	font-weight: 600;
+	max-height: 0px;
+	color: var(--latte-subtext1);
+}
+.yasb.dark .pomodoro-menu .header {
+	color: var(--mocha-subtext1);
+}
+.pomodoro-menu .status {
+	font-size: 18px;
+	font-weight: 600;
+	color: var(--latte-subtext0);
+}
+.yasb.dark .pomodoro-menu .status {
+	color: var(--mocha-subtext0);
+}
+.pomodoro-menu .session {
+	font-size: 12px;
+	color: var(--latte-subtext0);
+}
+.yasb.dark .pomodoro-menu .session {
+	color: var(--mocha-subtext0);
+}
+.pomodoro-widget .label.paused,
+.pomodoro-widget .icon.paused {
+	color: var(--latte-surface0);
+}
+.yasb.dark .pomodoro-widget .label.paused,
+.yasb.dark .pomodoro-widget .icon.paused {
+	color: var(--mocha-surface0);
+}
+.pomodoro-widget .label.work,
+.pomodoro-widget .icon.work {
+	color: var(--latte-green);
+}
+.yasb.dark .pomodoro-widget .label.work,
+.yasb.dark .pomodoro-widget .icon.work {
+	color: var(--mocha-green);
+}
+.pomodoro-widget .label.break,
+.pomodoro-widget .icon.break {
+	color: var(--latte-sapphire);
+}
+.yasb.dark .pomodoro-widget .label.break,
+.yasb.dark .pomodoro-widget .icon.break {
+	color: var(--mocha-sapphire);
+}
+.pomodoro-menu .button {
+	background-color: var(--latte-pink);
+	color: var(--latte-base);
+	border: none;
+	border-radius: 4px;
+	padding: 6px 12px;
+}
+.yasb.dark .pomodoro-menu .button {
+	background-color: var(--mocha-pink);
+	color: var(--mocha-base);
+}

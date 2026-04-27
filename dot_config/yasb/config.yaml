@@ -34,8 +34,8 @@ bars:
       right: 0
     widgets:
       left: ["komorebi_workspaces", "komorebi_active_layout"]
-      center: ["komorebi_stack"]
-      right: ["media", "systray", "wallpapers", "weather", "clock"]
+      center: ["active_window"]
+      right: ["media", "systray", "wallpapers", "weather", "pomodoro", "clock"]
 widgets:
   bluetooth:
     type: "yasb.bluetooth.BluetoothWidget"
@@ -66,11 +66,11 @@ widgets:
     options:
       label: "<span>\udb80\udf5c</span>"
       menu_list:
-        - { title: "Home", path: "~" }
-        - { title: "Downloads", path: "E:\\Downloads" }
-        - { title: "Documents", path: "~\\Documents" }
-        - { title: "Pictures", path: "~\\Pictures" }
-        - { title: "Videos", path: "~\\Videos" }
+        - {title: "Home", path: "~"}
+        - {title: "Downloads", path: "E:\\Downloads"}
+        - {title: "Documents", path: "~\\Documents"}
+        - {title: "Pictures", path: "~\\Pictures"}
+        - {title: "Videos", path: "~\\Videos"}
       system_menu: true
       power_menu: false
       blur: true
@@ -197,27 +197,34 @@ widgets:
     type: "yasb.weather.WeatherWidget"
     options:
       label: "<span>{icon}</span> {temp}"
-      label_alt: "<span>{icon}</span> {location}: Min {min_temp}, Max {max_temp}, Humidity {humidity}"
+      label_alt: >
+        <span>{icon}</span> {location}: Min {min_temp}, Max {max_temp},
+        Humidity {humidity}
       api_key: "env"
-      update_interval: 600 #Update interval in seconds, Min 600
+      update_interval: 600  # Update interval in seconds, Min 600
       units: "metric"
       hide_decimal: true
-      location: "UK Peterhead AB42 3EX"
+      location: "env"
       callbacks:
         on_left: "toggle_card"
         on_middle: "toggle_label"
         on_right: "do_nothing"
       icons:
-        sunnyDay: "\udb81\udd99"
-        clearNight: "\udb81\udd99"
-        cloudyDay: "\udb81\udd99"
-        cloudyNight: "\udb81\udd99"
-        rainyDay: "\udb81\udd99"
-        rainyNight: "\udb81\udd99"
-        snowyIcyDay: "\udb81\udd99"
-        snowyIcyNight: "\udb81\udd99"
-        blizzardDay: "\udb81\udd99"
-        default: "\udb81\udd99"
+        sunnyDay: "\ue30d"
+        clearNight: "\ue32b"
+        cloudyDay: "\ue312"
+        cloudyNight: "\ue311"
+        rainyDay: "\ue308"
+        rainyNight: "\ue333"
+        snowyDay: "\ue30a"
+        snowyNight: "\ue335"
+        blizzardDay: "\udb83\udf36"
+        blizzardNight: "\udb83\udf36"
+        foggyDay: "\ue303"
+        foggyNight: "\ue346"
+        thunderstormDay: "\ue30f"
+        thunderstormNight: "\ue338"
+        default: "\uebaa"
   media:
     type: "yasb.media.MediaWidget"
     options:
@@ -249,7 +256,10 @@ widgets:
     type: "yasb.active_window.ActiveWindowWidget"
     options:
       label: "{win[title]}"
-      label_alt: "[class_name='{win[class_name]}' exe='{win[process][name]}' hwnd={win[hwnd]}]"
+      label_alt: >
+        [class_name='{win[class_name]}'
+        exe='{win[process][name]}'
+        hwnd={win[hwnd]}]
       label_no_window: ""
       label_icon: true
       label_icon_size: 14
@@ -262,11 +272,11 @@ widgets:
       label: "<span>{icon}</span> {level}"
       label_alt: "{volume}"
       volume_icons:
-        - "\ueee8" # Icon for muted
-        - "\uf026" # Icon for 0-10% volume
-        - "\uf027" # Icon for 11-30% volume
-        - "\uf027" # Icon for 31-60% volume
-        - "\uf028" # Icon for 61-100% volume
+        - "\ueee8"  # Icon for muted
+        - "\uf026"  # Icon for 0-10% volume
+        - "\uf027"  # Icon for 11-30% volume
+        - "\uf027"  # Icon for 31-60% volume
+        - "\uf028"  # Icon for 61-100% volume
       callbacks:
         on_right: "exec cmd.exe /c start ms-settings:sound"
   clock:
@@ -286,8 +296,8 @@ widgets:
       group_label:
         volume_labels: ["C", "D", "E", "F"]
         show_label_name: false
-        blur: True
-        round_corners: True
+        blur: true
+        round_corners: true
         round_corners_type: "small"
         border_color: "System"
         alignment: "right"
@@ -296,16 +306,16 @@ widgets:
       callbacks:
         on_left: "toggle_group"
         on_middle: "toggle_label"
-        on_right: "exec explorer C:\\" # Open disk C in file explorer
+        on_right: "exec explorer C:\\"  # Open disk C in file explorer
   power_menu:
     type: "yasb.power_menu.PowerMenuWidget"
     options:
       label: "\uf011"
-      uptime: True
-      blur: False
-      blur_background: True
-      animation_duration: 250 # Milisecond
-      button_row: 5 # Number of buttons in row, min 1 max 5
+      uptime: true
+      blur: talse
+      blur_background: true
+      animation_duration: 250  # Milisecond
+      button_row: 5  # Number of buttons in row, min 1 max 5
       buttons:
         signout: ["\udb80\udf43", "Sign out"]
         shutdown: ["\uf011", "Shut Down"]
@@ -326,23 +336,24 @@ widgets:
       bars_number: 8
       bar_spacing: 2
       bar_width: 4
+      framerate: 60
       sleep_timer: 0
       hide_empty: true
   github:
     type: "yasb.github.GithubWidget"
     options:
       label: "<span>\ueba1</span>"
-      label_alt: "Notifications {data}" # {data} return number of unread notification
-      token: env # GitHub Personal access tokens (classic) https://github.com/settings/tokens
-      max_notification: 20 # Max number of notification displaying in menu max: 50
-      only_unread: false # Show only unread or all notifications;
-      max_field_size: 54 # Max characters in title before truncation.
-      update_interval: 300 # Check for new notification in seconds
+      label_alt: "Notifications {data}"  # {data} return number of unread notification
+      token: env  # GitHub Personal access tokens (classic) https://github.com/settings/tokens
+      max_notification: 20  # Max number of notification displaying in menu max: 50
+      only_unread: false  # Show only unread or all notifications;
+      max_field_size: 54  # Max characters in title before truncation.
+      update_interval: 300  # Check for new notification in seconds
       menu:
-        blur: True # Enable blur effect for the menu
-        round_corners: True # Enable round corners for the menu (this option is not supported on Windows 10)
-        round_corners_type: "normal" # Set the type of round corners for the menu (normal, small) (this option is not supported on Windows 10)
-        border_color: "System" # Set the border color for the menu (this option is not supported on Windows 10)
+        blur: true  # Enable blur effect for the menu
+        round_corners: true  # Enable round corners for the menu (this option is not supported on Windows 10)
+        round_corners_type: "normal"  # Set the type of round corners for the menu (normal, small) (this option is not supported on Windows 10)
+        border_color: "System"  # Set the border color for the menu (this option is not supported on Windows 10)
         alignment: "right"
         direction: "down"
         distance: 6
@@ -352,9 +363,9 @@ widgets:
       class_name: "systray"
       label_collapsed: " \uf0d7 "
       label_expanded: " \uf0da "
-      label_position: "right" # Can be "left" or "right"
-      icon_size: 18 # Can be any integer between 8 and 64
-      pin_click_modifier: "alt" # Can be "ctrl", "alt" or "shift"
+      label_position: "right"  # Can be "left" or "right"
+      icon_size: 18  # Can be any integer between 8 and 64
+      pin_click_modifier: "alt"  # Can be "ctrl", "alt" or "shift"
       show_unpinned: false
       show_unpinned_button: true
       show_battery: false
@@ -372,19 +383,19 @@ widgets:
       # Example path to folder with images. Can be a single string or a list of strings.
       # image_path: "C:\\Users\\{Username}\\Images"
       image_path:
-        - "E:\\pictures\\Wallpapers"
-      change_automatically: false # Automatically change wallpaper
-      update_interval: 60 # If change_automatically is true, update interval in seconds
+        - "E:\\pictures\\Wallpapers\\standard"
+      change_automatically: false  # Automatically change wallpaper
+      update_interval: 60  # If change_automatically is true, update interval in seconds
       gallery:
         enabled: true
         blur: true
         image_width: 440
         image_per_page: 6
-        gallery_columns: 3 # 0 = auto, matches image_per_page for a single row
-        horizontal_position: "center" # left/center/right placement on screen
-        vertical_position: "center" # top/center/bottom placement
-        position_offset: 0 # minimum gap (px) from screen edges - see below for advanced options
-        respect_work_area: true # clamp to OS work area (avoids Windows taskbar)
+        gallery_columns: 3  # 0 = auto, matches image_per_page for a single row
+        horizontal_position: "center"  # left/center/right placement on screen
+        vertical_position: "center"  # top/center/bottom placement
+        position_offset: 0  # minimum gap (px) from screen edges - see below for advanced options
+        respect_work_area: true  # clamp to OS work area (avoids Windows taskbar)
         show_buttons: false
         orientation: "landscape"
         image_spacing: 8
@@ -419,3 +430,49 @@ widgets:
         color: "black"
         radius: 3
         offset: [1, 1]
+  pomodoro:
+    type: "yasb.pomodoro.PomodoroWidget"
+    options:
+      label: ""
+      label_alt: "{remaining} {session}/{total_sessions} - {status}"
+      work_duration: 25
+      break_duration: 5
+      long_break_duration: 15
+      long_break_interval: 4
+      auto_start_breaks: true
+      auto_start_work: false
+      sound_notification: true
+      show_notification: true
+      hide_on_break: false
+      session_target: 8
+      icons:
+        work: "\uf252"
+        break: "\uf253"
+        paused: "\uf254"
+      menu:
+        blur: true
+        round_corners: true
+        round_corners_type: "normal"
+        border_color: "System"
+        alignment: "center"
+        direction: "down"
+        offset_top: 6
+        offset_left: 0
+        circle_background_color: "#09ffffff"
+        circle_work_progress_color: "#209fb5"
+        circle_break_progress_color: "#40a02b"
+        circle_thickness: 8
+        circle_size: 160
+      callbacks:
+        on_left: "toggle_menu"
+        on_middle: "reset_timer"
+        on_right: "toggle_label"
+      progress_bar:
+        enabled: true
+        position: "left"
+        animation: true
+      label_shadow:
+        enabled: false
+        color: "black"
+        radius: 3
+        offset: [ 1, 1 ]

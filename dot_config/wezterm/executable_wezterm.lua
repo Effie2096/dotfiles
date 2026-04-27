@@ -23,10 +23,14 @@ config.font = wezterm.font_with_fallback({
 })
 config.warn_about_missing_glyphs = false
 
-config.font_size = 11
+config.font_size = 13
 config.underline_thickness = "400%"
 config.underline_position = "200%"
 config.adjust_window_size_when_changing_font_size = false
+config.window_content_alignment = {
+	horizontal = "Center",
+	vertical = "Center",
+}
 
 wezterm.on("user-var-changed", function(window, pane, name, value)
 	local overrides = window:get_config_overrides() or {}
@@ -63,14 +67,14 @@ end)
 local gui = wezterm.gui
 if gui then
 	for _, gpu in ipairs(gui.enumerate_gpus()) do
-		if gpu.backend == "Dx12" and gpu.device_type == "DiscreteGpu" then
-			config.webgpu_preferred_adapter = gpu
-			config.front_end = "WebGpu"
-		end
-		-- if gpu.backend == "Gl" and gpu.device_type == "DiscreteGpu" then
+		-- if gpu.backend == "Dx12" and gpu.device_type == "DiscreteGpu" then
 		-- 	config.webgpu_preferred_adapter = gpu
-		-- 	config.front_end = "OpenGL"
+		-- 	config.front_end = "WebGpu"
 		-- end
+		if gpu.backend == "Gl" and gpu.device_type == "DiscreteGpu" then
+			config.webgpu_preferred_adapter = gpu
+			config.front_end = "OpenGL"
+		end
 	end
 end
 
@@ -78,7 +82,6 @@ end
 config.initial_rows = 55
 config.initial_cols = 235
 config.window_decorations = "RESIZE"
--- config.win32_system_backdrop = "Acrylic"
 config.max_fps = 60
 config.animation_fps = 60
 config.cursor_blink_rate = 250
@@ -201,12 +204,13 @@ config.inactive_pane_hsb = {
 	brightness = 1.0,
 }
 
+config.win32_system_backdrop = "Acrylic"
 config.background = {
 	{
 		source = {
 			Color = wezterm.get_builtin_color_schemes()[config.color_scheme].background,
 		},
-		opacity = 0.89,
+		opacity = 0.90,
 		width = "100%",
 		height = "100%",
 	},
@@ -221,6 +225,7 @@ config.background = {
 		repeat_y = "NoRepeat",
 		horizontal_align = "Left",
 		vertical_align = "Bottom",
+		vertical_offset = "-2%",
 	},
 	{
 		source = {
@@ -323,12 +328,12 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 		args = { "pwsh", "-NoLogo" },
 	})
 	lm:add({
-		label = "Apollyon",
-		args = { "ssh", "effie@10.0.1.35" },
+		label = "Media Server",
+		args = { "ssh", "mediaserver" },
 	})
 	lm:add({
-		label = "Media Server",
-		args = { "ssh", "-p", "869", "effie@192.168.0.8" },
+		label = "Annie Server",
+		args = { "ssh", "apollyon" },
 	})
 	-- config.default_prog = { "wsl", "-d", "Arch" }
 	-- config.default_cwd = [[\\wsl$\Arch\home\effie]]
@@ -340,11 +345,33 @@ config.launch_menu = lm
 
 -- Tabs
 config.enable_tab_bar = true
-config.tab_bar_at_bottom = false
+config.tab_bar_at_bottom = true
 config.show_new_tab_button_in_tab_bar = false
 config.tab_max_width = 40
 config.hide_tab_bar_if_only_one_tab = false
 config.use_fancy_tab_bar = false
+
+local function toggle_scheme(window)
+	local overrides = window:get_config_overrides() or {}
+	local current = overrides.color_scheme
+	local next = current == light_scheme and dark_scheme or light_scheme
+	window:set_config_overrides({
+		color_scheme = next,
+	})
+end
+
+wezterm.on("augment-command-palette", function(window, pane)
+	return {
+		{
+			brief = "Change Color Scheme",
+			icon = "md_rename_box",
+
+			action = wezterm.action_callback(function(window2)
+				toggle_scheme(window2)
+			end),
+		},
+	}
+end)
 
 wezterm.on(
 	"format-tab-title",
@@ -550,12 +577,7 @@ config.keys = {
 	{
 		key = "&",
 		mods = "LEADER|SHIFT",
-		action = wezterm.action({ CloseCurrentTab = { confirm = true } }),
-	},
-	{
-		key = "x",
-		mods = "LEADER",
-		action = wezterm.action({ CloseCurrentPane = { confirm = true } }),
+		action = wezterm.action.CloseCurrentTab({ confirm = true }),
 	},
 
 	-- { key = "UpArrow", mods = "ALT", action = wezterm.action.ScrollByLine(-1) },

@@ -1,0 +1,47 @@
+[general]
+live_config_reload = true
+import = ["eldritch.toml"]
+working_directory = "C:/Users/Faith/"
+
+[terminal]
+shell = "nu"
+
+[window]
+decorations = "none"
+dynamic_padding = true
+opacity = 0.95
+
+[window.padding]
+x = 4
+y = 8
+
+[font]
+size = 13
+builtin_box_drawing = false
+
+[font.normal]
+family = "Iosevka NFP"
+style = "Regular"
+
+[mouse]
+hide_when_typing = true
+
+[bell]
+duration = 10
+color = "#f27be5"
+
+[bell.command]
+program = "ffplay"
+args = [
+    "~/.config/wezterm/bell.mp3",
+    "-autoexit",
+    "-nodisp",
+]
+
+[colors]
+transparent_background_colors = true
+
+[[keyboard.bindings]]
+key = "N"
+mods = "Control|Shift"
+action = "CreateNewWindow"

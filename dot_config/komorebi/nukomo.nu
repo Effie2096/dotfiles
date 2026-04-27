@@ -30,9 +30,22 @@ export def "main scroll-columns" [sizing: string]  {
 export def "main bar-offset" [] {
 	let monitors = (komorebic state | from json | get monitors.elements)
 
-	for monitor in $monitors {
-		let offset = $monitor | get work_area_size.top | into int
-		$"(komorebic global-work-area-offset -- 0 -($offset) 0 -($offset))"
-	}
+	let _ = $monitors | enumerate | each {|monitor|
+		let offset = $monitor.item | get work_area_offset | default {left: 0, top: 0, right: 0, bottom: 0}
+		| items {|key, value| {$key: ($value | into int)}}
+		| reduce {|$it, $acc| $acc | merge $it}
 
+		let new_offset = if ($offset.top == 0) { 24 } else { 0 }
+		(komorebic monitor-work-area-offset -- ($monitor.index) ($offset.left) -($new_offset) ($offset.right) -($new_offset))
+	}
+}
+
+export def "main side-offset" [] {
+	let monitor_idx = (komorebic query focused-monitor-index) | into int
+	let offset = (komorebic state | from json | get monitors.elements | get $monitor_idx | get work_area_offset | default {left: 0, top: 0, right: 0, bottom: 0})
+	# | items {|key, value| {$key: ($value | into int)}}
+	# | reduce {|$it, $acc| $acc | merge $it}
+
+	let new_offset = if ($offset.left == 0) { 650 } else { 0 }
+	(komorebic monitor-work-area-offset -- ($monitor_idx) ($new_offset) ($offset.top) ($new_offset) ($offset.bottom))
 }
