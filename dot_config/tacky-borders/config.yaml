@@ -205,7 +205,9 @@ window_rules:
   - match: Process
     name: "OverKeys"
     enabled: false
-
+  - match: Process
+    name: "winamp"
+    enabled: false
 # Example rule:
 # - match: Class                   # Match based on Class, Title, or Process
 #   name: "MozillaWindowClass"     # Class/title/process name to match
