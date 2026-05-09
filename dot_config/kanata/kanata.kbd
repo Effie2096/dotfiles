@@ -129,14 +129,14 @@
 )
 
 (defchordsv2
-  (t! modcho (q w            ) 30 (one-shot 2000 lctl))
-  (t! modcho (  w e          ) 30 @sft_caps)
-  (t! modcho (    e r        ) 30 (one-shot 2000 lalt))
-  (t! modcho (  w   r        ) 20 (one-shot 2000 lmet))
-  (t! modcho (        i   p  ) 20 (one-shot 2000 lmet))
-  (t! modcho (        i o    ) 30 (one-shot 2000 lalt))
-  (t! modcho (          o p  ) 30 @sft_caps)
-  (t! modcho (            p [) 30 (one-shot 2000 lctl))
+  (t! modcho (a s            ) 30 (one-shot 2000 lctl))
+  (t! modcho (  s d          ) 30 @sft_caps)
+  (t! modcho (    d f        ) 30 (one-shot 2000 lalt))
+  (t! modcho (  s   f        ) 20 (one-shot 2000 lmet))
+  (t! modcho (        k   ;  ) 20 (one-shot 2000 lmet))
+  (t! modcho (        k l    ) 30 (one-shot 2000 lalt))
+  (t! modcho (          l ;  ) 30 @sft_caps)
+  (t! modcho (            ; ') 30 (one-shot 2000 lctl))
 
   (t! modcho (1 2    ) 30 @{)
   (t! modcho (  2 3  ) 20 [)
