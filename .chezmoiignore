@@ -29,3 +29,14 @@ bin/scoop.bat
 {{ if ne .chezmoi.os "linux" }}
 .config/zellij/
 {{- end }}
+
+# TODO: niri config has cachyos specifc stuff for now
+{{ if ne .chezmoi.osRelease.id "cachyos" }}
+.config/niri/
+.config/niri/**
+.config/niri/cfg/
+.config/niri/cfg/**
+
+.config/noctalia/
+.config/noctalia/**
+{{- end }}
