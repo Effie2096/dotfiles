@@ -19,8 +19,10 @@ input {
     mouse {
         // If you want to disable Mouse Acceleration,
         // uncomment the lines below.
-        //accel-profile "flat"
-        //accel-speed 0.0
+        accel-profile "flat"
+        accel-speed 0.0
+
+        scroll-factor 0.5
     }
 
     focus-follows-mouse // Automatically focus windows under the mouse pointer

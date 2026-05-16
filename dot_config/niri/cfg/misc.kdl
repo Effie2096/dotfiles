@@ -1,25 +1,23 @@
-    prefer-no-csd
-    screenshot-path null
+prefer-no-csd
+screenshot-path "~/Pictures/Screenshots/Screenshot_%Y-%m-%d_%H-%M-%S.png"
+environment {
+    ELECTRON_OZONE_PLATFORM_HINT "auto"
+    QT_QPA_PLATFORM "wayland"
+    QT_QPA_PLATFORMTHEME "gtk3"
+    QT_WAYLAND_DISABLE_WINDOWDECORATION "1"
+    XDG_CURRENT_DESKTOP "niri"
+    XDG_SESSION_TYPE "wayland"
+    SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
+}
+cursor {
+    xcursor-theme "capitaine-cursors"
+    xcursor-size 24
+}
+debug {
+    // Allows notification actions and window activation from Noctalia.
+    honor-xdg-activation-with-invalid-serial
+}
+hotkey-overlay {
+    skip-at-startup
+}
 
-    environment {
-        ELECTRON_OZONE_PLATFORM_HINT "auto"
-        QT_QPA_PLATFORM "wayland"
-        QT_QPA_PLATFORMTHEME "gtk3"
-        QT_WAYLAND_DISABLE_WINDOWDECORATION "1"
-        XDG_CURRENT_DESKTOP "niri"
-        XDG_SESSION_TYPE "wayland"
-    }
-
-    cursor {
-        xcursor-theme "capitaine-cursors"
-        xcursor-size 24
-    }
-
-    debug {
-        // Allows notification actions and window activation from Noctalia.
-        honor-xdg-activation-with-invalid-serial
-    }
-
-    hotkey-overlay {
-       skip-at-startup
-    }
