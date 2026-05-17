@@ -1,22 +1,14 @@
 {
 	"$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
 	"logo": {
-		"type": "raw",
-		"source": "~/.config/fastfetch/out.sixel",
+		"type": "kitty-direct",
+		"source": "~/.config/media/pixel_fox_sit_side.png",
 		"width": 36,
-		"height": 14,
-		"padding": {
-			"top": 0,
-			"left": 1,
-			"right": 3
-		},
+		"height": 16,
 		"position": "left",
 		"printRemaining": true,
-		"color": {
-			"1": "38;5;202",
-			"2": "38;5;15",
-			"3": "38;5;94",
-			"4": "38;5;0"
+		"padding": {
+			"top": 2
 		}
 	},
 	"display": {
@@ -34,68 +26,110 @@
 			"key": "{$1}distro",
 			"keyColor": "38;5;202",
 			"type": "os",
+			"outputColor": "bright_green",
 			"format": "\"{name}\","
+		},
+		{
+			"type": "wm",
+			"key": "{$1}wm",
+			"keyColor": "38;5;202",
+			"outputColor": "bright_green",
+			"format": "\"{1}\""
 		},
 		{
 			"key": "{$1}wm",
 			"keyColor": "38;5;202",
 			"type": "command",
 			"text": "komorebi --version | head -1",
+			"outputColor": "bright_green",
 			"format": "\"{1}\","
 		},
 		{
 			"key": "{$1}cursor",
 			"keyColor": "38;5;202",
 			"type": "cursor",
+			"outputColor": "bright_green",
 			"format": "\"{1}\","
 		},
 		{
 			"key": "{$1}term",
 			"keyColor": "38;5;202",
+			"outputColor": "bright_green",
 			"format": "\"{pretty-name}\",",
 			"type": "terminal"
 		},
 		{
 			"key": "{$1}theme",
 			"keyColor": "38;5;202",
+			"outputColor": "bright_green",
 			"type": "terminaltheme",
 			"format": "\"{fg-color} - {bg-color}\","
 		},
 		{
 			"key": "{$1}font",
 			"keyColor": "38;5;202",
+			"outputColor": "bright_green",
 			"type": "terminalfont",
 			"format": "\"{name}\","
 		},
 		{
 			"key": "{$1}shell",
 			"keyColor": "38;5;202",
+			"outputColor": "bright_green",
 			"type": "shell",
 			"format": "\"{pretty-name}\","
 		},
 		{
 			"key": "{$1}packages",
 			"keyColor": "38;5;202",
+			"outputColor": "magenta",
 			"type": "packages",
 			"format": "{all},"
 		},
 		{
 			"key": "{$1}editor",
 			"keyColor": "38;5;202",
+			"outputColor": "bright_green",
 			"type": "editor",
 			"format": "\"{name}\","
 		},
 		{
 			"key": "{$1}cpu",
 			"keyColor": "38;5;202",
+			"outputColor": "bright_green",
 			"type": "cpu",
 			"format": "\"{name}\","
 		},
 		{
 			"key": "{$1}gpu",
 			"keyColor": "38;5;202",
+			"outputColor": "bright_green",
 			"type": "gpu",
 			"format": "\"{name}\","
+		},
+		{
+			"key": "{$1}network",
+			"keyColor": "38;5;202",
+			"type": "custom",
+			"format": "{"
+		},
+		{
+			"key": "{$1}{$1}int",
+			"keyColor": "38;5;202",
+			"outputColor": "bright_green",
+			"type": "localip",
+			"format": "\"{ifname}\","
+		},
+		{
+			"key": "{$1}{$1}ipv4",
+			"keyColor": "38;5;202",
+			"outputColor": "bright_green",
+			"type": "localip",
+			"format": "\"{ipv4}\","
+		},
+		{
+			"type": "custom",
+			"format": "  },"
 		},
 		{
 			"type": "custom",
@@ -103,9 +137,21 @@
 		},
 		"break",
 		{
+			"type": "player",
+			"key": "♫",
+			"format": "{name}"
+		},
+		{
+			"type": "media",
+			"key": " ",
+			"format": "{?artist}{artist} - {?}{title}",
+			"keyColor": "cyan"
+		},
+		"break",
+		{
 			"key": " ",
 			"type": "colors",
-			"symbol": "background"
+			"symbol": "circle"
 		}
 	]
 }
