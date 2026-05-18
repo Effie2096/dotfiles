@@ -36,7 +36,7 @@
         "visualizerType": "linear",
         "volumeFeedback": false,
         "volumeFeedbackSoundFile": "",
-        "volumeOverdrive": false,
+        "volumeOverdrive": true,
         "volumeStep": 5
     },
     "bar": {
@@ -47,9 +47,9 @@
         "capsuleColorKey": "none",
         "capsuleOpacity": 1,
         "contentPadding": 2,
-        "density": "default",
+        "density": "compact",
         "displayMode": "always_visible",
-        "enableExclusionZoneInset": true,
+        "enableExclusionZoneInset": false,
         "fontScale": 1,
         "frameRadius": 12,
         "frameThickness": 8,
@@ -63,7 +63,7 @@
         ],
         "mouseWheelAction": "none",
         "mouseWheelWrap": true,
-        "outerCorners": true,
+        "outerCorners": false,
         "position": "top",
         "reverseScroll": false,
         "rightClickAction": "controlCenter",
@@ -71,36 +71,13 @@
         "rightClickFollowMouse": true,
         "screenOverrides": [
         ],
-        "showCapsule": true,
+        "showCapsule": false,
         "showOnWorkspaceSwitch": true,
         "showOutline": false,
         "useSeparateOpacity": false,
         "widgetSpacing": 6,
         "widgets": {
             "center": [
-                {
-                    "characterCount": 2,
-                    "colorizeIcons": false,
-                    "emptyColor": "secondary",
-                    "enableScrollWheel": true,
-                    "focusedColor": "primary",
-                    "followFocusedScreen": false,
-                    "fontWeight": "bold",
-                    "groupedBorderOpacity": 1,
-                    "hideUnoccupied": false,
-                    "iconScale": 0.8,
-                    "id": "Workspace",
-                    "labelMode": "index+name",
-                    "occupiedColor": "secondary",
-                    "pillSize": 0.6,
-                    "showApplications": true,
-                    "showApplicationsHover": false,
-                    "showBadge": true,
-                    "showLabelsOnlyWhenOccupied": false,
-                    "unfocusedIconsOpacity": 1
-                }
-            ],
-            "left": [
                 {
                     "colorizeIcons": false,
                     "hideMode": "hidden",
@@ -111,25 +88,48 @@
                     "showText": true,
                     "textColor": "none",
                     "useFixedWidth": false
-                },
+                }
+            ],
+            "left": [
+                {
+                    "characterCount": 2,
+                    "colorizeIcons": false,
+                    "emptyColor": "secondary",
+                    "enableScrollWheel": true,
+                    "focusedColor": "primary",
+                    "followFocusedScreen": false,
+                    "fontWeight": "bold",
+                    "groupedBorderOpacity": 1,
+                    "hideUnoccupied": true,
+                    "iconScale": 0.8,
+                    "id": "Workspace",
+                    "labelMode": "index",
+                    "occupiedColor": "secondary",
+                    "pillSize": 0.6,
+                    "showApplications": true,
+                    "showApplicationsHover": false,
+                    "showBadge": true,
+                    "showLabelsOnlyWhenOccupied": false,
+                    "unfocusedIconsOpacity": 1
+                }
+            ],
+            "right": [
                 {
                     "compactMode": false,
                     "hideMode": "hidden",
                     "hideWhenIdle": false,
                     "id": "MediaMini",
-                    "maxWidth": 145,
+                    "maxWidth": 200,
                     "panelShowAlbumArt": true,
-                    "scrollingMode": "hover",
+                    "scrollingMode": "always",
                     "showAlbumArt": true,
                     "showArtistFirst": true,
                     "showProgressRing": true,
-                    "showVisualizer": false,
+                    "showVisualizer": true,
                     "textColor": "none",
                     "useFixedWidth": false,
                     "visualizerType": "linear"
-                }
-            ],
-            "right": [
+                },
                 {
                     "blacklist": [
                     ],
@@ -159,40 +159,11 @@
                     "showPowerProfiles": false
                 },
                 {
-                    "applyToAllMonitors": false,
-                    "displayMode": "onhover",
-                    "iconColor": "none",
-                    "id": "Brightness",
-                    "textColor": "none"
-                },
-                {
                     "displayMode": "onhover",
                     "iconColor": "none",
                     "id": "Volume",
                     "middleClickCommand": "pwvucontrol || pavucontrol",
                     "textColor": "none"
-                },
-                {
-                    "compactMode": true,
-                    "diskPath": "/",
-                    "iconColor": "none",
-                    "id": "SystemMonitor",
-                    "showCpuCores": false,
-                    "showCpuFreq": false,
-                    "showCpuTemp": true,
-                    "showCpuUsage": true,
-                    "showDiskAvailable": false,
-                    "showDiskUsage": false,
-                    "showDiskUsageAsPercent": false,
-                    "showGpuTemp": false,
-                    "showLoadAverage": false,
-                    "showMemoryAsPercent": false,
-                    "showMemoryUsage": true,
-                    "showNetworkStats": false,
-                    "showSwapUsage": false,
-                    "textColor": "none",
-                    "useMonospaceFont": true,
-                    "usePadding": false
                 },
                 {
                     "clockColor": "none",
@@ -220,7 +191,7 @@
         "backlightDeviceMappings": [
         ],
         "brightnessStep": 5,
-        "enableDdcSupport": false,
+        "enableDdcSupport": true,
         "enforceMinimum": true
     },
     "calendar": {
@@ -245,7 +216,7 @@
         "manualSunrise": "06:30",
         "manualSunset": "18:30",
         "monitorForColors": "",
-        "predefinedScheme": "Kanagawa",
+        "predefinedScheme": "Horizon",
         "schedulingMode": "location",
         "syncGsettings": true,
         "useWallpaperColors": false
@@ -357,7 +328,7 @@
         "animationDisabled": false,
         "animationSpeed": 1,
         "autoStartAuth": false,
-        "avatarImage": "/home/faith/.face",
+        "avatarImage": "/home/effie/.face",
         "boxRadiusRatio": 1,
         "clockFormat": "hh\\nmm",
         "clockStyle": "custom",
@@ -366,7 +337,7 @@
         "enableBlurBehind": true,
         "enableLockScreenCountdown": true,
         "enableLockScreenMediaControls": false,
-        "enableShadows": true,
+        "enableShadows": false,
         "forceBlackScreenCorners": false,
         "iRadiusRatio": 1,
         "keybinds": {
@@ -430,23 +401,23 @@
     },
     "idle": {
         "customCommands": "[]",
-        "enabled": true,
+        "enabled": false,
         "fadeDuration": 5,
         "lockCommand": "",
-        "lockTimeout": 660,
+        "lockTimeout": 0,
         "resumeLockCommand": "",
         "resumeScreenOffCommand": "",
         "resumeSuspendCommand": "",
         "screenOffCommand": "",
         "screenOffTimeout": 600,
         "suspendCommand": "",
-        "suspendTimeout": 1800
+        "suspendTimeout": 0
     },
     "location": {
         "analogClockInCalendar": false,
         "autoLocate": false,
         "firstDayOfWeek": -1,
-        "hideWeatherCityName": false,
+        "hideWeatherCityName": true,
         "hideWeatherTimezone": false,
         "name": "Peterhead, United Kingdom",
         "showCalendarEvents": true,
@@ -471,7 +442,7 @@
     "nightLight": {
         "autoSchedule": true,
         "dayTemp": "6500",
-        "enabled": false,
+        "enabled": true,
         "forced": false,
         "manualSunrise": "06:30",
         "manualSunset": "18:30",
@@ -482,7 +453,7 @@
         "disableWallpaper": true
     },
     "notifications": {
-        "backgroundOpacity": 1,
+        "backgroundOpacity": 0.85,
         "clearDismissed": true,
         "criticalUrgencyDuration": 15,
         "density": "default",
@@ -491,7 +462,7 @@
         "enableMarkdown": false,
         "enableMediaToast": false,
         "enabled": true,
-        "location": "top_right",
+        "location": "bottom_right",
         "lowUrgencyDuration": 3,
         "monitors": [
         ],
@@ -509,8 +480,8 @@
             "excludedApps": "discord,firefox,chrome,chromium,edge",
             "lowSoundFile": "",
             "normalSoundFile": "",
-            "separateSounds": false,
-            "volume": 0.5
+            "separateSounds": true,
+            "volume": 0.05
         }
     },
     "osd": {
@@ -647,7 +618,7 @@
     },
     "wallpaper": {
         "automationEnabled": false,
-        "directory": "/home/faith/Pictures/Wallpapers",
+        "directory": "/home/effie/Pictures/Wallpapers",
         "enableMultiMonitorDirectories": false,
         "enabled": true,
         "favorites": [
@@ -664,7 +635,7 @@
         "panelPosition": "follow_bar",
         "randomIntervalSec": 300,
         "setWallpaperOnAllMonitors": true,
-        "showHiddenFiles": false,
+        "showHiddenFiles": true,
         "skipStartupTransition": false,
         "solidColor": "#1a1a2e",
         "sortOrder": "name",
@@ -681,13 +652,13 @@
         "useOriginalImages": false,
         "useSolidColor": false,
         "useWallhaven": false,
-        "viewMode": "single",
+        "viewMode": "browse",
         "wallhavenApiKey": "",
         "wallhavenCategories": "111",
         "wallhavenOrder": "desc",
-        "wallhavenPurity": "100",
-        "wallhavenQuery": "",
-        "wallhavenRatios": "",
+        "wallhavenPurity": "000",
+        "wallhavenQuery": "fox",
+        "wallhavenRatios": "16x9",
         "wallhavenResolutionHeight": "",
         "wallhavenResolutionMode": "atleast",
         "wallhavenResolutionWidth": "",
