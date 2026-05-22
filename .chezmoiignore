@@ -28,6 +28,8 @@ bin/scoop.bat
 
 {{ if ne .chezmoi.os "linux" }}
 .config/zellij/
+.config/rofi/
+.config/rofi/**
 {{- end }}
 
 # TODO: niri config has cachyos specifc stuff for now
