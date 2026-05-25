@@ -1,3 +1,5 @@
+use std repeat
+
 mkdir ($nu.data-dir | path join "vendor/autoload")
 
 $env.EDITOR = "nvim"
@@ -64,11 +66,14 @@ use ($nu.default-config-dir | path join prompt.nu) [
   status_component
   time_component
   git_component
-  shell_component
 ]
 
 $env.PROMPT_COMMAND = { ||
   [
+    (ansi dark_gray_dimmed)
+    ("─" | repeat (tput cols | into int) | str join)
+    (ansi reset)
+    (char newline)
     (char space)
     (dir_component)
     (git_component)
@@ -101,11 +106,13 @@ def prompt_right [] {
       }
     )
     (time_component)
+    (char space)
   ] | str join
 }
 
-$env.PROMPT_COMMAND_RIGHT = {|| prompt_right }
+$env.PROMPT_COMMAND_RIGHT = ""
 $env.TRANSIENT_PROMPT_COMMAND_RIGHT = {|| prompt_right }
+
 
 def --wrapped scoop [...args] {
   if ($args | is-empty) {
@@ -149,7 +156,7 @@ $env.config.completions.external = {
 }
 
 # Load completions
-source ~/.config/nushell/completions/komorebic-completions.nu
+source ./completions/komorebic-completions.nu
 
 
 alias ll = ^eza --icons --color=always -GF -a --group-directories-first
@@ -212,4 +219,7 @@ $env.config.keybindings ++= [{
   ]
 }]
 
-(^tput cup (^tput lines) 0)
+if ($nu.is-interactive) {
+  (^tput cup (^tput lines) 0)
+  ^fastfetch
+}

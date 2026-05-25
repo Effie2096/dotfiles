@@ -1,7 +1,6 @@
 [general]
 live_config_reload = true
 import = ["eldritch.toml"]
-working_directory = "C:/Users/Faith/"
 
 [terminal]
 shell = "nu"
@@ -20,7 +19,7 @@ size = 13
 builtin_box_drawing = false
 
 [font.normal]
-family = "Iosevka NFP"
+family = "Iosevka NF"
 style = "Regular"
 
 [mouse]

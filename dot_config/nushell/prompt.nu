@@ -3,14 +3,18 @@ export def dir_component [] {
   if (($env.PWD | str starts-with $nu.home-dir)) {
     $prompt = $"($prompt | str replace $nu.home-dir "~")"
   }
-  $prompt
+  [
+    (ansi orange1)
+    $prompt
+    (ansi reset)
+  ] | str join
 }
 
 export def status_component [] {
   [
     (
       if $env.LAST_EXIT_CODE != 0 {
-        (ansi { fg: "#CC0000" })
+        (ansi red)
       } else {
         (ansi { fg: "#606060" })
       }
@@ -38,10 +42,16 @@ export def duration_component [] {
   )
 }
 
-export def shell_component [] {
-  (
-    $env.SHELL
-  )
+export def user_component [] {
+  [
+    (ansi magenta)
+    ($env.USER)
+    (ansi white)
+    "@"
+    (ansi blue)
+    (^hostname)
+    (ansi reset)
+  ] | str join
 }
 
 export def git_component [] {

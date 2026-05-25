@@ -3,20 +3,12 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
 local home = os.getenv("HOME")
-local data_folder = os.getenv("XDG_DATA_HOME") .. "/wezterm"
+local data_folder = home .. "/.local/share/" .. "/wezterm"
 
 -- Font
 config.font = wezterm.font_with_fallback({
 	{
-		family = "Iosevka NFP",
-		weight = "Regular",
-	},
-	{
-		family = "Lilex Nerd Font",
-		weight = "Regular",
-	},
-	{
-		family = "FiraCode Nerd Font",
+		family = "Iosevka NF",
 		weight = "Regular",
 	},
 	"Segoe UI Emoji",
@@ -32,6 +24,37 @@ config.window_content_alignment = {
 	vertical = "Center",
 }
 
+local gui = wezterm.gui
+if gui then
+	for _, gpu in ipairs(gui.enumerate_gpus()) do
+		-- if gpu.backend == "Dx12" and gpu.device_type == "DiscreteGpu" then
+		-- 	config.webgpu_preferred_adapter = gpu
+		-- 	config.front_end = "WebGpu"
+		-- end
+		if gpu.backend == "Gl" and gpu.device_type == "DiscreteGpu" then
+			config.webgpu_preferred_adapter = gpu
+			config.front_end = "OpenGL"
+		end
+		-- 	if gpu.backend == "Vulkan" and gpu.device_type == "DiscreteGpu" then
+		-- 		config.webgpu_preferred_adapter = gpu
+		-- 		config.front_end = "WebGpu"
+		-- 	end
+	end
+end
+
+-- Window
+config.initial_rows = 55
+config.initial_cols = 235
+config.window_decorations = "RESIZE"
+config.max_fps = 60
+config.animation_fps = 60
+config.cursor_blink_rate = 250
+config.window_padding = {
+	left = 0,
+	right = 0,
+	top = 0,
+	bottom = 0,
+}
 wezterm.on("user-var-changed", function(window, pane, name, value)
 	local overrides = window:get_config_overrides() or {}
 	if name == "ZEN_MODE" then
@@ -55,7 +78,7 @@ wezterm.on("user-var-changed", function(window, pane, name, value)
 	window:set_config_overrides(overrides)
 end)
 
-local bell_sound = wezterm.config_dir .. "/bell.mp3"
+local bell_sound = home .. "/.config/media/bell.mp3"
 config.audible_bell = "Disabled"
 wezterm.on("bell", function(
 	_ --[[window]],
@@ -64,23 +87,7 @@ wezterm.on("bell", function(
 	os.execute('ffplay "' .. bell_sound .. '" -autoexit -nodisp')
 end)
 
-local gui = wezterm.gui
-if gui then
-	for _, gpu in ipairs(gui.enumerate_gpus()) do
-		-- if gpu.backend == "Dx12" and gpu.device_type == "DiscreteGpu" then
-		-- 	config.webgpu_preferred_adapter = gpu
-		-- 	config.front_end = "WebGpu"
-		-- end
-		if gpu.backend == "Gl" and gpu.device_type == "DiscreteGpu" then
-			config.webgpu_preferred_adapter = gpu
-			config.front_end = "OpenGL"
-		end
-	end
-end
-
 -- Window
-config.initial_rows = 55
-config.initial_cols = 235
 config.window_decorations = "RESIZE"
 config.max_fps = 60
 config.animation_fps = 60
@@ -95,109 +102,8 @@ config.window_padding = {
 -- color schemes
 local light_scheme = "Catppuccin Latte"
 local dark_scheme = "Eldritch"
+config.color_scheme = dark_scheme
 
-local function read_file(path)
-	local f = io.open(path, "r")
-	if not f then
-		wezterm.log_error("Could not open file: " .. path)
-		return nil
-	end
-	local content = f:read("*a")
-	f:close()
-	return content
-end
-
-local function read_json(path)
-	local content = read_file(path)
-	if not content then
-		return {}
-	end
-	local ok, data = pcall(wezterm.json_parse, content)
-	if not ok then
-		wezterm.log_error("Error decoding JSON: " .. tostring(data))
-		return {}
-	end
-	return data
-end
-
-local astronomy = read_json(os.getenv("XDG_STATE_HOME") .. "/astronomy.json")
-
-local function seconds_until_theme_switch(current_hour, current_minute)
-	local minutes_per_day = 24 * 60
-	local current_total = current_hour * 60 + current_minute
-
-	local dark_total = (astronomy.today.sunset.hour * 60)
-		+ astronomy.today.sunset.minute
-	local light_total = (astronomy.today.sunrise.hour * 60)
-		+ astronomy.today.sunrise.minute
-
-	-- Time until each switch (mod to handle wraparound)
-	local until_dark = (dark_total - current_total) % minutes_per_day
-	local until_light = (light_total - current_total) % minutes_per_day
-
-	local next_minutes = math.min(
-		until_dark > 0 and until_dark or minutes_per_day,
-		until_light > 0 and until_light or minutes_per_day
-	)
-
-	return next_minutes * 60
-end
-
-local function time_to_seconds(hour, min)
-	return hour * 3600 + min * 60
-end
-
-local function now_in_seconds()
-	local now = os.date("*t")
-	return now.hour * 3600 + now.min * 60 + now.sec
-end
-
-local function get_scheme_for_time()
-	local now = now_in_seconds()
-	if
-		now
-			>= time_to_seconds(
-				astronomy.today.sunrise.hour,
-				astronomy.today.sunrise.minute
-			)
-		and now
-			< time_to_seconds(
-				astronomy.today.sunset.hour,
-				astronomy.today.sunset.minute
-			)
-	then
-		return light_scheme
-	else
-		return dark_scheme
-	end
-end
-
--- schedule reload at next switch
--- schedule a single reload at next switch
-local function schedule_next_switch()
-	if wezterm.GLOBAL_THEME_SCHEDULED then
-		wezterm.log_info("Theme switch already scheduled, skipping")
-		return
-	end
-
-	wezterm.GLOBAL_THEME_SCHEDULED = true
-	local hour = tonumber(os.date("%H"))
-	local minute = tonumber(os.date("%M"))
-	local delay = seconds_until_theme_switch(hour, minute)
-	wezterm.log_info("Scheduling next theme switch in " .. delay .. " seconds")
-
-	wezterm.time.call_after(delay, function()
-		wezterm.log_info("Triggering theme reload now")
-		wezterm.GLOBAL_THEME_SCHEDULED = false -- allow re-scheduling after reload
-		wezterm.reload_configuration()
-	end)
-end
-
--- Set the initial scheme
-config.color_scheme = get_scheme_for_time()
-schedule_next_switch()
-
--- config.color_scheme = dark_scheme
 config.force_reverse_video_cursor = true
 config.inactive_pane_hsb = {
 	saturation = 1.0,
@@ -339,6 +245,12 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 	-- config.default_cwd = [[\\wsl$\Arch\home\effie]]
 	config.default_prog = { "nu" }
 	-- config.default_cwd = [[~]]
+else
+	lm:add({
+		label = "Nushell",
+		args = { "nu" },
+	})
+	config.default_prog = { "nu" }
 end
 
 config.launch_menu = lm
