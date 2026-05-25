@@ -34,6 +34,7 @@
   lp S-9
   rp S-0
   _ S--
+  + S-=
   | S-\
   ~ S-grv
   { S-[
@@ -192,7 +193,7 @@
 )
 
 (deflayer layers
-  _    @can @qwr @src _    _    _    _    _    _    _    _    _    _
+  _    @can @qwr @src lrld    _    _    _    _    _    _    _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _
@@ -216,7 +217,7 @@
 )
 
 (deflayer (symbols icon ./icons/keyboard_blue.png)
-  XX @!     @@     @#     @$     @%   XX   @&   =       +       -       @_      XX XX
+  XX @!     @@     @#     @$     @%   XX   @&   =       @+       -       @_      XX XX
   XX @tlmet @tlalt @tlctl @tlsft @^   XX   @*   @tlsft  @tlctl  @tlalt  @tlmet  XX XX
   XX \      @|    bspc   spc    ret  XX   @~   grv     XX      @?      /       XX
   XX  XX   XX  _   _       _      _     _    _      XX       XX      XX
