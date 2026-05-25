@@ -12,104 +12,90 @@
 		}
 	},
 	"display": {
-		"constants": ["  "]
+		"constants": ["  "],
+		"color": {
+			"keys": "38;5;202"
+		}
 	},
 	"modules": [
-		// "break",
 		{
 			"type": "custom",
 			"key": " ",
-			"keyColor": "38;5;202",
 			"format": "{#italic_magenta}let{#} fox: {#dim_cyan}Host{#} = {"
 		},
 		{
 			"key": "{$1}distro",
-			"keyColor": "38;5;202",
 			"type": "os",
 			"format": "{#italic_bright_green}\"{name}\"{#},"
 		},
 		{
 			"type": "wm",
 			"key": "{$1}wm",
-			"keyColor": "38;5;202",
 			"format": "{#italic_bright_green}\"{1}\"{#},"
 		},
 		{
 			"key": "{$1}wm",
-			"keyColor": "38;5;202",
 			"type": "command",
 			"text": "komorebi --version | head -1",
 			"format": "{#italic_bright_green}\"{1}\"{#},"
 		},
 		{
 			"key": "{$1}cursor",
-			"keyColor": "38;5;202",
 			"type": "cursor",
 			"format": "{#italic_bright_green}\"{1}\"{#},"
 		},
 		{
 			"key": "{$1}term",
-			"keyColor": "38;5;202",
 			"format": "{#italic_bright_green}\"{pretty-name}\"{#},",
 			"type": "terminal"
 		},
 		{
 			"key": "{$1}theme",
-			"keyColor": "38;5;202",
 			"type": "terminaltheme",
 			"format": "{#italic_bright_green}\"{fg-color} - {bg-color}\"{#},"
 		},
 		{
 			"key": "{$1}font",
-			"keyColor": "38;5;202",
 			"type": "terminalfont",
 			"format": "{#italic_bright_green}\"{name}\"{#},"
 		},
 		{
 			"key": "{$1}shell",
-			"keyColor": "38;5;202",
 			"type": "shell",
 			"format": "{#italic_bright_green}\"{pretty-name}\"{#},"
 		},
 		{
 			"key": "{$1}packages",
-			"keyColor": "38;5;202",
 			"type": "packages",
 			"format": "{#bold_dim_yellow}{all}{#},"
 		},
 		{
 			"key": "{$1}editor",
-			"keyColor": "38;5;202",
 			"type": "editor",
 			"format": "{#italic_bright_green}\"{name}\"{#},"
 		},
 		{
 			"key": "{$1}cpu",
-			"keyColor": "38;5;202",
 			"type": "cpu",
 			"format": "{#italic_bright_green}\"{name}\"{#},"
 		},
 		{
 			"key": "{$1}gpu",
-			"keyColor": "38;5;202",
 			"type": "gpu",
 			"format": "{#italic_bright_green}\"{name}\"{#},"
 		},
 		{
 			"key": "{$1}network",
-			"keyColor": "38;5;202",
 			"type": "custom",
 			"format": "{"
 		},
 		{
 			"key": "{$1}{$1}int",
-			"keyColor": "38;5;202",
 			"type": "localip",
 			"format": "{#italic_bright_green}\"{ifname}\"{#},"
 		},
 		{
 			"key": "{$1}{$1}ipv4",
-			"keyColor": "38;5;202",
 			"type": "localip",
 			"format": "{#italic_bright_green}\"{ipv4}\"{#},"
 		},
@@ -129,8 +115,7 @@
 		{
 			"type": "media",
 			"key": " ",
-			"format": "{player-name} {#cyan}♫{#} {?artist}{artist} - {?}{title}",
-			"keyColor": "cyan"
+			"format": "{player-name} {#cyan}♫{#} {?artist}{artist} - {?}{title}"
 		}
 	]
 }

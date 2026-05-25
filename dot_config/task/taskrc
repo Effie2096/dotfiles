@@ -1,64 +1,30 @@
-# [Created by task 2.6.2 2/22/2026 03:05:59]
-# Taskwarrior program configuration file.
-# For more documentation, see https://taskwarrior.org or try 'man task', 'man task-color',
-# 'man task-sync' or 'man taskrc'
-
-# Here is an example of entries that use the default, override and blank values
-#   variable=foo   -- By specifying a value, this overrides the default
-#   variable=      -- By specifying no value, this means no default
-#   #variable=foo  -- By commenting out the line, or deleting it, this uses the default
-
-# You can also refence environment variables:
-#   variable=$HOME/task
-#   variable=$VALUE
-
-# Use the command 'task show' to see all defaults and overrides
-
+# [Created by task 3.4.2 5/23/2026 22:52:15]
+news.version=3.4.2
 
 # To use the default location of the XDG directories,
-# move this configuration file from ~/.taskrc to ~/.config/task/taskrc and uncomment below
+# move this configuration file from ~/.taskrc to ~/.config/task/taskrc and update location config as follows:
 
-data.location=$XDG_DATA_HOME/task
-hooks.location=$XDG_CONFIG_HOME/task/hooks
-
-verbose=affected,blank,context,edit,header,footnote,label,new-id,project,special,sync,recur
-uda.priority.values=H,M,,L
-color.alternate=
+data.location=~/.local/share/task
+hooks.location=~/.config/task/hooks
 
 # Color theme (uncomment one to use)
 #include light-16.theme
 #include light-256.theme
+#include bubblegum-256.theme
 #include dark-16.theme
 #include dark-256.theme
 #include dark-red-256.theme
-include dark-green-256.theme
+#include dark-green-256.theme
 #include dark-blue-256.theme
-# include dark-violets-256.theme
+#include dark-violets-256.theme
 #include dark-yellow-green.theme
 #include dark-gray-256.theme
 #include dark-gray-blue-256.theme
 #include solarized-dark-256.theme
 #include solarized-light-256.theme
 #include no-color.theme
-news.version=2.6.0
 
-default.command=next
-urgency.user.tag.urgent.coefficient=10.0
-urgency.due.coefficient=12.0
-
-# Weekly agenda report
-report.agenda.columns=id,project,priority,description,due
-report.agenda.labels=ID,Proj,Pri,Description,Due
-report.agenda.filter=status:pending due.before:eow
-report.agenda.sort=due+,priority-
-
-# High priority items
-report.urgent.columns=id,project,description,due,urgency
-report.urgent.labels=ID,Project,Task,Due,Urg
-report.urgent.filter=status:pending priority:H
-report.agenda.sort=urgency-
-
-# Waiting tasks
-report.waiting.columns=id,project,description,wait
-report.waiting.labels=ID,Project,Description,Wait Until
-report.waiting.filter=status:waiting
+uda.priority.values=H,M,,L
+urgency.uda.priority.H.coefficient=6.0
+urgency.uda.priority.M.coefficient=3.9
+urgency.uda.priority.L.coefficient=0.8
