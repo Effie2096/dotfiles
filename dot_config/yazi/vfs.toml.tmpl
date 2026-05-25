@@ -1,0 +1,5 @@
+[services.mediaserver]
+type = "sftp"
+host = "{{ (bitwardenFields "item" "mediaserver").ip.value }}"
+user = "{{ (bitwarden "item" "mediaserver").login.username }}"
+port = {{ (bitwardenFields "item" "mediaserver").port.value }}
