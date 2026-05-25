@@ -1,0 +1,19 @@
+shell-integration-features = true
+
+font-family = "IosevkaTerm NF"
+font-size = 12
+theme = Eldritch
+command = nu
+scrollbar = never
+
+adjust-underline-position = 3
+adjust-underline-thickness = 100%
+
+background-opacity = 0.7
+background-blur = 120
+
+window-padding-x = 0
+window-padding-y = 0
+window-padding-balance = true
+window-decoration = auto
+window-theme = system
