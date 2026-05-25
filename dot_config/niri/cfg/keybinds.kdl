@@ -10,8 +10,9 @@ binds {
     Mod+Return hotkey-overlay-title="Open Terminal: Ghostty" {
         spawn "ghostty"
     }
-    Mod+D hotkey-overlay-title="Open App Launcher: noctalia launcher" {
-        spawn-sh "qs -c noctalia-shell ipc call launcher toggle"
+    Mod+D hotkey-overlay-title="Open App Launcher: rofi" {
+        // spawn-sh "qs -c noctalia-shell ipc call launcher toggle"
+        spawn-sh "rofi -show drun"
     }
     Mod+B hotkey-overlay-title="Open Browser: zen" {
         spawn "zen-browser"
