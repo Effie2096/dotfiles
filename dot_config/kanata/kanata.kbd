@@ -126,7 +126,7 @@
 )
 
 (deftemplate modcho (keys timeout action)
-  $keys $action $timeout all-released (navigation symbols numbers function numpad mouse)
+  $keys $action $timeout all-released (navigation symbols numbers function numpad mouse source)
 )
 
 (defchordsv2
@@ -147,14 +147,14 @@
   (t! modcho (    0 -) 30 @})
 
   ;; H diagraphs
-  (r i) (macro t h) 200 first-release (navigation symbols numbers function numpad mouse)
-  (q i) (macro c h) 200 first-release (navigation symbols numbers function numpad mouse)
-  (1 i) (macro w h) 200 first-release (navigation symbols numbers function numpad mouse)
-  (e i) (macro s h) 200 first-release (navigation symbols numbers function numpad mouse)
-  (t i) (macro g h) 200 first-release (navigation symbols numbers function numpad mouse)
-  (4 i) (macro p h) 200 first-release (navigation symbols numbers function numpad mouse)
+  (r i) (macro t h) 200 first-release (navigation symbols numbers function numpad mouse source)
+  (q i) (macro c h) 200 first-release (navigation symbols numbers function numpad mouse source)
+  (1 i) (macro w h) 200 first-release (navigation symbols numbers function numpad mouse source)
+  (e i) (macro s h) 200 first-release (navigation symbols numbers function numpad mouse source)
+  (t i) (macro g h) 200 first-release (navigation symbols numbers function numpad mouse source)
+  (4 i) (macro p h) 200 first-release (navigation symbols numbers function numpad mouse source)
 
-  (b m) (layer-while-held function) 40 first-release (navigation symbols numbers function numpad mouse)
+  (b m) (layer-while-held function) 40 first-release (navigation symbols numbers function numpad mouse source)
 )
 
 (defsrc
