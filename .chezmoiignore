@@ -30,7 +30,6 @@ bin/scoop.bat
 .config/zellij/
 .config/rofi/
 .config/rofi/**
-{{- end }}
 
 # TODO: niri config has cachyos specifc stuff for now
 {{ if ne .chezmoi.osRelease.id "cachyos" }}
@@ -41,4 +40,5 @@ bin/scoop.bat
 
 .config/noctalia/
 .config/noctalia/**
-{{- end }}
+{{- end }} # cachyos niri
+{{- end }} # linux
