@@ -445,6 +445,11 @@
 	"floating_applications": [
 		{
 			"kind": "Exe",
+			"id": "kdenlive.exe",
+			"matching_strategy": "Equals"
+		},
+		{
+			"kind": "Exe",
 			"id": "loopMIDI.exe",
 			"matching_strategy": "Equals"
 		},

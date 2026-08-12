@@ -6,7 +6,7 @@
 .keys/
 .keys/**
 
-{{- if ne .chezmoi.os "windows" }}
+{{- if ne .chezmoi.os "windows" -}}
 bin/ahk/
 bin/ahk/**
 AppData/
@@ -26,13 +26,14 @@ default_settings
 bin/scoop.bat
 {{- end }}
 
-{{ if ne .chezmoi.os "linux" }}
+{{- if ne .chezmoi.os "linux" -}}
 .config/zellij/
 .config/rofi/
 .config/rofi/**
+{{- end }} # linux
 
 # TODO: niri config has cachyos specifc stuff for now
-{{ if ne .chezmoi.osRelease.id "cachyos" }}
+{{- if ne (get .chezmoi.osRelease "id") "cachyos" -}}
 .config/niri/
 .config/niri/**
 .config/niri/cfg/
@@ -41,4 +42,3 @@ bin/scoop.bat
 .config/noctalia/
 .config/noctalia/**
 {{- end }} # cachyos niri
-{{- end }} # linux

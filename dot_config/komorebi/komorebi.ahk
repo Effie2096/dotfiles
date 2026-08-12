@@ -18,10 +18,11 @@ Groups := Map(
 		{ bind: "#^!r", desc: "Restart Komorebi", cb: (*) => (Komorebic("stop --ahk"), Komorebic("start --ahk")), arg: "" },
 		{ bind: "#^!q", desc: "Quit Komorebi", cb: Komorebic, arg: "stop --ahk" },
 		{ bind: "#?", desc: "Toggle Keybind Help", cb: toggle_help },
-		{ bind: "#!b", desc: "Toggle Status Bar", cb: toggle_yasb },
+		{ bind: "#^!b", desc: "Toggle Status Bar", cb: toggle_yasb },
 	],
 	"Apps", [
 		{ bind: "#y", desc: "Open File Explorer", cb: Run, arg: "explorer.exe" },
+		{ bind: "#b", desc: "Open Web Browser", cb: Run, arg: "zen.exe" },
 		{ bind: "#Enter", desc: "Open Terminal", cb: RunHidden, arg: "wezterm.exe" }
 	],
 	"Focus Windows", [
@@ -68,15 +69,15 @@ Groups := Map(
 		{ bind: "#+f", desc: "Toggle Float", cb: Komorebic, arg: "toggle-float" },
 		{ bind: "#f", desc: "Toggle Focus", cb: Komorebic, arg: "toggle-monocle" },
 		{ bind: "#.", desc: "Minimize", cb: Komorebic, arg: "minimize" },
-		{ bind: "#c", desc: "Close", cb: Komorebic, arg: "close" },
+		{ bind: "#q", desc: "Close", cb: Komorebic, arg: "close" },
 		{ bind: "#!l", desc: "Lock Container", cb: Komorebic, arg: "toggle-lock" },
 	],
 	"Layouts", [
-		{ bind: "#b", desc: "BSP", cb: Komorebic, arg: "change-layout bsp" },
-		{ bind: "#s", desc: "Scrolling", cb: Komorebic, arg: "change-layout scrolling" },
-		{ bind: "#g", desc: "Grid", cb: Komorebic, arg: "change-layout grid" },
-		{ bind: "#x", desc: "Flip Horizontal", cb: Komorebic, arg: "flip-layout horizontal" },
-		{ bind: "#v", desc: "Flip Vertical", cb: Komorebic, arg: "flip-layout vertical" },
+		{ bind: "#!b", desc: "BSP", cb: Komorebic, arg: "change-layout bsp" },
+		{ bind: "#!s", desc: "Scrolling", cb: Komorebic, arg: "change-layout scrolling" },
+		{ bind: "#!g", desc: "Grid", cb: Komorebic, arg: "change-layout grid" },
+		{ bind: "#!x", desc: "Flip Horizontal", cb: Komorebic, arg: "flip-layout horizontal" },
+		{ bind: "#!v", desc: "Flip Vertical", cb: Komorebic, arg: "flip-layout vertical" },
 		{ bind: format("#!{1}", Movement["MonRight"]), desc: "Next Layout", cb: Komorebic, arg: "cycle-layout next" },
 		{ bind: format("#!{1}", Movement["MonLeft"]), desc: "Previous Layout", cb: Komorebic, arg: "cycle-layout previous" },
 		{ bind: "#!=", desc: "Increase Scroll Columns", cb: Nukomo, arg: "scroll-columns increase" },
@@ -178,10 +179,8 @@ Nukomo(cmd) {
 toggle_yasb() {
 	if WinExist("YasbBar") {
 		Yasb("hide-bar")
-		Nukomo("bar-offset")
 	} else {
 		Yasb("show-bar")
-		Nukomo("bar-offset")
 	}
 }
 
